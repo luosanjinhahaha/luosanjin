@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.FamdoctorMapper">
+	<resultMap type="com.smxy.healthmedical.bean.Famous_Doctor" id="famdoctorResultMap">
+		<id column="drid" property="drid"/>
+		<result column="drphotosrc" property="drphotosrc"/>
+		<result column="drname" property="drname"/>
+		<result column="drsex" property="drsex"/>
+		<result column="drmajor" property="drmajor"/>
+		<result column="drintro" property="drintro"/>
+	</resultMap>
+	<select id="famdoctorlist" parameterType="com.smxy.healthmedical.bean.Famous_Doctor" resultMap="famdoctorResultMap">
+		select * from tbl_fdr
+	</select>
+</mapper>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>基于大数据技术的医疗服务系统</title>
+</head>
+<script th:src="@{/js/others_js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/others_js/jquery.bootstrap.newsbox.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<link rel="Shortcut Icon" th:href="@{/images/favicon.ico}"/>
+<link rel="stylesheet" th:href="@{/css/others_css/stylefree.css}"/>
+<link rel='stylesheet' th:href='@{/css/others_css/owl.carousel.min.css}'/>
+<link rel='stylesheet' th:href='@{/css/others_css/fonts.googleapis.css}'/>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/others_css/homepage.css}"/>
+<link rel="stylesheet" th:href="@{/css/others_css/main.css}"/>
+<link rel="stylesheet" th:href="@{/css/others_css/font-awesome.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/others_css/bootstrap-theme.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/others_css/default.css}"/>
+<link rel="stylesheet" th:href="@{/css/others_css/normalize.css}"/>
+<link rel="stylesheet" th:href="@{/css/others_css/site.css}"/>
+<link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}"/>
+<body style="min-width: 1349px; background: white;">
+<div class="header">
+    <div th:replace="~{frame/top::top}"></div>
+    <!-- swiper -->
+    <div class="container">
+        <div class="trent-slider1">
+            <div class="t-slide current-t-slide">
+                <img th:src="@{/images/swiper01.jpg}" alt=""/>
+                <div style="position: absolute; top: 60px; right: 20px;">
+                    <h1>
+                        <a href="#">基于大数据技术的医疗服务平台</a>
+                    </h1>
+                    <h3>医疗服务后台管理系统</h3>
+                </div>
+            </div>
+            <div class="t-slide current-t-slide">
+                <img th:src="@{/images/swiper01.jpg}" alt=""/>
+                <div style="position: absolute; top: 100px;">dsad</div>
+            </div>
+            <div class="t-slide">
+                <img th:src="@{/images/swiper01.jpg}" alt=""/>
+            </div>
+            <div class="t-slide">
+                <img th:src="@{/images/swiper01.jpg}" alt=""/>
+            </div>
+            <div class="t-slider-controls">
+                <div class="arrow right-arrow">
+                    <div class="arrow-container">
+                        <div class="arrow-icon">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="arrow left-arrow">
+                    <div class="arrow-container">
+                        <div class="arrow-icon">
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-load-bar">
+                    <div class="inner-load-bar"></div>
+                </div>
+                <div class="t-dots-container">
+                    <div class="t-slide-dots-wrap">
+                        <div class="t-slide-dots"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 主体部分 -->
+
+<div class="main_news">
+    <div class="news_nav">
+			<span>通知公告 <span></span>
+			</span>
+    </div>
+    <div class="new_lis new_lis_notice">
+        <div style="position: relative; top: 220px; left: -35px;">
+            <a th:href="@{/user/more_notice/1}" style="outline: none;"
+               target="_blank">
+                <img alt="" th:src="@{/images/more.gif}" title="更多"/>
+            </a>
+        </div>
+
+    </div>
+</div>
+<div class="main_intro">
+    <div class="news_nav">
+			<span>媒体聚焦 <span></span>
+			</span>
+    </div>
+    <div class="new_lis new_lis_media">
+        <div style="position: relative; top: 220px; left: -35px;">
+            <a th:href="@{/user/more_media/1}" style="outline: none;"
+               target="_blank"> <img alt="" th:src="@{/images/more.gif}" title="更多"/>
+            </a>
+        </div>
+    </div>
+</div>
+<div style="clear: both;"></div>
+<!-- <div class="leading_1"> -->
+<div class="select_nav1">
+    <div class="leading_1_nav">
+			<span>全景导诊 <span></span>
+			</span>
+    </div>
+    <div class="select_btn_1">
+			<span> <a href="#"> <img th:src="@{/images/select_01.png}" alt=""/>
+			</a> <label style="font-size: 16px; margin: 8px; color: white;">会诊须知</label>
+			</span> <span>
+            <a href="#"> <img th:src="@{/images/select_02.png}" alt=""/>
+			</a> <label style="font-size: 16px; margin-left: 10px; color: white;">会诊流程</label>
+			</span> <span> <a href="#"> <img th:src="@{/images/select_03.png}" alt=""/>
+			</a> <label
+            style="font-size: 16px; margin-top: 7px; margin-left: 10px; color: white;">专家介绍</label>
+			</span>
+    </div>
+    <div class="select_btn_1">
+			<span> <a href="#"> <img
+                    th:src="@{/images/select_04.png}" alt=""/>
+			</a> <label
+                    style="font-size: 16px; margin-top: 6px; margin-left: 10px; color: white;">出诊专家</label>
+			</span> <span> <a href="#"> <img
+            th:src="@{/images/select_05.png}"
+            style="margin-left: 20px; margin-top: 4px;" alt=""/>
+			</a><label style="font-size: 16px; margin-top: 7px; margin-left: 10px; color: white;">科室介绍</label>
+			</span> <span>
+            <a href="#"> <img th:src="@{/images/select_06.png}" alt=""/>
+			</a> <label
+            style="font-size: 16px; margin-top: 7px; margin-left: 10px; color: white;">医保就医</label>
+			</span>
+    </div>
+    <div class="select_btn_1">
+			<span> <a href="#"> <img
+                    th:src="@{/images/select_07.png}" alt=""/>
+			</a> <label
+                    style="font-size: 16px; margin-top: 7px; margin-left: 10px; color: white;">专科门诊</label>
+			</span> <span> <a href="#"> <img
+            th:src="@{/images/select_08.png}"
+            style="margin-left: 20px; margin-top: 4px;" alt=""/>
+			</a> <label
+            style="font-size: 16px; margin-top: 7px; margin-left: 10px; color: white;">健康体检</label>
+			</span> <span> <a href="#"> <img
+            th:src="@{/images/select_09.png}" alt=""/>
+			</a> <label
+            style="font-size: 16px; margin-top: 7px; margin-left: 10px; color: white;">放射诊疗</label>
+			</span>
+    </div>
+</div>
+<!-- <div class="leading_2"> -->
+
+<div class="select_nav2">
+    <div class="leading_2_nav">
+			<span>全景导诊 <span></span>
+			</span>
+    </div>
+</div>
+<!-- <div class="leading_3"> -->
+
+<div class="select_nav3">
+    <div class="leading_3_nav">
+			<span>查询服务 <span></span>
+			</span>
+    </div>
+    <span> <a href="javascript:void(0);" class="dr_order">-医师排班查询-</a>
+		</span> <span> <a href="#" class="dr_order" target="_blank">-化验参考值查询-</a>
+		</span> <span> <a href="#" class="dr_order" target="_blank">-执业医师信息查询-</a>
+		</span> <span> <a th:href="@{/user/to_dr_arrange}"
+                          class="dr_order" target="_blank">-护士资质信息查询-</a>
+		</span>
+</div>
+<!-- <div class="leading_4"> -->
+
+<div class="select_nav4">
+    <div class="leading_4_nav">
+			<span>政策通告 <span></span>
+			</span>
+    </div>
+    <!-- <div class="htmleaf-container"> -->
+    <!-- <div class="container mp30"> -->
+    <div class="row">
+        <div class="col-md-4"
+             style="width: 100%; height: 160px; line-height: 17px;">
+            <div class="panel panel-default" style="margin-left: 10px;">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-list-alt"></span> <b>医疗行业政策</b>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12" style="height: 130px; overflow: hidden;">
+                            <ul class="demo2">
+                                <li class="news-item">《“十三五”深化医药卫生体制改革规划》 <a href="#">更多...</a>
+                                </li>
+                                <li class="news-item">《“十三五”卫生与健康规划》 <a href="#">更多...</a>
+                                </li>
+                                <li class="news-item">
+                                    《关于印发国家基本医疗保险、工伤保险和生育保险药品目录（2018年版）的通知》 <a href="#">更多...</a>
+                                </li>
+                                <li class="news-item">《关于进一步深化基本医疗保险支付方式改革的指导意见》 <a
+                                        href="#">更多...</a>
+                                </li>
+                                <li class="news-item">《关于全面推开公立医院综合改革的通知》 <a href="#">更多...</a>
+                                </li>
+                                <li class="news-item">《关于推进医疗联合体建设和发展的指导意见》 <a href="#">更多...</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="emp_nav">
+		<span>名医简介 <span></span>
+		</span>
+</div>
+<div class="emp_intro">
+    <div class="htmleaf-container">
+        <div class="container">
+            <div class="mhn-slide owl-carousel"></div>
+        </div>
+    </div>
+</div>
+<div class="banner_nav1">
+    <div class="banner_nav1_leading">
+			<span>健康教育 <span></span>
+			</span>
+    </div>
+    <div class="banner_nav1_leading_f">
+        //////////////&nbsp;&nbsp; <font
+            style="color: orange; font-weight: bolder;">全民健康</font>
+        &nbsp;&nbsp;///////////////////////////////////////////////////
+    </div>
+    <div class="yangsheng">
+        <img th:src="@{/images/yang.jpg}" alt=""/> <span
+            class="yangspan1"> <a href="#">1.中医养生知识 十个脚底养生按摩方法</a>
+			</span> <span class="yangspan2"> <a href="#">2.中医养生知识 十个脚底养生按摩方法</a>
+			</span> <span class="yangspan3"> <a href="#">3.中医养生知识 十个脚底养生按摩方法</a>
+			</span> <span class="yangspan4"> <a href="#">4.中医养生知识 十个脚底养生按摩方法</a>
+			</span>
+    </div>
+    <div class="banner_nav1_leading_f2">
+        //////////&nbsp;&nbsp; <font
+            style="color: orange; font-weight: bolder;">全民健康</font> &nbsp;&nbsp;
+        //////////
+    </div>
+    <div class="banner_nav1_leading_f3">
+        //////////&nbsp;&nbsp; <font
+            style="color: orange; font-weight: bolder;">全民健康</font> &nbsp;&nbsp;
+        //////////
+    </div>
+    <div class="banner_nav1_info">
+        <span><a href="#">【10.15全球洗手日】今天您洗手</a></span>
+    </div>
+    <div class="banner_nav1_info" style="margin-left: 40px;">
+        <span><a href="#">【10.15全球洗手日】今天您洗手</a></span>
+    </div>
+    <div class="banner_nav1_info">
+        <span><a href="#">【10.15全球洗手日】今天您洗手</a></span>
+    </div>
+    <div class="banner_nav1_info" style="margin-left: 40px;">
+        <span><a href="#">【10.15全球洗手日】今天您洗手</a></span>
+    </div>
+    <div class="banner_nav1_info">
+        <span><a href="#">【10.15全球洗手日】今天您洗手</a></span>
+    </div>
+    <div class="banner_nav1_info" style="margin-left: 40px;">
+        <span><a href="#">【10.15全球洗手日】今天您洗手</a></span>
+    </div>
+    <div class="banner_nav1_info">
+        <span><a href="#">【10.15全球洗手日】今天您洗手</a></span>
+    </div>
+</div>
+<div class="banner_nav2"></div>
+<div class="banner_nav3">
+    <div class="banner_btn1">
+        <button type="button" class="btn btn-primary btn-lg btn-block">
+            预约挂号
+            <p>Appointment</p>
+        </button>
+    </div>
+    <div class="banner_btn2">
+        <button type="button" class="btn btn-warning btn-lg btn-block">
+            在线咨询
+            <p>Online Consultation</p>
+        </button>
+    </div>
+    <div class="banner_btn3">
+        <button type="button" class="btn btn-warning btn-lg btn-block">
+            在线咨询
+            <p>Online Consultation</p>
+        </button>
+    </div>
+</div>
+<div th:replace="~{frame/footer::footer}"></div>
+</body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js'></script>
+<script th:src="@{/js/others_js/main.js}"></script>
+<script>
+    $(window).load(function () {
+        $(".loading").fadeOut(750);
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".demo2").bootstrapNews({
+            newsPerPage: 4,
+            autoplay: true,
+            pauseOnHover: true,
+            navigation: false,
+            direction: 'down',
+            newsTickerInterval: 2500,
+            onToDo: function () {
+                //console.log(this);
+            }
+        });
+    });
+    window.onload = function notice_deal_media_deal() {
+        $.ajax({
+            url: "/medical/user/notice_deal",
+            type: "GET",
+            success: function (result) {
+                build_notice_show(result);
+            }
+        });
+        // $.ajax({
+        //     url: "/medical/user/media_deal",
+        //     type: "POST",
+        //     success: function (result) {
+        //         build_media_show(result);
+        //     }
+        // });
+        $.ajax({
+            url: "/medical/user/famous_dr",
+            type: "GET",
+            success: function (result) {
+                build_fam_dr(result);
+                console.log(result.extend.famdoctor);
+            }
+        });
+    }
+
+    //构建名医简介
+    function build_fam_dr(result) {
+        var fam_drData = result.extend.famdoctor;
+        var owl_carouselDiv = $("<div></div>").addClass("mhn-slide owl-carousel");
+        $.each(fam_drData, function (index, item) {
+            var mhn_itemDiv = $("<div></div>").addClass("mhn-item")
+                .append($("<div></div>").addClass("mhn-inner")
+                    .append($("<img/>").attr("src", item.drphotosrc).css("height", "166.53px").css("object-fit", "cover"))
+                    .append($("<div></div>").addClass("mhn-img")
+                        .append($("<div></div>").addClass("loader-circle")
+                            .append($("<div></div>").addClass("loader-stroke-left"))
+                            .append($("<div></div>").addClass("loader-stroke-right"))))
+                    .append($("<div></div>").addClass("mhn-text")
+                        .append($("<h4></h4>").append(item.drname))
+                        .append($("<p></p>").append(item.drintro))));
+            owl_carouselDiv.append(mhn_itemDiv).appendTo(".emp_intro .container");
+        });
+    }
+
+    $(function () {
+        $('.mhn-slide').owlCarousel({
+            nav: true,
+//             loop:true,
+            slideBy: 'page',
+            rewind: false,
+            responsive: {
+                0: {items: 1},
+                480: {items: 2},
+                600: {items: 3},
+                1000: {items: 4}
+            },
+            smartSpeed: 70,
+            onInitialized: function (e) {
+                $(e.target).find('img').each(function () {
+                    if (this.complete) {
+                        $(this).closest('.mhn-inner').find('.loader-circle').hide();
+                        $(this).closest('.mhn-inner').find('.mhn-img').css('background-image', 'url(' + $(e.target).attr('src') + ')');
+                    } else {
+                        $(this).bind('load', function (e) {
+                            $(e.target).closest('.mhn-inner').find('.loader-circle').hide();
+                            $(e.target).closest('.mhn-inner').find('.mhn-img').css('background-image', 'url(' + $(e.target).attr('src') + ')');
+                        });
+                    }
+                });
+            },
+            navText: ['<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>', '<svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>']
+        });
+    });
+
+    //公告，媒体展示
+    function build_notice_show(result) {
+        var ul = $("<ul></ul>");
+        var notice_data = result.extend.PageInfo.list;
+        $.each(notice_data, function (index, item) {
+            var li = $("<li></li>")
+                .addClass("li1").append($("<span></span>")
+                    .append($("<a></a>").attr("href", "/medical/user/show_notice_info/" + (item.nid))
+                        .addClass("show_notice").attr("target", "_blank").attr("show_id", index + 1).attr("title", item.nname)
+                        .append(item.nname.substr(0, 18) + "...")))
+                .append($("<span></span>").append(item.ntime));
+            ul.append(li).appendTo(".new_lis_notice");
+        });
+    }
+
+    // function build_media_show(result) {
+    //     var ul = $("<ul></ul>");
+    //     var media_data = result.extend.PageInfo.list;
+    //     $.each(media_data, function (index, item) {
+    //         var li = $("<li></li>")
+    //             .addClass("li1").append($("<span></span>")
+    //                 .append($("<a></a>").attr("href", "/medical/user/show_media_info/" + (item.mid))
+    //                     .addClass("show_media").attr("target", "_blank").attr("show_id", index + 1).attr("title", item.mname)
+    //                     .append(item.mname.substr(0, 18) + "...")))
+    //             .append($("<span></span>").append(item.mtime));
+    //         ul.append(li).appendTo(".new_lis_media");
+    //     });
+    // };
+
+    //非登录不能查看排班系统
+    $(".dr_order").click(function () {
+        $.ajax({
+            url: "/medical/user/to_dr_arrange",
+            type: "POST",
+            success: function (result) {
+                if (result.code == 200) {
+                    location.href = "/medical/user/to_dr_arrange";
+                } else {
+                    swal({
+                        title: "您还未登录没有权限查看！",
+                        type: "error"
+                    }, function () {
+                        location.href = "/medical/user/to_login";
+                    });
+                }
+            }
+        });
+    });
+</script>
+</html>

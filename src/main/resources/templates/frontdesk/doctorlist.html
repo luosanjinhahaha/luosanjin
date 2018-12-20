@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+<link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
+<link rel="stylesheet" th:href="@{/css/main_css/foundation-datepicker.css}">
+<link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}">
+<link rel="stylesheet" th:href="@{/css/data_table_css/plugin/datatables/datatables.css}">
+<body>
+<div th:replace="~{common/loading::loading}"></div>
+<div th:replace="~{common/header::header(activeUri = '/user/doctorlist')}"></div>
+<section class="breadcumb-area bg-img gradient-background-overlay"
+         style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb2.jpg');">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-content">
+                    <h3 class="breadcumb-title">优秀的医师团队</h3>
+                    <br>
+                    <p>我们总是把病人放在第一位</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--医师团队列表-->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped"
+                           style="text-align: center;">
+                        <thead>
+                        <tr style="line-height: 40px;">
+                            <th style="width: 35px">编号</th>
+                            <th style="width: 75px">医师照片</th>
+                            <th style="width: 88px">医师姓名</th>
+                            <th style="width: 41px">性别</th>
+                            <th style="width: 83px">医师主攻</th>
+                            <th>医师简介</th>
+                            <!--<th style="width: 94px">操作</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="famdoctorlist:${famousdoctors}"
+                            style="table-layout: fixed; WORD-BREAK: break-all; WORD-WRAP: break-word">
+                            <td th:text="${ famdoctorlist.drid}"></td>
+                            <td><img style="width: 90px; height: 120px; object-fit: cover;"
+                                     th:src="${famdoctorlist.drphotosrc}" alt=""/></td>
+                            <td th:text="${ famdoctorlist.drname}"></td>
+                            <td th:text="${ famdoctorlist.drsex}"></td>
+                            <td th:text="${ famdoctorlist.drmajor}"></td>
+                            <td th:text="${ famdoctorlist.drintro}"></td>
+                            <!--<td style="vertical-align: middle;">-->
+                            <!--<button style="width: 110px; margin-top: 10px; margin-bottom: 10px;"-->
+                            <!--class="btn btn-primary btn-sm edit_btn">-->
+                            <!--<span>编辑</span>-->
+                            <!--</button>-->
+                            <!--<button style="width: 110px; margin-bottom: 10px;"-->
+                            <!--class="btn btn-primary btn-sm delete_btn">-->
+                            <!--<span>修改</span>-->
+                            <!--</button>-->
+                            <!--<button style="width: 110px; margin-bottom: 10px;"-->
+                            <!--class="btn btn-danger btn-sm delete_btn">-->
+                            <!--<span>删除</span>-->
+                            <!--</button>-->
+                            <!--</td>-->
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>编号</th>
+                            <th>医师照片</th>
+                            <th>医师姓名</th>
+                            <th>性别</th>
+                            <th>医师主攻</th>
+                            <th>医师简介</th>
+                            <!--<th>操作</th>-->
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{common/footer::footer}"></div>
+</body>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+</script>
+<script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/homepage_js/popper.min.js}"></script>
+<script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
+<script th:src="@{/js/homepage_js/plugins.js}"></script>
+<script th:src="@{/js/homepage_js/active.js}"></script>
+<script th:src="@{/js/main_js/foundation-datepicker.js}"></script>
+<script th:src="@{/js/main_js/foundation-datepicker.zh-CN.js}"></script>
+<script th:src="@{/js/main_js/datatables.min.js}"></script>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script></script>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="loading">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/loading_css/loading.css}" />
+</head>
+<body>
+    <div class="loading">
+        <img th:src="@{/images/main_image/loading.gif}" alt="loading-img">
+    </div>
+</body>
+<div th:replace="~{common/common_js::common_js}"></div>
+<script type="text/javascript">
+    $(window).load(function() {
+    $(".loading").fadeOut(750);
+    });
+</script>
+</html>

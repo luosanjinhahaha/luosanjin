@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.RoleMapper">
+    <!--通过 roleId 查找医师角色-->
+    <select id="getDoctorRoleByRoleId" parameterType="integer" resultMap="getDoctorRoleByRoleIdResultMap">
+        select * from tbl_role where role_id = #{roleId}
+    </select>
+
+    <resultMap id="getDoctorRoleByRoleIdResultMap" type="com.smxy.healthmedical.bean.Role">
+        <result property="roleId" column="role_id"/>
+        <collection property="RolePermissions" column="role_id" select="com.smxy.healthmedical.dao.RolePermissionMapper.getDoctorPermissionByRoleId">
+        </collection>
+    </resultMap>
+
+    <!--通过 RoleName 查找角色-->
+    <select id="getDoctorRoleByRoleName" parameterType="String" resultType="Role">
+        select * from tbl_role where role_name = #{roleName}
+    </select>
+
+</mapper>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="patient_add" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="hold-transition sidebar-mini" >
+<div class="wrapper">
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">鑫睿医疗服务中心-患者添加</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">主页</a></li>
+                            <li class="breadcrumb-item active">患者添加</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-----------------------------------------------------------------  -->
+        <section class="content">
+            <div class="container-fluid" id="patientAdd">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Horizontal Form -->
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">患者信息添加</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form class="form-horizontal">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">患者姓名</label>
+                                        <div class="col-sm-12">
+                                            <input autocomplete="off" name="pinfoName" type="text" class="form-control" id="pinfoName_add_input"
+                                                   placeholder="">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="pinfoGender" id="pinfoGender1_add_input" value="男" checked> 男
+                                            </label>
+                                            <label style="margin-left: 50px;" class="radio-inline">
+                                                <input type="radio" name="pinfoGender" id="pinfoGender2_add_input" value="女">女
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">患者年龄</label>
+                                        <div class="col-sm-12">
+                                            <input autocomplete="off" name="pinfoAge" type="text" class="form-control" id="pinfoAge_add_input"
+                                                   placeholder="">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">患者确诊</label>
+                                        <div class="col-sm-12">
+                                            <input autocomplete="off" type="text" class="form-control" name="ppinfoIllname"
+                                                   id="ppinfoIllname_add_input" placeholder="">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-sm-2 control-label">症状情况</label>
+                                        <div class="col-sm-12">
+                                            <input autocomplete="off" type="text" class="form-control" name="pinfoInfo"
+                                                   id="pinfoInfo_add_input" placeholder="">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">科室</label>
+                                        <div class="col-sm-4">
+                                            <!-- 部门提交部门id即可 -->
+                                            <select name="piId" class="form-control" id="dept_add_select">
+                                                <option th:each="dept:${departments}" th:value="${dept.deptId}" th:text="${dept.deptName}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" id="patients_save_btn" class="btn btn-info">保存</button>
+                                    <button type="button" class="btn btn-default float-right">清除</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $("#patients_save_btn").click(function() {
+        $.ajax({
+            url : "/medical/admin/savepatients",
+            type : "POST",
+            data : $("#patientAdd form").serialize()+"&_method=PUT",
+            success : function() {
+                swal({
+                    title:"保存成功！",
+                    type:"success"
+                },function(){
+                    location.href="/medical/admin/allpatients";
+                });
+            }
+        });
+    });
+</script>
+</html>

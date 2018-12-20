@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="doctorOverviewList">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .inner {
+        border: 1px solid #f2f2f2;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .inner img {
+        width: 90px;
+        height: 88px;
+        object-fit: cover;
+        float: right;
+        position: relative;
+        top: -83px;
+    }
+
+    .small-box {
+        cursor: pointer;
+        /*background-color: white;"*/
+    }
+</style>
+<body>
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">
+                        <span><img alt="权限控制" th:src="@{/images/quanxian.png}"/></span>&nbsp;&nbsp;宜家医坊医师总览</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">主页</a></li>
+                        <li class="breadcrumb-item active">医师总览</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!--small-box bg-info bg-success bg-warning原本颜色-->
+                        <div class="small-box" style="border-top: 3px solid red;" title="">
+                            <div class="inner"
+                                 th:each="doctorOverviewLists:${doctorOverviewList}">
+                                <span th:each="doctorRole:${doctorOverviewLists.doctorRoles}"
+                                      th:if="${doctorRole.role.roleId == 1}">
+                                    <p>职称：主任医师</p>
+                                    <p th:dr_value_id="${doctorOverviewLists.doctorId}"
+                                       th:text="'姓名：' + ${doctorOverviewLists.doctorName}"></p>
+                                    <span><img th:src="${doctorOverviewLists.doctorPhotoSrc}" alt=""/></span>
+                                    <p th:text="'主治：' + ${doctorOverviewLists.doctorName}"></p>
+                                    <a th:href="@{/admin/doctorProfile/} + ${doctorOverviewLists.doctorId}"
+                                       style="width: 91px; display: inline-block;position: relative;float: right;top: -23px; left: 91px;"
+                                       class="btn btn-primary btn-sm profile-btn">
+                                        <span>查看</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="border-top: 3px solid #007bff;" title="">
+                            <div class="inner"
+                                 th:each="doctorOverviewLists:${doctorOverviewList}">
+                            <span th:each="doctorRole:${doctorOverviewLists.doctorRoles}"
+                                  th:if="${doctorRole.role.roleId == 2}">
+                                <p>职称：副主任医师</p>
+                                <p th:dr_value_id="${doctorOverviewLists.doctorId}"
+                                   th:text="'姓名：' + ${doctorOverviewLists.doctorName}"></p>
+                                <span><img th:src="${doctorOverviewLists.doctorPhotoSrc}" alt=""/></span>
+                                <p th:text="'主治：' + ${doctorOverviewLists.doctorName}"></p>
+                                <a th:href="@{/admin/doctorProfile/} + ${doctorOverviewLists.doctorId}"
+                                   style="width: 91px;display: inline-block;position: relative;float: right;top: -23px; left: 91px;"
+                                   class="btn btn-primary btn-sm">
+                                    <span>查看</span>
+                                </a>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="border-top: 3px solid #2ab764" title="">
+                            <div class="inner"
+                                 th:each="doctorOverviewLists:${doctorOverviewList}">
+                             <span th:each="doctorRole:${doctorOverviewLists.doctorRoles}"
+                                   th:if="${doctorRole.role.roleId == 3}">
+                            <p>职称：主治医师</p>
+                            <p th:dr_value_id="${doctorOverviewLists.doctorId}"
+                               th:text="'姓名：' + ${doctorOverviewLists.doctorName}"></p>
+                            <span><img th:src="${doctorOverviewLists.doctorPhotoSrc}" alt=""/></span>
+                            <p th:text="'主治：' + ${doctorOverviewLists.doctorName}"></p>
+                            <a th:href="@{/admin/doctorProfile/} + ${doctorOverviewLists.doctorId}"
+                               style="width: 91px;display: inline-block;position: relative;float: right;top: -23px; left: 91px;"
+                               class="btn btn-primary btn-sm">
+                                <span>查看</span>
+                            </a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="border-top: 3px solid gold" title="">
+                            <div class="inner"
+                                 th:each="doctorOverviewLists:${doctorOverviewList}">
+                                <span th:each="doctorRole:${doctorOverviewLists.doctorRoles}"
+                                      th:if="${doctorRole.role.roleId == 4}">
+                                    <p>职称：医师</p>
+                                    <p th:dr_value_id="${doctorOverviewLists.doctorId}"
+                                       th:text="${'姓名：' + doctorOverviewLists.doctorName}"></p>
+                                    <span><img th:src="${doctorOverviewLists.doctorPhotoSrc}" alt=""/></span>
+                                    <p th:text="'主治：' + ${doctorOverviewLists.doctorName}"></p>
+                                    <a th:href="@{/admin/doctorProfile/} + ${doctorOverviewLists.doctorId}"
+                                       style="width: 91px;display: inline-block;position: relative;float: right;top: -23px; left: 91px;"
+                                       class="btn btn-primary btn-sm">
+                                        <span>查看</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<footer class="main-footer"><strong>© 2018 YJYF
+    Medical Center. All Rights Reserved.  宜家医坊总裁办公室所有</strong>
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.0.0-alpha
+    </div>
+</footer>
+</body>
+<script>
+    $(function () {
+        $(".inner").each(function(index, item) {
+            if($(this).children("span").length === 0) {
+                $(this).remove();
+            }
+        });
+    })
+</script>
+</html>

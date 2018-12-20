@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.RolePermissionMapper">
+
+    <!--根据角色id在角色权限表查权限id-->
+    <select id="getDoctorPermissionByRoleId" parameterType="integer" resultMap="getPermissionIdByRoleIdResultMap">
+        select * from tbl_role_permission where role_id = #{roleId}
+    </select>
+
+    <resultMap id="getPermissionIdByRoleIdResultMap" type="com.smxy.healthmedical.bean.RolePermission">
+        <result column="permission_id" property="permissionId"/>
+        <association property="permission" column="permission_id" select="com.smxy.healthmedical.dao.PermissionMapper.getDoctorPermissionByPermissionId">
+        </association>
+    </resultMap>
+
+    <!--角色权限表查权限id-->
+    <select id="getDoctorPermissionAll" resultMap="getDoctorPermissionAllResultMap">
+        select * from tbl_role_permission where role_permission_id = #{rolePermissionId}
+    </select>
+
+    <resultMap id="getDoctorPermissionAllResultMap" type="com.smxy.healthmedical.bean.RolePermission">
+        <result column="permission_id" property="permissionId"/>
+        <association property="permission" column="permission_id"
+                     select="com.smxy.healthmedical.dao.PermissionMapper.getDoctorPermissionAll">
+        </association>
+    </resultMap>
+
+    <!--通过角色id权限id添加医师权限-->
+    <insert id="addDoctorPermissionByDoctorRoleIdAndPermissionId"
+            parameterType="com.smxy.healthmedical.bean.RolePermission">
+        insert into tbl_role_permission(role_permission_id, role_id, permission_id) values (#{rolePermissionId},
+        #{roleId}, #{permissionId})
+    </insert>
+
+    <!--通过角色id和权限id数组批量添加医师权限-->
+    <insert id="addDoctorPermissionBatch">
+        insert into tbl_role_permission(role_id, permission_id) values
+        <foreach collection="permissionId" item="item" index="no" open="" separator="," close="">
+            (#{roleId}, #{item})
+        </foreach>
+    </insert>
+
+    <!--通过角色id权限id删除医师权限-->
+    <delete id="deleteDoctorPermissionByPermissionId" parameterType="com.smxy.healthmedical.bean.RolePermission">
+        delete from tbl_role_permission where role_id = #{roleId} and permission_id = #{permissionId}
+    </delete>
+
+    <!--通过角色id和权限id数组批量删除医师权限-->
+    <delete id="deleteDoctorPermissionBatch">
+        delete from tbl_role_permission where role_id = #{roleId} and permission_id in
+        <foreach collection="permissionId" item="item" index="no" open="(" close=")" separator=",">
+             #{item}
+        </foreach>
+    </delete>
+</mapper>

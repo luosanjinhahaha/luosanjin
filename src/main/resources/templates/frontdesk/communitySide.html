@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="side">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 col-lg-2">
+    <div class="medilife-blog-sidebar-area">
+        <div class="search-widget-area mb-50">
+            <form action="#" method="get">
+                <input type="search" placeholder="搜索">
+                <input type="submit" value="Search">
+                <a th:href="@{/#}" class='btn medilife-btn mt-50' data-toggle="modal" data-target="#exampleModal">发
+                    帖 <span>+</span></a>
+            </form>
+        </div>
+        <div class="medilife-catagories-card mb-50">
+            <h5>类别</h5>
+            <ul class="catagories-menu">
+                <li><a th:href="@{/#}">疾病症状</a></li>
+                <li><a th:href="@{/#}">医学养生</a></li>
+                <li><a th:href="@{/#}">家庭保健</a></li>
+                <li><a th:href="@{/#}">用药指南</a></li>
+                <li><a th:href="@{/#}">康复与疗养</a></li>
+                <li><a th:href="@{/#}">糖尿病</a></li>
+                <li><a th:href="@{/#}">消化疾病</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--开始-->
+<div class="col-12 col-lg-2" style="margin-top: 195px;">
+    <div class="medilife-blog-sidebar-area">
+        <div class="medilife-catagories-card mb-50">
+            <h5>科室</h5>
+            <ul class="catagories-menu">
+                <li th:class="${activeUri == '/user/consult/${dept.deptId}'?'nav-item active':'nav-item active'}">
+                    <a th:href="@{/user/consult/}+${dept.deptId}" th:each="dept:${dept}" th:text="${dept.deptName}">疾病症状</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--结束-->
+</body>
+</html>

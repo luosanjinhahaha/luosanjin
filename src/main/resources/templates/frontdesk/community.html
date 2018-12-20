@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>患者社区-最全面的交流社区</title>
+    <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/loading.css/loading.css}"/>
+</head>
+
+<body>
+<div th:replace="~{common/loading::loading}"></div>
+<div th:replace="~{common/header::header(activeUri = '/user/community')}"></div>
+<section class="breadcumb-area bg-img gradient-background-overlay"
+         style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb2.jpg');">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-content">
+                    <h3 class="breadcumb-title">交流社区</h3>
+                    <br>
+                    <p>在这里，您提出的任何问题都会得到解答。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="medilife-blog-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="row">
+                    <div th:replace="frontdesk/communityMain :: main"></div>
+                </div>
+                <div th:replace="frontdesk/communitySide :: side"></div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="pagination-area mt-50">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="page-item active"><a class="page-link" th:href="@{/#}">01</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{/#}">02</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{/#}">03</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{/#}">04</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{/#}">...</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{/#}">99</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{/#}">100</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{common/footer::footer}"></div>
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">-->
+    <!--<div class="modal-dialog" role="document">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>-->
+                <!--</button>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<form>-->
+                    <!--<p>请选择发帖区：-->
+                    <!--<div class="Select">-->
+                        <!--<select id="city" class="select">-->
+                            <!--<option value="疾病症状区">疾病症状</option>-->
+                            <!--<option value="医学养生区">医学养生</option>-->
+                            <!--<option value="家庭护理区">家庭护理</option>-->
+                            <!--<option value="用药指南区">用药指南</option>-->
+                            <!--<option value="检验查询区">检验查询</option>-->
+                            <!--<option value="听力康复区">听力康复</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="recipient-name" class="control-label">标题：</label>-->
+                        <!--<input type="text" class="form-control" id="recipient-name" value="示范：本人女，24岁,患XX疾病，有XX症状...."-->
+                               <!--onfocus="if(this.value=='示范：本人女，24岁,患XX疾病，有XX症状....'){this.value='';}">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="message-text" class="control-label">详细描述：</label>-->
+                        <!--<textarea class="form-control" id="message-text"></textarea>-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <!--<button type="button" class="btn btn-primary">发布</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+</body>
+<script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/homepage_js/popper.min.js}"></script>
+<script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
+<script th:src="@{/js/homepage_js/plugins.js}"></script>
+<script th:src="@{/js/homepage_js/active.js}"></script>
+<script>
+    $(window).load(function () {
+        $(".loading").fadeOut(750);
+    });
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var recipient = button.data('whatever')
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    })
+</script>
+</html>

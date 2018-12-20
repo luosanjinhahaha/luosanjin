@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="common_css">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    ::-webkit-scrollbar
+    {
+        width: 5px;
+        height: 10px;
+        background-color: #F5F5F5;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+    ::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 5px;
+        background-color: #F5F5F5;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+    ::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #555;
+    }
+
+</style>
+<body>
+    <div>
+        <link rel="stylesheet" th:href="@{/css/main_css/font-awesome.css}">
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" th:href="@{/css/main_css/adminlte.css}">
+        <link rel="stylesheet" th:href="@{/css/main_css/blue.css}">
+        <link rel="stylesheet" th:href="@{/css/main_css/morris.css}">
+        <link rel="stylesheet" th:href="@{/css/main_css/jquery-jvectormap-1.2.2.css}">
+        <link rel="stylesheet" th:href="@{/css/main_css/datepicker3.css}">
+        <link rel="stylesheet" th:href="@{/css/data_table_css/plugin/datatables/datatables.css}">
+        <link rel="stylesheet" th:href="@{/css/main_css/daterangepicker-bs3.css}">
+        <link rel="stylesheet" th:href="@{/css/main_css/bootstrap3-wysihtml5.min.css}">
+        <link rel="stylesheet" th:href="@{/css/main_css/font_google.css}">
+        <link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}" />
+        <link rel="stylesheet" th:href="@{/css/loading_css/loading.css}" />
+    </div>
+</body>
+</html>

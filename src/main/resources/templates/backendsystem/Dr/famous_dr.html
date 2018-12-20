@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="famous_dr">
+<head>
+    <meta charset="UTF-8">
+    <title>基于大数据技术的医疗服务平台--名医简介</title>
+    <div th:replace="~{common/common_css::common_css}"></div>
+    <link rel="stylesheet" th:href="@{/css/drop_css/drop.css}">
+</head>
+<body >
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>
+						<span><img alt="权限控制" th:src="@{/images/dr.png}"/></span>
+                        &nbsp;&nbsp;宜家医坊-名医简介
+                    </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">主页</a></li>
+                        <li class="breadcrumb-item active">名医简介</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped"
+                               style="text-align: center;">
+                            <thead>
+                            <tr style="line-height: 40px;">
+                                <th style="width:35px">编号</th>
+                                <th style="width: 75px">医师照片</th>
+                                <th style="width: 88px">医师姓名</th>
+                                <th style="width: 41px">性别</th>
+                                <th style="width: 83px">医师主攻</th>
+                                <th>医师简介</th>
+                                <th style="width: 94px">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="famdoctorlist:${famdoctor}" style="table-layout: fixed; WORD-BREAK: break-all; WORD-WRAP: break-word">
+                                    <td th:text="${ famdoctorlist.drid}"></td>
+                                    <td><img style="width: 90px; height: 120px; object-fit: cover;"
+                                             th:src="${famdoctorlist.drphotosrc}" alt=""/></td>
+                                    <td th:text="${ famdoctorlist.drname}"></td>
+                                    <td th:text="${ famdoctorlist.drsex}"></td>
+                                    <td th:text="${ famdoctorlist.drmajor}"></td>
+                                    <td th:text="${ famdoctorlist.drintro}"></td>
+                                    <td style="vertical-align: middle;">
+                                        <button style="width: 110px; margin-top: 10px; margin-bottom: 10px;"
+                                                class="btn btn-primary btn-sm edit_btn">
+                                            <span>编辑</span>
+                                        </button>
+                                        <button style="width: 110px; margin-bottom: 10px;"
+                                                class="btn btn-primary btn-sm delete_btn">
+                                            <span>修改</span>
+                                        </button>
+                                        <button style="width: 110px; margin-bottom: 10px;"
+                                                class="btn btn-danger btn-sm delete_btn">
+                                            <span>删除</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>编号</th>
+                                <th>医师照片</th>
+                                <th>医师姓名</th>
+                                <th>性别</th>
+                                <th>医师主攻</th>
+                                <th>医师简介</th>
+                                <th>操作</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<footer class="main-footer"> <strong>© 2018 RX
+    Medical Center. All Rights Reserved. 鑫睿医疗总裁办公室所有</strong>
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.0.0-alpha
+    </div>
+</footer>
+</body>
+<div th:replace="~{common/common_js::common_js}"></div>
+<script>
+    $(function() {
+        $("#example1").DataTable();
+    });
+</script>
+</html>

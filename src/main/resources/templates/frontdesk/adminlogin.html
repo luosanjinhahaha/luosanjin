@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>欢迎登录基于大数据的医疗健康服务系统</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/css/main_css/font-awesome.min.css}">
+  <link rel="stylesheet"  th:href="@{/css/main_css/adminlte.css}">
+  <link rel="stylesheet"  th:href="@{/css/main_css/blue.css}">
+  <link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}">
+  <link rel="stylesheet" th:href="@{/css/loading.css/loading.css}">
+  <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+</head>
+<style>
+.img_logo{
+  margin-top: 20px;
+  margin-left: 117px;
+  width: 80px;
+  height: 80px;
+  table-layout: fixed;
+  WORD-BREAK: break-all;
+  WORD-WRAP: break-word;
+}
+  .login-card-body > p{
+    color: #76757B;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+  }
+.btn-danger>i{
+    position:relative;
+    left:-10px;
+    top: 3px;
+  }
+.btn-primary>i{
+  position:relative;
+  top: 3px;
+}
+.btn-danger>font>font{
+  position:relative;
+  left:-10px;
+}
+</style>
+<body class="hold-transition login-page">
+<div th:replace="~{common/loading::loading}"></div>
+<div class="login-box">
+  <div class="card">
+    <div class="card-body login-card-body">
+      <img th:src="@{/images/homepage_images/core-img/plus.png}" alt="" class="img_logo">
+      <p>Bigdata health management service platform</p>
+      <p class="login-box-msg">登录开始您的访问</p>
+
+      <form id="login_form">
+        <div class="form-group has-feedback">
+          <input type="username" name="adminName" class="form-control" placeholder="Account" autocomplete="off">
+          <span class="fa fa-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="password" name="adminPassword" class="form-control" placeholder="Password" autocomplete="off">
+          <span class="fa fa-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button id="login_btn" type="button" style="background-color: #081f3e;border-radius: 4px;" class="btn btn-primary btn-block btn-flat">登录</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center mb-3">
+        <p>- 或 -</p>
+        <a href="#" class="btn btn-block btn-primary" style="background-color: #081f3e">
+          <i class="fa fa-phone mr-2"></i> 使用手机号码的登录
+        </a>
+        <a href="#" class="btn btn-block btn-danger" style="background-color: #081f3e">
+          <i  class="fa fa-minus-square mr-2"></i> 使用QQ邮箱登录
+        </a>
+      </div>
+      <p class="mb-1">
+        <a href="#">我忘记了密码？</a>
+      </p>
+      <div class="session" style="display: none;" th:text="${session.admin}"></div>
+    </div>
+  </div>
+</div>
+</body>
+<script th:src="@{/js/others_js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/main_js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script>
+    $("#login_btn").click(function () {
+        $.ajax({
+            url: "/medical/admin/adminlogin",
+            type: "POST",
+            data: $("#login_form").serialize(),
+            success: function (result) {
+                if (result.code == 200) {
+                    console.log(result);
+                    swal({
+                        title: "登录成功！",
+                        type: "success"
+                    }, function () {
+                        location.href ="/medical/admin/to_main"
+                    });
+                } else {
+                    swal({
+                        title: "密码错误或没有该管理员信息，请重新登录！",
+                        type: "error"
+                    }, function () {
+                        window.location.reload();
+                    });
+                }
+            },
+            error: function () {
+                alert("fail!")
+            }
+        });
+    });
+</script>
+</html>

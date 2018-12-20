@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.AdminRoleMapper">
+    <select id="getAdminUserRoleByAdminId" parameterType="integer" resultMap="getAdminUserRoleByAdminIdResultMap">
+        select * from tbl_admin_role where admin_id = #{adminId}
+    </select>
+
+    <resultMap id="getAdminUserRoleByAdminIdResultMap" type="com.smxy.healthmedical.bean.AdminUserRole">
+        <result column="role_id" property="roleId"/>
+        <association property="role" column="role_id" select="com.smxy.healthmedical.dao.RoleMapper.getDoctorRoleByRoleId">
+        </association>
+    </resultMap>
+</mapper>

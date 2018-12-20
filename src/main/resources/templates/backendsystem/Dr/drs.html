@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>基于大数据技术的医疗服务平台--名医简介</title>
+    <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+    <div th:replace="~{common/common_css::common_css}"></div>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div th:replace="~{common/loading::loading}"></div>
+    <div th:replace="~{backendsystem/frame/main_nav::main_nav}"></div>
+    <div th:replace="~{backendsystem/frame/main_aside::main_aside(activeUri = '/admin/famous_dr')}"></div>
+    <div th:replace="~{backendsystem/Dr/famous_dr::famous_dr}"></div>
+</body>
+    <div th:replace="~{common/common_js::common_js}"></div>
+</html>

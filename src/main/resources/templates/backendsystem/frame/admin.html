@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="admin">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>
+						<span><img alt="权限控制"
+                                   th:src="@{/images/quanxian.png}"/></span>
+                        &nbsp;&nbsp;权限管理
+                    </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">主页</a></li>
+                        <li class="breadcrumb-item active">权限管理</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="info-box bg-info">
+                        <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Bookmarks</span> <span
+                                class="info-box-number">41,410</span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <span class="progress-description"> 70% Increase in 30Days
+							</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="info-box bg-success">
+                        <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Likes</span> <span
+                                class="info-box-number">41,410</span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <span class="progress-description"> 70% Increase in 30Days
+							</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="info-box bg-warning">
+                        <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Events</span> <span
+                                class="info-box-number">41,410</span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <span class="progress-description"> 70% Increase in 30Days
+							</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="info-box bg-danger">
+                        <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Comments</span> <span
+                                class="info-box-number">41,410</span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <span class="progress-description"> 70% Increase in 30Days
+							</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped"
+                               style="text-align: center;">
+                            <thead>
+                            <tr>
+                                <th>权限</th>
+                                <th>账号</th>
+                                <th>密码</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="admin:${admininfo}">
+                                <td>管理员</td>
+                                <td><input autocomplete="off" name="adminName"
+                                           type="text" class="form-control" disabled="disabled"
+                                           th:value="${admin.adminName}"></td>
+                                <td><input autocomplete="off" name="adminPassword"
+                                           type="text" class="form-control" disabled="disabled"
+                                           th:value="${admin.adminPassword}"></td>
+                                <td style="text-align: center;">
+                                    <button style="display: inline-block;"
+                                            th:bang-id="${admin.adminId}"
+                                            class="btn btn-primary func1_btn bang_btn" id="">
+                                        <span>修改信息</span>
+                                    </button>
+                                    <button style="display: inline-block;"
+                                            th:jie-id="${admin.adminId}"
+                                            class="btn btn-danger func1_btn jie_btn">
+                                        <span>解除权限</span>
+                                    </button>
+                                    <button style="display: none;" th:bang-id="${admin.adminId}"
+                                            class="btn btn-primary func2_btn save_admin_btn">
+                                        <span>确认</span>
+                                    </button>
+                                    <button style="display: none;" th:jie-id="${admin.adminId}"
+                                            class="btn btn-danger  cancel_btn func2_btn">
+                                        <span>取消</span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>权限</th>
+                                <!--<th>姓名</th> -->
+                                <th>账号</th>
+                                <th>密码</th>
+                                <th>操作</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<footer class="main-footer"><strong>© 2018 YJYF
+    Medical Center. All Rights Reserved. 宜家医坊总裁办公室所有</strong>
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.0.0-alpha
+    </div>
+</footer>
+</body>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+
+    //点击修改信息按钮变化
+    $(".bang_btn").click(function () {
+        $(this).parents("tr").find("input").removeAttr("disabled");
+        $(this).css("display", "none");
+        $(this).siblings().eq(0).css("display", "none");
+        $(this).siblings().eq(1).css("display", "inline-block");
+        $(this).siblings().eq(2).css("display", "inline-block");
+    });
+
+    //
+
+    //点击取消还原
+    $(".cancel_btn").click(function () {
+        $(this).parents("tr:eq(0)").find("input").prop("disabled", true);
+        $(".func2_btn").css("display", "none");
+        $(".func1_btn").css("display", "inline-block");
+        swal({
+            title: "您已取消修改！",
+            type: "success"
+        });
+    });
+    //修改账户密码并保存
+    $(".save_admin_btn").click(
+        function () {
+            var original_data = "";
+            var data = "";
+            $.each($(this).parents("tr:eq(0)").find("input"), function () {
+                original_data += "-" + $(this).val();
+            })
+            original_data = original_data
+                .substring(1, original_data.length).split("-");
+            var data = "adminName=" + original_data[0] + "&adminPassword="
+                + original_data[1];
+            var id = $(this).attr("bang-id");
+            swal({
+                title: "确定修改吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认修改",
+                cancelButtonText: "取消修改",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/medical/admin/save_admin/" + id,
+                        type: "POST",
+                        data: data,
+                        success: function (result) {
+                            if (result.code == 200) {
+                                swal({
+                                    title: "您已修改成功！",
+                                    type: "success"
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    swal({
+                        title: "您已取消修改！",
+                        type: "success"
+                    });
+                }
+            });
+        });
+</script>
+</html>

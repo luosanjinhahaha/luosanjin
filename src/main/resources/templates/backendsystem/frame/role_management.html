@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="role_management">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_888320_t8whj6z8m3.css">
+    <link rel="stylesheet" th:href="@{/css/main_css/animate.min.css}">
+</head>
+<body>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>
+						<span><img alt="权限控制"
+                                   th:src="@{/images/quanxian.png}"/></span>
+                        &nbsp;&nbsp;角色管理
+                    </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">主页</a></li>
+                        <li class="breadcrumb-item active">角色管理</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped"
+                               style="text-align: center;">
+                            <thead>
+                            <tr>
+                                <th style="width:110px;">职称</th>
+                                <th style="width:110px;">姓名</th>
+                                <th style="width:90px;">职称编号</th>
+                                <th>权限管理</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody th:each="doctorList:${doctorList}">
+                            <tr th:each="doctorRole:${doctorList.doctorRoles}">
+                                <td th:text="${doctorRole.role.roleDescription}"></td>
+                                <td><input autocomplete="off" name="doctorName"
+                                           type="text" class="form-control" disabled="disabled"
+                                           th:value="${doctorList.doctorName}"></td>
+                                <td><input autocomplete="off" name="roleId"
+                                           type="text" class="form-control" disabled="disabled"
+                                           th:value="${doctorRole.role.roleId}"></td>
+                                <td>
+                                    <button th:roleId="${doctorRole.role.roleId}" data-toggle="tooltip"
+                                            data-placement="top"
+                                            style="width: 120px;display: inline-block;background-color: #577b93;color: white"
+                                            class="btn btn-default authority role-manager" title="分配权限"
+                                            data-tooltip-animate-function="slidein">
+                                        <span class="iconfont icon-quanxian1"> &nbsp;管理权限</span>
+                                    </button>
+                                    <button data-toggle="tooltip"
+                                            style="display: inline-block;background-color: #aee4db;color: #4b545c"
+                                            class="btn btn-default look-over" title="查看权限" data-animation="foldout">
+                                        <span class="iconfont icon-see" style="font-size: 16px;"></span>
+                                    </button>
+                                </td>
+                                <td style="text-align: center;">
+                                    <!--<span class="iconfont icon-see" style="font-size: 16px;"></span>-->
+                                    <button style="width: 120px;display: inline-block;"
+                                            th:bang-id="${doctorList.doctorId}"
+                                            class="btn btn-primary func1_btn bang_btn" id="">
+
+                                        <span class="iconfont icon-xiugai">&nbsp;修改信息</span>
+                                    </button>
+                                    <button style="width: 120px;display: inline-block;"
+                                            th:jie-id="${doctorList.doctorId}"
+                                            class="btn btn-danger func1_btn jie_btn">
+                                        <span class="iconfont icon-shanchu">&nbsp;解除权限</span>
+                                    </button>
+                                    <button style="width: 120px;display: none;"
+                                            th:bang-id="${doctorList.doctorId}"
+                                            class="btn btn-primary func2_btn save_admin_btn">
+                                        <span>确认</span>
+                                    </button>
+                                    <button style="width: 120px;display: none;"
+                                            th:jie-id="${doctorList.doctorId}"
+                                            class="btn btn-danger  cancel_btn func2_btn">
+                                        <span>取消</span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>职称</th>
+                                <th>姓名</th>
+                                <th>职称编号</th>
+                                <th>权限管理</th>
+                                <th>操作</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!--模态窗口-->
+<div id="modal" class="modal" style="background: rgba(0,0,0,.4);">
+    <div class="modal-dialog animated">
+        <div class="modal-content" style="width: 1095px; left: -175px;">
+            <form class="form-horizontal" method="get">
+                <!--<div class="modal-header">-->
+                <!--<strong>分配权限</strong>-->
+                <!--</div>-->
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 col-6">
+                                <!--small-box bg-info bg-success bg-warning原本颜色-->
+                                <p>已分配权限</p>
+                                <div class="small-box" style="border-top: 3px solid #577b93;" title="">
+                                    <table id="example1" class="table table-hover example1" style="text-align: center;">
+                                        <thead>
+                                        <tr>
+                                            <th>权限描述</th>
+                                            <th>权限管理</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <button type="button" id="removePermission"
+                                        style="background-color: #577b93;color: white"
+                                        class="btn btn-default btn-sm btn-block">
+                                    <span class="iconfont icon-quanxian1"> &nbsp;移除权限</span>
+                                </button>
+                            </div>
+                            <div class="col-lg-6 col-6">
+                                <p>未分配权限</p>
+                                <div class="small-box" style="border-top: 3px solid #007bff;" title="">
+                                    <table id="example1" class="table table-hover example2" style="text-align: center;">
+                                        <thead>
+                                        <tr>
+                                            <th>权限描述</th>
+                                            <th>权限管理</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <button type="button" id="addPermission"
+                                        style="background-color: #007bff;color: white"
+                                        class="btn btn-default btn-sm btn-block">
+                                    <span class="iconfont icon-quanxian1"> &nbsp;添加权限</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" onclick="modal.close();">取消</button>
+                    <button class="btn btn-primary" type="submit" onclick="modal.close();">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="main-footer"> <strong>© 2018 YJYF
+    Medical Center. All Rights Reserved. 宜家医坊总裁办公室所有</strong>
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.0.0-alpha
+    </div>
+</footer>
+</body>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script>
+    $(function () {
+        var modal = new RModal(document.getElementById('modal'));
+        document.addEventListener('keydown', function (ev) {
+            modal.keydown(ev);
+        }, true);
+
+        var roleManagers = document.getElementsByClassName('role-manager');
+
+        for (var i = 0; i < roleManagers.length; i++) {
+            roleManagers[i].addEventListener("click", function (ev) {
+                ev.preventDefault();
+                modal.open();
+            }, false);
+        }
+
+        window.modal = modal;
+
+        $('[data-toggle="tooltip"]').tooltip({
+            animation: true,
+            delay: {"show": 500, "hide": 500}
+        });
+        $("#example1").DataTable();
+    });
+
+    $(".role-manager").click(function () {
+        $.ajax({
+            url: "/medical/admin/getRolePermission/" + $(this).attr("roleId"),
+            type: "GET",
+            success: function (res) {
+                console.log(res);
+                build_doctor_permission(res);
+            }
+        })
+    });
+
+    function build_doctor_permission(res) {
+
+        /*已分配权限表*/
+        $(".example1 tbody").empty();
+        var doctorPermissions = res.extend.doctorPermissions;
+        $.each(doctorPermissions, function (index, item) {
+            $("<tr></tr>").attr("permission-id", item.permission.permissionId).append($("<td></td>")
+                .append(item.permission.permissionDescription))
+                .append($("<td></td>")
+                    .append(item.permission.permissionName)).appendTo(".example1 tbody");
+        });
+
+        var permissions = res.extend.permissions;
+
+        var result = [];
+
+        for (var i = 0; i < permissions.length; i++) {
+            var permissionsItems = permissions[i];
+            console.log(permissionsItems);
+            var permissionsItemsId = permissionsItems.permissionId;
+            var flag = false;
+            for (var j = 0; j < doctorPermissions.length; j++) {
+                var doctorPermissionsItems = doctorPermissions[j];
+                var doctorPermissionsItemsId = doctorPermissionsItems.permissionId;
+                if (doctorPermissionsItemsId == permissionsItemsId) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                result.push(permissionsItems);
+                console.log(result);
+            }
+        }
+
+        /*未分配权限表*/
+        $(".example2 tbody").empty();
+        // var permissions = res.extend.permissions;
+        $.each(result, function (index, item) {
+            $("<tr></tr>").attr("permission-id", item.permissionId).append($("<td></td>")
+                .append(item.permissionDescription))
+                .append($("<td></td>")
+                    .append(item.permissionName)).appendTo(".example2 tbody");
+        });
+    }
+
+    /*移除权限：点击选中再点击取消选中*/
+    var deletePermissions = [];
+    $(document).on("click", ".example1 tbody tr", function () {
+        var permissionId = deletePermissions.indexOf($(this).attr("permission-id"));
+        if (permissionId == -1) {
+            $(this).css("background", "#577b93").css("color", "white");
+            deletePermissions.push($(this).attr("permission-id"));
+        } else {
+            $(this).css("background", "").css("color", "");
+            deletePermissions.splice(permissionId, 1);
+        }
+    });
+
+    /*添加权限：点击选中再点击取消选中*/
+    var addPermissions = [];
+    $(document).on("click", ".example2 tbody tr", function () {
+        var permissionId = addPermissions.indexOf($(this).attr("permission-id"));
+        if (permissionId == -1) {
+            $(this).css("background", "#007bff").css("color", "white");
+            addPermissions.push($(this).attr("permission-id"));
+        } else {
+            $(this).css("background", "").css("color", "");
+            addPermissions.splice(permissionId, 1);
+        }
+    });
+
+    /*移除权限按钮：*/
+    $("#removePermission").click(function () {
+        console.log(deletePermissions);
+        var removePermissionId="";
+        $.each(deletePermissions,function (index,item) {
+            removePermissionId += item + "-";
+        });
+        removePermissionId = removePermissionId.substring(0, removePermissionId.length - 1);
+        console.log(removePermissionId);
+        var doctorRoleId = $(".role-manager").attr("roleId");
+        swal({
+            title: "确定移除该权限吗？",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确认移除",
+            cancelButtonText: "取消消除",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },function (isConfirm) {
+            if(isConfirm){
+                $.ajax({
+                   url:"/medical/admin/removeDoctorPermission",
+                   data:{
+                       removePermissionId:removePermissionId,
+                       doctorRoleId:doctorRoleId,
+                   },
+                   type:"POST",
+                   success:function (res) {
+                       if(res.code == 200){
+                           swal({
+                               title: "移除权限成功！",
+                               type: "success"
+                           },function () {
+                               window.location.reload();
+                           });
+                       }else{
+                           swal({
+                               title: "移除权限失败！",
+                               type: "error"
+                           });
+                       }
+                   },error:function () {
+                        swal({
+                            title: "系统发生未知错误！",
+                            type: "error"
+                        });
+                    }
+                });
+            }else{
+                swal({
+                    title: "您已取消操作！",
+                    type: "success"
+                });
+            }
+        });
+    });
+
+    /*添加权限按钮：*/
+    $("#addPermission").click(function () {
+        var addPermissionId = "";
+        $.each(addPermissions,function (index,item) {
+            addPermissionId += item + "-";
+        })
+        addPermissionId = addPermissionId.substring(0, addPermissionId.length - 1);
+        var doctorRoleId = $(".role-manager").attr("roleId");
+        console.log(addPermissionId);
+        swal({
+            title: "确定添加该权限吗？",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确认添加",
+            cancelButtonText: "取消添加",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },function (isConfirm) {
+            if(isConfirm){
+                $.ajax({
+                    url:"/medical/admin/addDoctorPermission",
+                    data:{
+                        doctorRoleId:doctorRoleId,
+                        addPermissionId:addPermissionId,
+                    },
+                    type:"POST",
+                    success:function (res) {
+                        console.log(res.code);
+                        if(res.code == 200){
+                            swal({
+                                title: "添加权限成功！",
+                                type: "success"
+                            },function () {
+                                window.location.reload();
+                            });
+                        }else{
+                            swal({
+                                title: "添加权限失败！",
+                                type: "error"
+                            });
+                        }
+                    },error:function () {
+                        swal({
+                            title: "系统发生未知错误！",
+                            type: "error"
+                        });
+                    }
+                });
+            }else{
+                swal({
+                    title: "您已取消操作！",
+                    type: "success"
+                });
+            }
+        });
+    });
+
+    /*点击修改信息按钮变化*/
+    $(".bang_btn").click(function () {
+        $(this).parents("tr").find("input").removeAttr("disabled");
+        $(this).css("display", "none");
+        $(this).siblings().eq(0).css("display", "none");
+        $(this).siblings().eq(1).css("display", "inline-block");
+        $(this).siblings().eq(2).css("display", "inline-block");
+    });
+
+    //点击取消还原
+    $(".cancel_btn").click(function () {
+        $(this).parents("tr:eq(0)").find("input").prop("disabled", true);
+        $(".func2_btn").css("display", "none");
+        $(".func1_btn").css("display", "inline-block");
+        swal({
+            title: "您已取消修改！",
+            type: "success"
+        });
+    });
+    //修改账户密码并保存
+    $(".save_admin_btn").click(
+        function () {
+            var original_data = "";
+            var data = "";
+            $.each($(this).parents("tr:eq(0)").find("input"), function () {
+                original_data += "-" + $(this).val();
+            })
+            original_data = original_data
+                .substring(1, original_data.length).split("-");
+            var data = "adminName=" + original_data[0] + "&adminPassword="
+                + original_data[1];
+            var id = $(this).attr("bang-id");
+            swal({
+                title: "确定修改吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认修改",
+                cancelButtonText: "取消修改",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/medical/admin/save_admin/" + id,
+                        type: "POST",
+                        data: data,
+                        success: function (result) {
+                            if (result.code == 200) {
+                                swal({
+                                    title: "您已修改成功！",
+                                    type: "success"
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    swal({
+                        title: "您已取消修改！",
+                        type: "success"
+                    });
+                }
+            });
+        });
+</script>
+</html>

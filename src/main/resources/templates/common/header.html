@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:fragment="header">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header class="header-area">
+    <!-- Top Header Area -->
+    <div class="top-header-area">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100">
+                    <div class="h-100 d-md-flex justify-content-between align-items-center">
+                        <p>Welcome to
+                            <span> Bigdata health management service platform </span>
+                        </p>
+                        <p>
+                            <a th:style="${session.realname} == null?'display:inline-block':'display:none'" th:href="@{/user/to_login}">登录</a>
+                            <span th:style="${session.realname} == null?'display:inline-block':'display:none'" style="margin-left: 40px;">
+                                <a style="margin-left: 20px;" th:href="@{/user/to_reg}">注册</a>
+                            </span>
+                            <span id="user_name" th:style="${session.realname} == null?'display:none':'display:inline-block'" th:text="${session.realname}"></span>
+                            <span th:style="${session.realname} == null?'display:none':'display:inline-block'">
+                                <a id="logout" style="margin-left: 20px;" href="javascript:;">注销</a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Header Area -->
+    <div class="main-header-area" id="stickyHeader">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12 h-100">
+                    <div class="main-menu h-100">
+                        <nav class="navbar h-100 navbar-expand-lg">
+                            <!-- Logo Area  -->
+                            <a class="navbar-brand" th:href="@{/user/index}">宜家医坊</a>
+
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                    data-target="#medilifeMenu" aria-controls="medilifeMenu"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="medilifeMenu">
+                                <!-- Menu Area -->
+                                <ul class="navbar-nav ml-auto">
+                                    <li th:class="${activeUri == '/user/index'?'nav-item active':'nav-item'}">
+                                        <a class="nav-link active" th:href="@{/user/index}">首页
+                                            <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                    <li th:class="${activeUri == '/user/chat'?'nav-item active':'nav-item'}">
+                                        <a class="nav-link must" th:href="@{/user/chat}">在线问诊</a>
+                                    </li>
+                                    <li th:class="${activeUri == '/user/consult'?'nav-item active':'nav-item'}">
+                                        <a class="nav-link must" th:href="@{/user/consult}">名医预约</a>
+                                    </li>
+                                    <li th:class="${activeUri == '/user/community'?'nav-item active':'nav-item'}">
+                                        <a class="nav-link must" th:href="@{/user/community}">问答社区</a>
+                                    </li>
+                                    <li th:class="${activeUri == 'contact.html'?'nav-item active':'nav-item'}">
+                                        <a class="nav-link must" th:href="@{contact.html}">健康科普</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" th:href="@{/#}" id="navbarDropdown" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false">相关</a>
+                                        <div style="text-align: center;" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" th:href="@{/user/index}">主页</a>
+                                            <a class="dropdown-item" th:href="@{/user/chat}">在线问诊</a>
+                                            <a class="dropdown-item" th:href="@{/user/consult}">名医预约</a>
+                                            <a class="dropdown-item" th:href="@{/user/community}">患者社区</a>
+                                            <a class="dropdown-item" th:href="@{single-blog.html}">健康科普 </a>
+                                            <a class="dropdown-item" th:href="@{/admin/background}">后台登录</a>
+                                            <a class="dropdown-item" th:href="@{/admin/background}">医师登录</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- Appointment Button <a th:href="#" class="btn medilife-appoint-btn ml-30">For <span>Manager</span> Click here</a> -->
+
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+<script>
+    $("#logout").click(function () {
+        swal({
+            title : "您确定注销吗？",
+            type : "warning",
+            showCancelButton : true,
+            confirmButtonColor : "#DD6B55",
+            confirmButtonText : "确定",
+            cancelButtonText : "取消",
+            closeOnConfirm : false,
+            closeOnCancel : false
+        },function (isConfirm) {
+            if(isConfirm){
+                $.ajax({
+                   url:"/medical/user/logout",
+                   type:"POST",
+                   success:function (res) {
+                       if(res.code == 200){
+                           swal({
+                              title:"您已成功退出！再见！",
+                              type:"success",
+                           },function () {
+                               location.href = "/medical/user/index";
+                           });
+                       }
+                   },
+                   error:function () {
+                       swal({
+                           title:"系统发生未知错误！您已强制退出，再见！",
+                           type:"error"
+                       })
+                   }
+                });
+            }else{
+                swal({
+                    title:"您已取消退出退出！",
+                    type:"success",
+                });
+            }
+        });
+    })
+</script>
+</html>

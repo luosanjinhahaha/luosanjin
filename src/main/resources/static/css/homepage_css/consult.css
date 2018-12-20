@@ -1,0 +1,47 @@
+.post-meta{
+    position: relative;
+    top: -60px;
+    left: 180px;
+}
+.doc_name{
+    position: relative;
+    top:-35px;
+    left: 75px;
+}
+.post-meta{
+    margin-bottom: -20px;
+}
+.arrange_area{
+    margin-left: 25px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.pb_title > span:nth-child(2) a,
+.pb_title > span:nth-child(3) a{
+    margin-left: 10px;
+    font-size: 25px;
+    margin-right: 10px;
+}
+.pb_title > span:nth-child(4) a{
+    font-size: 18px;
+}
+.pb_title > span:last-child{
+    float: right;
+    margin-right: 30px;
+    line-height: 47px;
+}
+tbody{
+    width: 50px;
+    height: 50px;
+}
+.appoint-btn > button:nth-child(1){
+    width: 200px;
+    display: inline-block;
+}
+.appoint-btn > button:nth-child(2){
+    width: 200px;
+    display: inline-block;
+    margin: 0;
+}

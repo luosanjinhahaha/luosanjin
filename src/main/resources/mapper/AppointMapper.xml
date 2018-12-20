@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="com.smxy.healthmedical.dao.AppointMapper">
+	<!--带部门带医师的多重联表查询-->
+	<resultMap id="WithDeptDoctorResultMap" type="com.smxy.healthmedical.bean.Appoint">
+		<id column="appoint_id" property="appointId"/>
+		<result column="appoint_name" property="appointName"/>
+		<result column="appoint_drid" property="appointDrid"/>
+		<result column="appoint_drname" property="appointName"/>
+		<result column="appoint_deptid" property="appointDeptid"/>
+		<result column="appoint_deptname" property="appointDeptname"/>
+		<result column="appoint_date" property="appointDate"/>
+		<result column="appoint_time" property="appointTime"/>
+		<association property="doctor" javaType="com.smxy.healthmedical.bean.Doctor">
+			<id column="doctor_id" property="doctorId"/>
+			<result column="doctor_name" property="doctorName"/>
+			<result column="doctor_gender" property="doctorGender"/>
+			<result column="doctor_intro" property="doctorIntro"/>
+			<result column="d_id" property="dId"/>
+		</association>
+		<association property="department" javaType="com.smxy.healthmedical.bean.Department">
+			<id column="dept_id" property="deptId"/>
+			<result column="dept_name" property="deptName"/>
+		</association>
+	</resultMap>
+	<sql id="WithDeptDoctor_Column_List">
+		appoint_id, appoint_name, appoint_drid, appoint_drname, appoint_deptid, appoint_deptname, appoint_date, appoint_time
+	</sql>
+
+	<select id="AppointWithDeptWithDoctor" parameterType="com.smxy.healthmedical.bean.Appoint" resultMap="WithDeptDoctorResultMap">
+		SELECT
+		<include refid="WithDeptDoctor_Column_List"/>
+		SELECT appoint_id, appoint_deptname, appoint_drname, appoint_date, appoint_time, appoint_name,
+		appoint_phone, appoint_email, appoint_content
+
+		FROM  tbl_appoint
+
+		WHERE appoint_id = #{appointId}
+	</select>
+
+	<insert id="insertAppoint" parameterType="com.smxy.healthmedical.bean.Appoint">
+		INSERT INTO tbl_appoint
+
+		(appoint_id, appoint_deptname, appoint_drname, appoint_date, appoint_time, appoint_name,
+		appoint_phone, appoint_email, appoint_content)
+
+		VALUES(
+			#{appointId}, #{appointDeptname}, #{appointDrname},
+			#{appointDate}, #{appointTime}, #{appointName},
+			#{appointPhone}, #{appointEmail}, #{appointContent}
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,8 @@
+.modal-title{
+	position:relative;
+	right: 360px; 
+}
+.modal-header > button{
+	position:relative;
+	left: 100px; 
+}

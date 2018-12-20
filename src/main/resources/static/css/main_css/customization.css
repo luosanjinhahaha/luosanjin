@@ -1,0 +1,34 @@
+.tbody1 > tr > td:nth-of-type(odd){
+    width: 155px;
+    text-align: right;
+    font-weight: bold;
+}
+.tbody1 input,.tbody1 select{
+    border-radius: 3px;
+    border: none;
+}
+.nice-select{
+    height: 30px;
+    width: 100px;
+}
+.tbody2 > tr > td:nth-of-type(odd){
+    width: 155px;
+    text-align: right;
+    font-weight: bold;
+}
+.tbody2 .nice-select{
+    width: 163px;
+}
+.tbody2 input,.tbody2 select{
+    height: 35px;
+    width: 150px;
+    border-radius: 3px;
+    border: none;
+}
+.tbox{
+    width:397px;
+    height:49px;
+    background:url(bak.png) no-repeat;
+    margin-top:20px;
+}
+

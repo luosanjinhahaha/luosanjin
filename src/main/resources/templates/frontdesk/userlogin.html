@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>基于大数据技术的医疗服务平台--用户登录</title>
+    <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/userlogin_css/userlogin.css}">
+    <link rel="stylesheet" th:href="@{/css/reg_css/reg.css}">
+    <link rel="stylesheet" th:href="@{/css/others_css/homepage.css}">
+    <link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}" />
+
+</head>
+<body>
+    <div th:replace="~{common/loading::loading}"></div>
+    <div th:replace="~{common/header::header}"></div>
+    <section class="breadcumb-area bg-img gradient-background-overlay" style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb2.jpg');">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-content">
+                        <h3 class="breadcumb-title">欢迎登录</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetuer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="elements-area section-padding-100-0">
+
+        <div>
+            <div class="popup" id="popup">
+                <div class="top_nav" id='top_nav'>
+                    <div align="center">
+                        <span>登录</span>
+                    </div>
+                </div>
+                <div class="min">
+                    <div class="tc_login">
+                        <div class="left">
+                            <h4 align="center">手机扫描</h4>
+                            <div align="center">
+                                <img th:src="@{/images/userlogin_image/erweima.jpg}" width="150" height="150" />
+                            </div>
+                            <dd>
+                                <div align="center">扫描二维码登录</div>
+                            </dd>
+                        </div>
+                        <div class="right">
+                            <form name="form_login" id="form_login" target="_top">
+                                <div align="center" class="myui-input-div">
+                                    <a href="">短信快捷登录</a>
+                                    <i class="icon-mobile-phone"></i>
+                                    <input type="text" name="username" id="username" required="required" placeholder="用户名" autocomplete="off" class="input_yh myui-input-img">
+                                    <input type="password" name="password" id="password" required="required" placeholder="密码" autocomplete="off" class="input_mm myui-input-img" >
+                                </div>
+                                <dd>
+                                    <div align="center">
+                                        <a style="text-decoration: none;margin-top: 10px;color: #081f3e;" href="">遇到登录问题</a>
+                                    </div>
+                                </dd>
+                                <div align="center">
+                                    <input type="button" id="userlogin_btn" class="button" title="Sign In" value="登录">
+                                </div>
+                            </form>
+                            <dd>
+                                <div align="center">
+                                    <a style="text-decoration: none;margin-top: 5px;color: #081f3e;" th:href="@{/user/to_reg}" >立即注册</a>
+                                </div>
+                            </dd>
+                            <hr align="center" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a style="display: none;" th:href="@{/user/userlogin}" id="a"></a>
+        </div>
+    </section>
+    <div th:replace="~{common/footer::footer}"></div>
+</body>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/homepage_js/popper.min.js}"></script>
+<script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
+<script th:src="@{/js/homepage_js/plugins.js}"></script>
+<script th:src="@{/js/homepage_js/active.js}"></script>
+<script type="text/javascript">
+    $("#userlogin_btn").click(function(){
+        console.log($("#form_login").serialize());
+        $.ajax({
+            url:$("#a").prop("href"),
+            data:$("#form_login").serialize(),
+            type:"POST",
+            success:function(result){
+                console.log(result);
+                if(result.code == 200){
+                    swal({
+                        title:"登录成功！",
+                        showConfirmButton:true,
+                        timer:3000,
+                        type:"success"
+                    },function(){
+                        location.href="/medical/user/index";
+                    });
+                }else{
+                    swal({
+                        title:"登录失败！您输入的账号或密码不正确",
+                        type:"error"
+                    });
+                }
+            },
+            error:function(){
+                swal({
+                    title:"系统发生未知错误！请重新登录",
+                    type:"error"
+                },function(){
+                    location.reload();
+                });
+            }
+        });
+    });
+</script>
+</html>

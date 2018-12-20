@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> Home</title>
+    <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/main_css/foundation-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}">
+    <link rel="stylesheet" th:href="@{/css/homepage_css/communityDetails.css}">
+</head>
+<body>
+<div th:replace="~{common/loading::loading}"></div>
+<div th:replace="~{common/header::header(activeUri = '/user/index')}"></div>
+<section class="breadcumb-area bg-img gradient-background-overlay"
+         style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb2.jpg');">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-content">
+                    <h3 class="breadcumb-title">交流社区</h3>
+                    <br>
+                    <p>在这里，您提出的任何问题都会得到解答。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="medilife-blog-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="single-blog-area">
+                    <div class="blog-post-thumbnail">
+                    </div>
+                    <div class="post-content" th:each="question:${questions}">
+                        <div class="post-author">
+                            <img class="aksimg" th:src="@{/images/homepage_images/blog-img/p1.jpg}" alt="">
+                            <span class="askname" th:data-qid="${question.questionId}" th:text="${question.questionName}"></span>
+                            <span class="asktime" th:text="${question.questionTime}"></span>
+                        </div>
+                        <div class="askcontent" th:text="${question.questionContent}"></div>
+                    </div>
+                </div>
+                <div class="comments-area">
+                    <h5></h5>
+                    <ol>
+                        <li class="single_comment_area">
+                            <div class="comment-wrapper d-flex" th:each="comment:${questions.comment}">
+                                <div class="comment-author">
+                                    <img src="/medical/images/homepage_images/blog-img/6.jpg" alt="">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-meta">
+                                        <a href="#" class="comment-author-name" th:text="${comment.user.username}">Maria Williams</a> |
+                                        <a href="#" class="comment-date" th:text="${comment.commentTime}">Jan 29, 2018</a> |
+                                        <a href="#" th:class="'comment'+${comment.commentId}+' '+'comment-reply'">回复</a>
+                                    </div>
+                                    <p th:text="${comment.commentContent}">在这里，使我们的脂肪神圣不可侵犯。我们要指出的是：那是什么？他坐在一个美丽的地方。这是必然的结果。</p>
+                                    <p><input class="commentInput" type="text" style="display: none; width: 300px"></p>
+                                </div>
+                            </div>
+                            <!--<ol class="children">-->
+                                <!--<li class="single_comment_area">-->
+                                    <!--<div class="comment-wrapper d-flex">-->
+                                        <!--<div class="comment-author">-->
+                                            <!--<img src="/medical/images/homepage_images/blog-img/7.jpg" alt="">-->
+                                        <!--</div>-->
+                                        <!--<div class="comment-content">-->
+                                            <!--<div class="comment-meta">-->
+                                                <!--<a href="#" class="comment-author-name">admin</a> |-->
+                                                <!--<a href="#" class="comment-date"> 2018-10-20</a> |-->
+                                            <!--</div>-->
+                                            <!--<p>对的，我之前也是这样就好了</p>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</li>-->
+                            <!--</ol>-->
+                        </li>
+                    </ol>
+                </div>
+                <div class="leave-comment-area clearfix">
+                    <div class="comment-form">
+                        <form id="comment-message-form">
+                            <h5 style="margin-bottom: 5px;margin-top: 30px;">您的留言可能会帮助到患者</h5>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" id="message" cols="30" rows="10" placeholder="留言" tabindex="1" style="overflow: hidden; outline: none;"></textarea>
+                            </div>
+                            <button id="comment_btn" type="button" class="btn medilife-btn">提交留言</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="medilife-blog-sidebar-area">
+                    <div class="search-widget-area mb-50">
+                        <form action="#" method="get">
+                            <input type="search" placeholder="关键词">
+                            <input type="submit" value="搜索">
+                        </form>
+                    </div>
+                    <div class="medilife-catagories-card mb-50">
+                        <h5>类别</h5>
+                        <ul class="catagories-menu">
+                            <li><a href="#">消化内科学</a></li>
+                            <li><a href="#">风湿与临床免疫学</a></li>
+                            <li><a href="#">内分泌学</a></li>
+                            <li><a href="#">肾内科学</a></li>
+                            <li><a href="#"> 心理健康</a></li>
+                        </ul>
+                    </div>
+                    <div class="latest-news-widget-area mb-50">
+                        <h5>最新消息</h5>
+                        <div class="widget-blog-post">
+                            <div class="widget-single-blog-post d-flex align-items-center">
+                                <div class="widget-post-thumbnail pr-3">
+                                    <img src="/medical/images/homepage_images/blog-img/ln1.jpg" alt="">
+                                </div>
+                                <div class="widget-post-content">
+                                    <a href="#">一个医学重大发现</a>
+                                    <p>2018.8.12</p>
+                                </div>
+                            </div>
+                            <div class="widget-single-blog-post d-flex align-items-center">
+                                <div class="widget-post-thumbnail pr-3">
+                                    <img src="/medical/images/homepage_images/blog-img/ln2.jpg" alt="">
+                                </div>
+                                <div class="widget-post-content">
+                                    <a href="#">每个人都应该知道的健康知识</a>
+                                    <p>2018.8.19</p>
+                                </div>
+                            </div>
+                            <div class="widget-single-blog-post d-flex align-items-center">
+                                <div class="widget-post-thumbnail pr-3">
+                                    <img src="/medical/images/homepage_images/blog-img/ln3.jpg" alt="">
+                                </div>
+                                <div class="widget-post-content">
+                                    <a href="#">什么时候该看医生？</a>
+                                    <p>2018.8.10</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="medilife-emergency-card bg-img bg-overlay"
+                         style="background-image: url('/medical/images/homepage_images/bg-img/about1.jpg');">
+                        <i class="icon-smartphone"></i>
+                        <h2>联系我们</h2>
+                        <h3>0592-644212</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{common/footer::footer}"></div>
+</body>
+<script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/homepage_js/popper.min.js}"></script>
+<script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
+<script th:src="@{/js/homepage_js/plugins.js}"></script>
+<script th:src="@{/js/homepage_js/active.js}"></script>
+<script th:src="@{/js/main_js/foundation-datepicker.js}"></script>
+<script th:src="@{/js/main_js/foundation-datepicker.zh-CN.js}"></script>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script>
+    $('#comment_btn').click(function () {
+        console.log($('#message').val());
+        console.log($('.askname').data('qid'));
+        var date = new Date().getUTCFullYear() + "-" + (new Date().getMonth()+1) + "-" + new Date().getDate();
+        console.log(date);
+        $.ajax({
+            url:'/medical/user/commentMessage',
+            data:{
+                content:$('#message').val(),
+                qid:$('.askname').data('qid'),
+                date:date,
+            },
+            type:'POST',
+            success:function (res) {
+                if(res.code == 200){
+                    swal({
+                       title:"留言成功！" ,
+                        type:"success"
+                    },function () {
+                        location.reload();
+                    });
+                }
+            }
+        });
+    });
+    window.onload = function () {
+        $.ajax({
+           url:"/medical/user/flashComment",
+           type:"POST",
+            data:{qid:$('.askname').data('qid')},
+           success:function (res) {
+               console.log(res);
+           }
+        });
+    }
+</script>
+</html>

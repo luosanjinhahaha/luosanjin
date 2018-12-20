@@ -1,0 +1,86 @@
+.arrange_area{
+	margin-top:30px;
+	float:left;
+	position:relative;
+	left:130px;
+	width: 80%;
+	height: auto;
+	border-top: 4px solid #2b3b72;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;	
+}
+.pb_head{
+	width: 100%;
+/* 	height: 50px; */
+}
+.pb_title{
+	width: 94%;
+/* 	height: 50px; */
+	position: relative;
+	left: 30px;
+	top:40px;
+	border-top: 1px solid #ddd;
+	line-height: 60px;	
+}
+.pb_title span:nth-child(1){
+	font-weight: bolder;
+}
+.pb_title span:nth-child(2) a,
+.pb_title span:nth-child(3) a{
+	display:inline-block;
+	border:1px solid #ddd;
+	width:25px;
+	height:25px;
+	line-height:25px;
+	text-align:center;
+	font-size:18px;
+	display: inline-block;
+	position:relative;
+	left:600px;
+	border-radius: 4px;
+}
+.pb_title span:nth-child(4) a{
+	display:inline-block;
+	border:1px solid #ddd;
+	width:50px;
+	height:25px;
+	line-height:25px;
+	text-align:center;
+	display: inline-block;
+	position:relative;
+	margin-left:13px;
+	top:-2px;
+	left:600px;
+	border-radius: 4px;
+}
+.pb_title a{
+	color:black;
+	background: linear-gradient(to bottom, #ddd 10%, #fff);
+}
+.pb_title a:HOVER,
+ .pb_title a:FOCUS{
+	text-decoration: none;
+}
+.pb_body{
+	margin-top:40px;
+	margin-bottom:20px;
+	position:relative;
+	left:55px;
+	float:left;
+	width: 90%;
+	border:1px solid #ddd;
+}
+.pb_table{
+	width: 100%;
+	border:1px solid #ddd;
+}
+.pb_table thead th{
+	height: 30px;
+	text-align: center;
+}
+.pb_table tbody td{
+	width: 120px;
+	height: 40px;
+	text-align: center;
+}

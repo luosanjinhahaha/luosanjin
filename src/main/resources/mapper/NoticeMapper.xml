@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.NoticeMapper">
+	<resultMap type="com.smxy.healthmedical.bean.Notice" id="selectAllResultMap">
+		<id column="nid" property="nid" />
+		<result column="nname" property="nname" />
+		<result column="ntime" property="ntime" />
+		<result column="ncontent" property="ncontent" />
+	</resultMap>
+	<resultMap type="com.smxy.healthmedical.bean.Notice" id="selectByPrimaryKeyResultMap">
+		<id column="nid" property="nid" />
+		<result column="nname" property="nname"/>
+		<result column="ntime" property="ntime"/>
+		<result column="ncontent" property="ncontent"/>
+	</resultMap>
+	<!--查询所有  -->
+	<select id="selectAll" parameterType="com.smxy.healthmedical.bean.Notice" resultMap="selectAllResultMap">
+		select * from tbl_notice
+	</select>
+	
+	<!--通过主键查找  -->
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="selectByPrimaryKeyResultMap">
+		select * from tbl_notice where nid = #{id , jdbcType=INTEGER}
+	</select>
+	
+	<!--通过主键删除  -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tbl_notice where nid = #{id , jdbcType=INTEGER}
+	</delete>
+	
+	<update id="updateByPrimarySelective" parameterType="com.smxy.healthmedical.bean.Notice">
+		update tbl_notice
+		<set>
+			<if test="nname != null">
+				nname = #{nname,jdbcType=VARCHAR},
+			</if>
+			<if test="ntime != null">
+				ntime = #{ntime,jdbcType=DATE},
+			</if>
+			<if test="ncontent != null">
+				ncontent = #{ncontent,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where nid = #{nid,jdbcType=INTEGER}
+	</update>
+</mapper>

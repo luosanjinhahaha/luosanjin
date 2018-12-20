@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.InfoMapper">
+  <resultMap id="BaseResultMap" type="com.smxy.healthmedical.bean.Info">
+    <id column="pinfo_id" jdbcType="INTEGER" property="pinfoId" />
+    <result column="pinfo_name" jdbcType="VARCHAR" property="pinfoName" />
+    <result column="pinfo_age" jdbcType="VARCHAR" property="pinfoAge"/>
+    <result column="pinfo_gender" jdbcType="VARCHAR" property="pinfoGender" />
+    <result column="ppinfo_illname" jdbcType="VARCHAR" property="ppinfoIllname" />
+    <result column="pinfo_info" jdbcType="VARCHAR" property="pinfoInfo" />
+    <result column="pi_id" jdbcType="INTEGER" property="piId" />
+  </resultMap>
+  <resultMap type="com.smxy.healthmedical.bean.Info" id="WithDeptAllResultMap">
+  	<id column="pinfo_id" jdbcType="INTEGER" property="pinfoId" />
+    <result column="pinfo_name" jdbcType="VARCHAR" property="pinfoName" />
+    <result column="pinfo_age" jdbcType="VARCHAR" property="pinfoAge" />
+    <result column="pinfo_gender" jdbcType="VARCHAR" property="pinfoGender" />
+    <result column="ppinfo_illname" jdbcType="VARCHAR" property="ppinfoIllname" />
+    <result column="pinfo_info" jdbcType="VARCHAR" property="pinfoInfo" />
+    <result column="pi_id" jdbcType="INTEGER" property="piId" />
+    <association property="department" javaType="com.smxy.healthmedical.bean.Department">
+    	<id column="dept_id" property="deptId"/>
+    	<result column="dept_name" property="deptName"/>
+    </association>
+  </resultMap>
+  
+  <!--带部门有选择的模糊连表查询  -->
+  <resultMap type="com.smxy.healthmedical.bean.Info" id="WithDeptResultMap">
+  	<id column="pinfo_id" jdbcType="INTEGER" property="pinfoId" />
+    <result column="pinfo_name" jdbcType="VARCHAR" property="pinfoName" />
+    <result column="pinfo_age" jdbcType="VARCHAR" property="pinfoAge"/>
+    <result column="pinfo_gender" jdbcType="VARCHAR" property="pinfoGender" />
+    <result column="ppinfo_illname" jdbcType="VARCHAR" property="ppinfoIllname" />
+    <result column="pinfo_info" jdbcType="VARCHAR" property="pinfoInfo" />
+    <result column="pi_id" jdbcType="INTEGER" property="piId" />
+    <association property="department" javaType="com.smxy.healthmedical.bean.Department">
+    	<id column="dept_id" property="deptId"/>
+    	<result column="dept_name" property="deptName"/>
+    </association>
+  </resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pinfo_id, pinfo_name, pinfo_gender, ppinfo_illname, pinfo_info, pi_id
+  </sql>
+  <sql id="WithDept_Column_List">
+  	p.pinfo_id, p.pinfo_name,p.pinfo_age, p.pinfo_gender, p.ppinfo_illname, p.pinfo_info, p.pi_id,d.dept_id,d.dept_name
+  </sql>
+  
+  <!--自定义带部门有选择的模糊连表查询 -->
+  <sql id="WithDeptDim_Column_List">
+  	p.pinfo_id, p.pinfo_name, p.pinfo_age, p.pinfo_gender, p.ppinfo_illname, p.pinfo_info, p.pi_id,d.dept_id,d.dept_name
+  </sql>
+  
+  <!--List<Info> selectByExampleWithDept(InfoExample example);Info selectByPrimaryKeyWithDept(Integer pinfoId);  -->
+  <select id="selectByExampleWithDept" resultMap="WithDeptResultMap">
+  	select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="WithDept_Column_List" />
+    FROM tbl_patient_info p
+	LEFT JOIN tbl_dept d ON p.pi_id = d.dept_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithDept" resultMap="WithDeptResultMap">
+  	select 
+    <include refid="WithDept_Column_List" />
+   	FROM tbl_patient_info p
+	LEFT JOIN tbl_dept d ON p.pi_id = d.dept_id
+    where pinfo_id = #{pinfoId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByExample" parameterType="com.smxy.healthmedical.bean.InfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_patient_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <!--自定义查所有患者基本信息  -->
+  <select id="selectAllWithDept" resultMap="WithDeptAllResultMap">
+  	select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="WithDeptDim_Column_List" />
+    FROM tbl_patient_info p
+	LEFT JOIN tbl_dept d ON p.pi_id = d.dept_id
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+ <!--自定义查所有患者基本信息结束--> 
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_patient_info
+    where pinfo_id = #{pinfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_patient_info
+    where pinfo_id = #{pinfoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.smxy.healthmedical.bean.InfoExample">
+    delete from tbl_patient_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smxy.healthmedical.bean.Info">
+    insert into tbl_patient_info (pinfo_id, pinfo_name, pinfo_gender, 
+      ppinfo_illname, pinfo_info, pi_id
+      )
+    values (#{pinfoId,jdbcType=INTEGER}, #{pinfoName,jdbcType=VARCHAR}, #{pinfoGender,jdbcType=VARCHAR}, 
+      #{ppinfoIllname,jdbcType=VARCHAR}, #{pinfoInfo,jdbcType=VARCHAR}, #{piId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.smxy.healthmedical.bean.Info">
+    insert into tbl_patient_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pinfoId != null">
+        pinfo_id,
+      </if>
+      <if test="pinfoName != null">
+        pinfo_name,
+      </if>
+      <if test="pinfoGender != null">
+        pinfo_gender,
+      </if>
+      <if test="pinfoAge != null">
+        pinfo_age,
+      </if>
+      <if test="ppinfoIllname != null">
+        ppinfo_illname,
+      </if>
+      <if test="pinfoInfo != null">
+        pinfo_info,
+      </if>
+      <if test="piId != null">
+        pi_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pinfoId != null">
+        #{pinfoId,jdbcType=INTEGER},
+      </if>
+      <if test="pinfoName != null">
+        #{pinfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="pinfoGender != null">
+        #{pinfoGender,jdbcType=VARCHAR},
+      </if>
+      <if test="pinfoAge != null">
+        #{pinfoAge,jdbcType=VARCHAR},
+      </if>
+      <if test="ppinfoIllname != null">
+        #{ppinfoIllname,jdbcType=VARCHAR},
+      </if>
+      <if test="pinfoInfo != null">
+        #{pinfoInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="piId != null">
+        #{piId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.smxy.healthmedical.bean.InfoExample" resultType="java.lang.Long">
+    select count(*) from tbl_patient_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tbl_patient_info
+    <set>
+      <if test="record.pinfoId != null">
+        pinfo_id = #{record.pinfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pinfoName != null">
+        pinfo_name = #{record.pinfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pinfoGender != null">
+        pinfo_gender = #{record.pinfoGender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppinfoIllname != null">
+        ppinfo_illname = #{record.ppinfoIllname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pinfoInfo != null">
+        pinfo_info = #{record.pinfoInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.piId != null">
+        pi_id = #{record.piId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tbl_patient_info
+    set pinfo_id = #{record.pinfoId,jdbcType=INTEGER},
+      pinfo_name = #{record.pinfoName,jdbcType=VARCHAR},
+      pinfo_gender = #{record.pinfoGender,jdbcType=VARCHAR},
+      ppinfo_illname = #{record.ppinfoIllname,jdbcType=VARCHAR},
+      pinfo_info = #{record.pinfoInfo,jdbcType=VARCHAR},
+      pi_id = #{record.piId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smxy.healthmedical.bean.Info">
+    update tbl_patient_info
+    <set>
+      <if test="pinfoName != null">
+        pinfo_name = #{pinfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="pinfoAge != null">
+        pinfo_age = #{pinfoAge,jdbcType=VARCHAR},
+      </if>
+      <if test="pinfoGender != null">
+        pinfo_gender = #{pinfoGender,jdbcType=VARCHAR},
+      </if>
+      <if test="ppinfoIllname != null">
+        ppinfo_illname = #{ppinfoIllname,jdbcType=VARCHAR},
+      </if>
+      <if test="pinfoInfo != null">
+        pinfo_info = #{pinfoInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="piId != null">
+        pi_id = #{piId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pinfo_id = #{pinfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smxy.healthmedical.bean.Info">
+    update tbl_patient_info
+    set pinfo_name = #{pinfoName,jdbcType=VARCHAR},
+      pinfo_gender = #{pinfoGender,jdbcType=VARCHAR},
+      ppinfo_illname = #{ppinfoIllname,jdbcType=VARCHAR},
+      pinfo_info = #{pinfoInfo,jdbcType=VARCHAR},
+      pi_id = #{piId,jdbcType=INTEGER}
+    where pinfo_id = #{pinfoId,jdbcType=INTEGER}
+  </update>
+  <!--统计心脑血管人数  -->
+  <select id="countInfoPiId" parameterType="com.smxy.healthmedical.bean.Info" resultType="INTEGER">
+  	select count(*) from tbl_patient_info group by pi_id
+  </select>
+
+  <!--根据所属部门id查找患者-->
+  <select id="selectInfoByPiId" parameterType="Integer" resultMap="selectInfoByPiIdResultMap">
+    select * from tbl_patient_info where pi_id = #{piId}
+  </select>
+
+  <resultMap id="selectInfoByPiIdResultMap" type="com.smxy.healthmedical.bean.Info">
+    <id column="pinfo_id" property="pinfoId"/>
+    <result column="pinfo_name" property="pinfoName"/>
+    <result column="pinfo_age" property="pinfoAge"/>
+    <result column="pinfo_gender" property="pinfoGender"/>
+    <result column="ppinfo_illname" property="ppinfoIllname"/>
+    <result column="pinfo_info" property="pinfoInfo"/>
+    <result column="pi_id" property="piId"/>
+    <association property="department" column="pi_id" select="selectInfoByPiIdWithDept">
+    </association>
+  </resultMap>
+
+  <select id="selectInfoByPiIdWithDept" resultType="com.smxy.healthmedical.bean.Department">
+    select * from tbl_dept where dept_id = #{piId}
+  </select>
+</mapper>

@@ -1,0 +1,29 @@
+.askname{
+    position: relative;
+    top: -42px;
+    left: 15px;
+    display: inline-block;
+    width: 728px;
+    font-size: 24px;
+    font-weight: bold;
+}
+.asktime{
+    position: absolute;
+    top: 20px;
+    right: 0px;
+}
+.aksimg{
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.1);
+    position: relative;
+    left: -70px;
+}
+.comments-area{
+    margin-top: 15px;
+    padding: 5px 10px;
+    background-color: #f2f3f5;
+}
+.askcontent{
+    margin-left: 16px;
+    width: 645px;
+}

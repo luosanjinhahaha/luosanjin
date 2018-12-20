@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.FastDfsImgMapper">
+	<select id="getImgPath" resultType="FastDfsImg">
+		select * from tbl_fastdfs_img
+	</select>
+
+	<insert id="insertImgPath" parameterType="FastDfsImg">
+		insert into tbl_fastdfs_img(img_id, img_path) values(#{imgId}, #{imgPath})
+	</insert>
+
+	<delete id="deleteImg" parameterType="String">
+		delete from tbl_fastdfs_img where img_path = #{oldPath}
+	</delete>
+
+</mapper>

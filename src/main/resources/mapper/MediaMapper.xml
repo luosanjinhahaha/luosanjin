@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.MediaMapper">
+	<resultMap id="selectAllResultMap" type="com.smxy.healthmedical.bean.Media">
+		<id column="mid" property="mid" />
+		<result column="mname" property="mname" />
+		<result column="mtime" property="mtime" />
+		<result column="mcontent" property="mcontent" />
+	</resultMap>
+	<resultMap type="com.smxy.healthmedical.bean.Media" id="selectByPrimaryKeyResultMap">
+		<id column="mid" property="mid" />
+		<result column="mname" property="mname"/>
+		<result column="mtime" property="mtime"/>
+		<result column="mcontent" property="mcontent"/>
+	</resultMap>
+	<!--查找所有  -->
+	<select id="selectAll" parameterType="com.smxy.healthmedical.bean.Media"
+		resultMap="selectAllResultMap">
+		select * from tbl_media
+	</select>
+	<!--通过主键查找  -->
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="selectByPrimaryKeyResultMap">
+		select * from tbl_media where mid = #{id , jdbcType=INTEGER}
+	</select>
+	<!--删除  -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tbl_media where mid = #{id,jdbcType=INTEGER}
+	</delete>
+	<!--更新 -->
+	<update id="updateByPrimarySelective" parameterType="com.smxy.healthmedical.bean.Media">
+		update tbl_media
+		<set>
+			<if test="mname != null">
+				mname = #{mname,jdbcType=VARCHAR},
+			</if>
+			<if test="mtime != null">
+				mtime = #{mtime,jdbcType=DATE},
+			</if>
+			<if test="mcontent != null">
+				mcontent = #{mcontent,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where mid = #{mid,jdbcType=INTEGER}
+	</update>
+</mapper>

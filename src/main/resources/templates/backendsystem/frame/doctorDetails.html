@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="doctorDetails">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content-wrapper" th:each="doctorInfoLists:${doctorInfoList}">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 th:text="${doctorInfoLists.doctorName} + '医生的主页'"></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">主页</a></li>
+                        <li class="breadcrumb-item active">医师主页</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                     th:src="${doctorInfoLists.doctorPhotoSrc}"
+                                     alt="User profile picture">
+                            </div>
+                            <h3 class="profile-username text-center" th:text="${doctorInfoLists.doctorName}"></h3>
+
+                            <p th:each="doctorRole:${doctorInfoLists.doctorRoles}" class="text-muted text-center" th:text="${doctorRole.role.roleDescription}"></p>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b>主攻方向</b> <a class="float-right"
+                                                   th:text="${doctorInfoLists.department.deptName}">1,322</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>年龄</b> <a class="float-right">86岁</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>临床经验</b> <a class="float-right">63年</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>案例</b> <a class="float-right">13,287例</a>
+                                </li>
+                            </ul>
+
+                            <!--从属患者列表-->
+                            <a href="javascript:;"  id="modal_btn" th:dept_id="${doctorInfoLists.department.deptId}" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-block"><b>患者列表</b></a>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content" style="width:1000px">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">患者列表</h4>
+                                </div>
+                                <!--患者列表模态框实体-->
+                                <div class="modal-body">
+                                    <table id="example1" class="table table-bordered table-striped"
+                                           style="text-align: center;">
+                                        <thead>
+                                        <tr style="line-height: 40px">
+                                            <th style="width: 30px">编号</th>
+                                            <th style="width: 40px">患者姓名</th>
+                                            <th style="width: 40px">年龄</th>
+                                            <th style="width: 40px">性别</th>
+                                            <th style="width:140px">患者症状</th>
+                                            <th style="width: 40px">症状详情</th>
+                                            <th style="width: 54px">所在部门</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>患者姓名</th>
+                                            <th>年龄</th>
+                                            <th>性别</th>
+                                            <th>患者症状</th>
+                                            <th>症状详情</th>
+                                            <th>所在部门</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">关于我</h3>
+                        </div>
+                        <div class="card-body">
+                            <strong><i class="fa fa-book mr-1"></i>教育</strong>
+
+                            <p class="text-muted">
+                                田纳西大学诺克斯维尔分校计算机科学学士
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-map-marker mr-1"></i> 技能</strong>
+
+                            <p class="text-muted">技能</p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-pencil mr-1"></i>Skills</strong>
+
+                            <p class="text-muted">
+                                <span class="tag tag-danger">UI Design</span>
+                                <span class="tag tag-success">Coding</span>
+                                <span class="tag tag-info">Javascript</span>
+                                <span class="tag tag-warning">PHP</span>
+                                <span class="tag tag-primary">Node.js</span>
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-file-text-o mr-1"></i> Notes</strong>
+
+                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                                fermentum enim neque.</p>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header p-2">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item"><a class="nav-link active" href="#activity"
+                                                        data-toggle="tab">保健</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">养身</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">预防</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body" th:each="doctorTip:${doctorInfoLists.doctorTips}">
+                            <div class="tab-content">
+                                <div class="active tab-pane" id="activity">
+                                    <div class="post">
+                                        <div class="user-block">
+                                            <img class="img-circle img-bordered-sm"
+                                                 th:src="${doctorInfoLists.doctorPhotoSrc}" style="object-fit: cover;"
+                                                 alt="user image">
+                                            <span class="username">
+                                              <a href="#" th:text="${doctorInfoLists.doctorName}"></a>
+                                              <a href="#" class="float-right btn-tool"><i class="fa fa-times"></i></a>
+                                            </span>
+                                            <span class="description"
+                                                  th:text="'分享于&emsp;' + ${doctorTip.doctorTipsTime}"></span>
+                                        </div>
+                                        <p style="font-weight: bold" th:text="${doctorTip.doctorTipsName}"></p>
+                                        <p th:text="${doctorTip.doctorTipsDescription}"></p>
+
+                                        <p>
+                                            <a href="#" class="link-black text-sm mr-2"><i class="fa fa-share mr-1"></i>
+                                                分享</a>
+                                            <a href="#" class="link-black text-sm"><i
+                                                    class="fa fa-thumbs-o-up mr-1"></i>[['点赞(' +
+                                                ${doctorTip.doctorTipsLike} + ')']]</a>
+                                            <span class="float-right">
+                                              <a href="#" class="link-black text-sm" data-toggle="tooltip" title="查看评论">
+                                                <i class="fa fa-comments-o mr-1"></i> Comments (5)
+                                              </a>
+                                            </span>
+                                        </p>
+                                        <input class="form-control form-control-sm" type="text"
+                                               placeholder="发表评论">
+                                    </div>
+                                </div>
+                                <!--timeline锚点区-->
+                                <div class="tab-pane " id="timeline">
+                                    <ul class="timeline timeline-inverse">
+                                        <li class="time-label">
+                                        <span class="bg-danger">
+                                          10 Feb. 2014
+                                        </span>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-envelope bg-primary"></i>
+
+                                            <div class="timeline-item">
+                                                <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                                                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an
+                                                    email</h3>
+
+                                                <div class="timeline-body">
+                                                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                                                    weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                                                    jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                                                    quora plaxo ideeli hulu weebly balihoo...
+                                                </div>
+                                                <div class="timeline-footer">
+                                                    <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                                                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-user bg-info"></i>
+
+                                            <div class="timeline-item">
+                                                <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+
+                                                <h3 class="timeline-header no-border"><a href="#">Sarah Young</a>
+                                                    accepted your friend request
+                                                </h3>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-comments bg-warning"></i>
+
+                                            <div class="timeline-item">
+                                                <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+
+                                                <h3 class="timeline-header"><a href="#">Jay White</a> commented on your
+                                                    post</h3>
+
+                                                <div class="timeline-body">
+                                                    Take me to your leader!
+                                                    Switzerland is small and neutral!
+                                                    We are more like Germany, ambitious and misunderstood!
+                                                </div>
+                                                <div class="timeline-footer">
+                                                    <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="time-label">
+                                        <span class="bg-success">
+                                          3 Jan. 2014
+                                        </span>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-camera bg-purple"></i>
+
+                                            <div class="timeline-item">
+                                                <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+
+                                                <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos
+                                                </h3>
+
+                                                <div class="timeline-body">
+                                                    <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                    <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                    <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                    <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-clock-o bg-gray"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--settings锚点区-->
+                                <div class="tab-pane" id="settings">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="email" class="form-control" id="inputName"
+                                                       placeholder="Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="email" class="form-control" id="inputEmail"
+                                                       placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputName2" class="col-sm-2 control-label">Name</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputName2"
+                                                       placeholder="Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputExperience"
+                                                   class="col-sm-2 control-label">Experience</label>
+
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" id="inputExperience"
+                                                          placeholder="Experience"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputSkills"
+                                                       placeholder="Skills">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox"> I agree to the <a href="#">terms and
+                                                        conditions</a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-danger">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<footer class="main-footer"><strong>© 2018 YJYF
+    Medical Center. All Rights Reserved.  宜家医坊总裁办公室所有</strong>
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.0.0-alpha
+    </div>
+</footer>
+<aside class="control-sidebar control-sidebar-dark">
+</aside>
+</div>
+</body>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            animation: true,
+            delay: {"show": 500, "hide": 500}
+        });
+    });
+
+    $("#modal_btn").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url:"/medical/admin/subordinate/" + $(this).attr("dept_id"),
+            type:"GET",
+            success:function (res) {
+                console.log(res);
+                build_info_table(res);
+            }
+        });
+    });
+    function build_info_table(res) {
+        var data = res.extend.infoList;
+        $.each(data,function (index,item) {
+            var tr = $("<tr></tr>")
+                .append($("<td></td>").append(item.pinfoId))
+                .append($("<td></td>").append(item.pinfoName))
+                .append($("<td></td>").append(item.pinfoAge))
+                .append($("<td></td>").append(item.pinfoGender))
+                .append($("<td></td>").append(item.ppinfoIllname))
+                .append($("<td></td>").append(item.pinfoInfo))
+                .append($("<td></td>").append(item.department.deptName))
+            tr.appendTo("#example1 tbody");
+        })
+    }
+</script>
+</html>

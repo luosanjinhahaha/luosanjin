@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="main_nav">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<link rel="stylesheet" th:href="@{/css/drop_css/drop.css}">-->
+    <script th:src="@{/js/main_js/bootstrap.bundle.js}"></script>
+</head>
+<body >
+<nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a></li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="index3.html" class="nav-link">主页</a></li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">联系人</a></li>
+    </ul>
+
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+            <input class="form-control form-control-navbar" type="search"
+                   placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <!--顶部栏右边的信息下拉栏-->
+    <ul class="navbar-nav ml-auto">
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                <i class="fa fa-comments-o"></i>
+                <span class="badge badge-danger navbar-badge">3</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <a href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <img th:src="@{/images/main_image/user2-160x160.jpg}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                Brad Diesel
+                                <span class="float-right text-sm text-danger"><i class="fa fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">Call me whenever you can...</p>
+                            <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+                        </div>
+                    </div>
+                    <!-- Message End -->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <img th:src="@{/images/main_image/user2-160x160.jpg}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                John Pierce
+                                <span class="float-right text-sm text-muted"><i class="fa fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">I got your message bro</p>
+                            <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+                        </div>
+                    </div>
+                    <!-- Message End -->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <img th:src="@{/images/main_image/user2-160x160.jpg}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                Nora Silvester
+                                <span class="float-right text-sm text-warning"><i class="fa fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">The subject goes here</p>
+                            <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+                        </div>
+                    </div>
+                    <!-- Message End -->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+            </div>
+        </li>
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fa fa-user-circle-o"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="fa fa-envelope mr-2"></i> 设置
+                    <span class="float-right text-muted text-sm">3 mins</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="fa fa-users mr-2"></i> 设置
+                    <span class="float-right text-muted text-sm">12 hours</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="fa fa-file mr-2"></i> 设置
+                    <span class="float-right text-muted text-sm">2 days</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="javascript:;" id="adminout" style="background: red;color: white" class="dropdown-item dropdown-footer">注销登录</a>
+            </div>
+        </li>
+    </ul>
+
+    <!--顶部栏的下拉框-->
+    <!--<div class="dropdown">-->
+        <!--<span class="admin_span">[[${session.admin}]]<span></span></span>-->
+        <!--<div class="dropdown-content">-->
+            <!--<span><a href="#"><i class="fa fa-ioxhost"></i>设置</a></span> <span><a-->
+                <!--href="#"><i class="fa  fa-list"></i>设置</a></span> <span><a href="#"><i-->
+                <!--class="fa fa-github-square"></i>设置</a></span> <span><a-->
+                <!--href="javascript:;" id="adminout"><i class="fa fa-sign-out"></i>注销</a></span>-->
+        <!--</div>-->
+    <!--</div>-->
+</nav>
+</body>
+<script th:src="@{/js/main_js/jquery.slimscroll.min.js}"></script>
+<script type="text/javascript">
+    $(".admin_span").click(function(){
+        if($(".dropdown-content").css("display") == "none"){
+            $(".dropdown-content").css("display","block");
+        }else{
+            $(".dropdown-content").css("display","none");
+        }
+    });
+    $(".dropdown-content a").click(function() {
+        $(".dropdown-content").css("display", "none");
+    });
+    $("#adminout").click(function(){
+        swal({
+            title : $(".admin_span").text() + "\t" +  "您确定退出后台管理系统吗？",
+            type : "warning",
+            showCancelButton : true,
+            confirmButtonColor : "#DD6B55",
+            confirmButtonText : "确认退出",
+            cancelButtonText : "取消退出",
+            closeOnConfirm : false,
+            closeOnCancel : false
+        },function(isConfirm){
+            if(isConfirm){
+                $.ajax({
+                    url:"/medical/admin/logout",
+                    type:"POST",
+                    success:function(res){
+                        console.log(res);
+                        if(res.code == 200){
+                            swal({
+                                title:"您已成功退出本系统",
+                                text:"欢迎再次使用再见！",
+                                type:"success"
+                            },function(){
+                                location.reload();
+                            });
+                        }else{
+                            swal({
+                                title:"退出系统失败已强制退出！欢迎您再次使用！",
+                                type:"error"
+                            },function(){
+                                location.reload();
+                            });
+                        }
+                    },error:function(){
+                        swal({
+                            title:"系统发生未知错误已强制退出！",
+                            type:"error"
+                        },function(){
+                            location.reload();
+                        });
+                    }
+                });
+            }else{
+                swal({
+                    title:"您已取消退出！可以继续使用本系统",
+                    type:"success"
+                });
+            }
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="docList">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    img{
+        object-fit: cover;
+        height: 58px;
+        width: 58px;
+    }
+</style>
+<body>
+<div class="col-12 col-lg-8 parent"></div>
+<!--开始-->
+<div class="col-12 col-lg-2">
+    <div class="medilife-blog-sidebar-area">
+        <div class="medilife-catagories-card mb-50">
+            <h5>科室</h5>
+            <ul class="dept-link catagories-menu">
+                <li th:class="${activeUri == '/user/consult/${dept.deptId}'?'nav-item':'nav-item'}">
+                    <a class="deptId" href="#" th:id="${dept.deptId}" th:each="dept:${dept}" th:text="${dept.deptName}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--结束-->
+<!--开始-->
+<div class="col-12 col-lg-2">
+    <div class="medilife-blog-sidebar-area">
+        <div class="medilife-catagories-card mb-50">
+            <!--<h5>科室</h5>-->
+            <ul class="dept-link catagories-menu">
+                <li th:class="${activeUri == '/user/consult/${dept.deptId}'?'nav-item':'nav-item'}">
+                    <a class="deptId" href="#" th:id="${dept.deptId}" th:each="dept:${dept}" th:text="${dept.deptName}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--结束-->
+</body>
+<script>
+    window.onload = function () {
+        console.log($('.deptId').attr('id'));
+        $.ajax({
+            url:'/medical/user/consult/1',
+            type:"GET",
+            success:function (res) {
+                console.log(res.extend.departmentList.list[0].doctors);
+                buildDoctor(res);
+            }
+        });
+    }
+    $('.deptId').click(function () {
+        $.ajax({
+            url:'/medical/user/consult/' +  $(this).attr('id'),
+            type:"GET",
+            success:function (res) {
+                console.log(res.extend.departmentList.list[0].doctors);
+                buildDoctor(res);
+            }
+        });
+    })
+    function buildDoctor(res) {
+        $(".parent").empty();
+        $.each(res.extend.departmentList.list,function (index, item) {
+            $.each(item.doctors,function (index,item){
+                var areaDiv = $('<div></div>').addClass('single-blog-area')
+                    .append($('<div></div>').addClass('blog-post-thumbnail'))
+                    .append($('<div></div>').addClass('post-content')
+                        .append($('<div></div>').addClass('post-author')
+                            .append($('<a></a>').append($('<img/>').attr('src',item.doctorPhotoSrc))))
+                        .append($('<a></a>').addClass('doc_name headline mb-0').append(item.doctorName))
+                        .append($('<div></div>').addClass('post-meta')
+                            .append($('<a></a>').attr('href','/medical/user/deptWithDoct/' + item.doctorId).attr('id','consult_btn').addClass('post-author-name').append('预约'))
+                            .append('&nbsp;|&nbsp;')
+                            .append($('<a></a>').attr('href','/medical/user/chat/').addClass('post-catagory').append('咨询')))
+                        // .append($('<p></p>').append('主治：'+ res.extend.departmentList.list.deptName))
+                        .append($('<p></p>').append('简介:'+ item.doctorIntro)));
+                areaDiv.appendTo('.parent');
+            });
+        });
+    }
+</script>
+</html>

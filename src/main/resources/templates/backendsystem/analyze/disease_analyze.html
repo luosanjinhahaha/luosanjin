@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="disease_analyze">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/js/echarts_js/echarts-gl.min.js}">
+</head>
+<body>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>
+						<span><img alt="权限控制"
+                                   th:src="@{/images/quanxian.png}"></span>
+                        &nbsp;&nbsp;宜家医坊-分析预测
+                    </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">主页</a></li>
+                        <li class="breadcrumb-item active">分析预测</li>
+                        <li class="dept_list" style="display: none;"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- 图表区域 card-primary-->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">患病类型人数实时监控</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool"
+                                        data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" style="display: block;">
+                            <div class="chart">
+                                <div id="diseaseandnumChart" style="height:400px;display: flex;"></div>
+                            </div>
+                            <div class="col-12" style="display: inline-block">
+                                <h6 style="display: inline-block;text-align: center;width: 100%;margin-top: 20px;">
+                                    人数变化反馈表</h6>
+                                <table id="feedback" class="table table-hover"
+                                       style="margin-top: 20px; text-align: center; font-size: small">
+                                    <thead>
+                                        <th>监控时间</th>
+                                        <th>异常增长类型</th>
+                                        <th>异常增长数量(正常数量)</th>
+                                        <th>异常增长速率</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>2018-12-5 / 20：21</td>
+                                        <td>普通外科</td>
+                                        <td>120(85)人</td>
+                                        <td>41.18%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2018-12-5 / 20：25</td>
+                                        <td>肿瘤内科</td>
+                                        <td>95(60)人</td>
+                                        <td>58.33%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2018-12-5 / 20：25</td>
+                                        <td>肿瘤内科</td>
+                                        <td>95(60)人</td>
+                                        <td>58.33%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2018-12-5 / 20：25</td>
+                                        <td>肿瘤内科</td>
+                                        <td>95(60)人</td>
+                                        <td>58.33%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2018-12-5 / 20：25</td>
+                                        <td>肿瘤内科</td>
+                                        <td>95(60)人</td>
+                                        <td>58.33%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2018-12-5 / 20：21</td>
+                                        <td>普通外科</td>
+                                        <td>120(85)人</td>
+                                        <td>41.18%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div style="float: right">
+                                    <button data-toggle="tooltip" data-placement="top" style="width: 140px;display: inline-block;background-color: #577b93;color: white"
+                                            class="btn btn-default authority" title="下载反馈表" data-tooltip-animate-function="slidein">
+                                        <span><i class="iconfont icon-download"></i>下载反馈表</span>
+                                    </button>
+                                    <button data-toggle="tooltip" data-placement="top" style="width: 100px;display: inline-block;color: white"
+                                            class="btn btn-danger authority" title="清空列表" data-tooltip-animate-function="slidein">
+                                        <span><i class="iconfont icon-qingkong"></i>清空</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+<script th:src="@{/js/echarts_js/echarts.min.js}"></script>
+<script th:src="@{/js/echarts_js/dark.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            animation:true,
+            delay: { "show": 500, "hide": 500 }
+        });
+        // $("#example1").DataTable();
+    });
+    /*, 'dark'*/
+    var mychart = echarts.init(document.getElementById('diseaseandnumChart'));
+    var app = {};
+    option = {
+        title: {
+            text: '动态数据',
+            // subtext: '纯属虚构'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#283b56'
+                }
+            }
+        },
+        legend: {
+            data: ['患者数量', '预约数量']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {readOnly: false},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        dataZoom: {
+            show: false,
+            start: 0,
+            end: 100
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: true,
+                data: (function () {
+                    var now = new Date();
+                    var res = [];
+                    var len = 10;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
+                        now = new Date(now - 2000);
+                    }
+                    return res;
+                })()
+            },
+            {
+                type: 'category',
+                boundaryGap: true,
+                data: (function () {
+                    var res = [];
+                    var len = 10;
+                    while (len--) {
+                        res.push(10 - len - 1);
+                    }
+                    return res;
+                })()
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                scale: true,
+                name: '数量',
+                max: 30,
+                min: 0,
+                boundaryGap: [0.2, 0.2]
+            },
+            {
+                type: 'value',
+                scale: true,
+                name: '预约购量',
+                max: 1200,
+                min: 0,
+                boundaryGap: [0.2, 0.2]
+            }
+        ],
+        series: [
+            {
+                name: '预约数量',
+                type: 'bar',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: (function () {
+                    var res = [];
+                    var len = 10;
+                    while (len--) {
+                        res.push(Math.round(Math.random() * 1000));
+                    }
+                    return res;
+                })()
+            },
+            {
+                name: '患者数量',
+                type: 'line',
+                data: (function () {
+                    var res = [];
+                    var len = 0;
+                    while (len < 10) {
+                        res.push((Math.random() * 10 + 5).toFixed(1) - 0);
+                        len++;
+                    }
+                    return res;
+                })()
+            }
+        ]
+    };
+
+    app.count = 11;
+    setInterval(function () {
+        axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+
+        var data0 = option.series[0].data;
+        var data1 = option.series[1].data;
+        data0.shift();
+        data0.push(Math.round(Math.random() * 1000));
+        data1.shift();
+        data1.push((Math.random() * 10 + 5).toFixed(1) - 0);
+
+        option.xAxis[0].data.shift();
+        option.xAxis[0].data.push(axisData);
+        option.xAxis[1].data.shift();
+        option.xAxis[1].data.push(app.count++);
+
+        mychart.setOption(option);
+    }, 2000);
+    if (option && typeof option === "object") {
+        mychart.setOption(option, true);
+    }
+
+    /*判断反馈表的数据个数*/
+    $(function () {
+       console.log($('#feedback tbody tr').length);
+        console.log($('#feedback tbody tr')[0]);
+    });
+    $(function () {
+        if (($('#feedback tbody tr').length) > 5) {
+            $('#feedback tbody tr')[0].remove();
+        }
+    });
+
+    // mychart.setOption({
+    //     title: {
+    //         text: '患病类型人数实时监控'
+    //     },
+    //     tooltip: {
+    //         trigger: 'axis',
+    //         axisPointer: {
+    //             type: 'cross',
+    //             label: {
+    //                 backgroundColor: '#283b56'
+    //             }
+    //         }
+    //     },
+    //     legend: {
+    //         data: ['患者数量']
+    //     },
+    //     xAxis: {
+    //         data: [],
+    //         axisLabel: {
+    //             interval: 0,
+    //             rotate: 35
+    //         },
+    //     },
+    //
+    //     yAxis: {},
+    //     series: [
+    //         {
+    //             name: '人数',
+    //             type: 'bar',
+    //             data:(function (){
+    //                 var res = [];
+    //                 var len = 10;
+    //                 while (len--) {
+    //                     res.push(Math.round(Math.random() * 1000));
+    //                 }
+    //                 return res;
+    //             })()
+    //         }]
+    // });
+    // $.ajax({
+    //     url: "/medical/admin/illtypenum",
+    //     type: "GET",
+    //     async: false,
+    //     cache: false,
+    //     success: function (result) {
+    //         console.log(result.dept);
+    //         mychart.setOption({
+    //             xAxis: {
+    //                 data: result.dept
+    //             },
+    //             series: {
+    //                 data: result.num
+    //             }
+    //         });
+    //     },
+    // });
+</script>
+</html>

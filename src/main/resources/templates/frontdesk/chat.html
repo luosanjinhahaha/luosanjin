@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Medilife - Health &amp; Medical Template | Services</title>
+    <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/homepage_css/chat.css}">
+</head>
+<body>
+<div th:replace="~{common/loading::loading}"></div>
+<div th:replace="~{common/header::header(activeUri = '/user/chat')}"></div>
+<section class="breadcumb-area bg-img gradient-background-overlay"
+         style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb2.jpg');">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-content">
+                    <h3 class="breadcumb-title">在线咨询</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetuer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--咨询页面-->
+<body>
+<!--<section class="medilife-blog-area section-padding-100">-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="col-12 col-lg-8">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-md-12" style="border: 1px solid black;height: 500px;">-->
+                        <!--<div class="chat-title" style="border: 1px solid black">-->
+                            <!--<span>dsad</span>-->
+                        <!--</div>-->
+                        <!--<div class="card-footer">-->
+                            <!--<form action="#" method="post">-->
+                                <!--<div class="input-group">-->
+                                    <!--<input type="text" name="message" placeholder="Type Message ..." class="form-control">-->
+                                    <!--<span class="input-group-append"><button type="button" class="btn btn-primary">Send</button></span>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div th:replace="frontdesk/communitySide :: side"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+<!--</section>-->
+
+<img style="margin:20px 230px;" th:src="@{/images/chat.png}" alt="">
+
+<div th:replace="~{common/footer::footer}"></div>
+</body>
+<script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/homepage_js/popper.min.js}"></script>
+<script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
+<script th:src="@{/js/homepage_js/plugins.js}"></script>
+<script th:src="@{/js/homepage_js/active.js}"></script>
+<script th:src="@{/js/main_js/chat.js}"></script>
+<script>
+    $(window).load(function () {
+        $(".loading").fadeOut(750);
+    });
+</script>
+</html>

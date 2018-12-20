@@ -1,0 +1,241 @@
+.left{
+	float:left;
+	width:300px;
+	height:600px;
+	margin-top:30px;
+	left:130px;
+	position: relative;
+	border-top: 4px solid #2b3b72;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;	
+}
+.right{
+	float:left;
+	width:750px;
+	height:600px;
+	margin-top:30px;
+	left:158px;
+	position: relative;
+	border-top: 4px solid #2b3b72;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;	
+}
+.right section{
+	width:748px;
+	height: 30px;
+	position:relative;
+	background: -webkit-gradient(linear, 
+	left top, left bottom, 
+	from(#ffffff), to(#ebebeb));
+}
+.show_area section,
+.pb_head section{
+	height: 30px;
+	position:relative;
+	background: -webkit-gradient(linear, 
+	left top, left bottom, 
+	from(#ffffff), to(#ebebeb));
+}
+.right>section span:nth-child(1),
+.show_area>section span:nth-child(1),
+.pb_head>section span:nth-child(1){
+	position:relative;
+	left:20px;
+	background:white;
+	text-align:center;
+	line-height:30px;
+	font-weight:bold;
+	font-size:15px;
+	color:#2b3b72;
+	display:inline-block;
+	width: 100px;
+	height: 30px;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+}
+/* 通知公告的按钮  */
+/* .right>section span:nth-child(2), */
+/* .right>section span:nth-child(3){ */
+/* 	position:relative; */
+/* 	left:530px; */
+/* 	top:-1px; */
+/* } */
+/* .right>section span:nth-child(2) button, */
+/* .right>section span:nth-child(3) button{ */
+/* 	background: #2b3b72; */
+/* 	color: white; */
+/* 	border-color: #2b3b72; */
+/* } */
+/* .right>section span:nth-child(2) button:active, */
+/* .right>section span:nth-child(3) button:active{ */
+/* 	background: white; */
+/* 	color:#2b3b72; */
+/* } */
+.show_area{
+	position:relative;
+	float:left;margin-top:30px;
+	left:130px; 
+	width:80%;
+	border-top: 4px solid #2b3b72;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+.notice_info{
+	margin-top:20px;
+	line-height: 1.5em;
+	font-family: 宋体;
+	font-size: 20px;
+	color:#666;
+}
+.info_label{
+	color:#333;
+	font-size:24px;
+	margin:10px auto;
+}
+.info_label label{
+	text-align:center;
+	display:block;
+	position:relative;
+}
+.info_time{
+	width:900px;
+	color:#333;
+	margin:10px auto;
+	border-bottom: 1px solid #ddd;
+}
+.info_time h4{
+	display:block;
+	text-align:center;
+}
+.info_area{
+	margin-top:30px;
+	margin-left:80px;
+	width: 900px;
+	border: 1px solid #black;
+}
+.notice{
+	width: 700px;
+	height: 569px;
+	position: relative;
+/* 	border: 1px solid black; */
+	left: 25px;
+	top:20px;
+}
+.media{
+	width: 700px;
+	height: 569px;
+	position: relative;
+/* 	border: 1px solid black; */
+	left: 25px;
+	top:5px;
+}
+ul{
+	list-style: none;
+}
+.li_1{
+	position:relative;
+	margin-left:-40px;
+	margin-top:-5px;
+	width: 690px;
+	height: 30px;
+/* 	border: 1px solid black; */
+	line-height: 25px;
+}
+.circle{
+	position:relative;
+	top:12px;
+	width: 5px;
+	height: 5px;
+/* 	border: 1px solid black; */
+	border-radius: 50%;
+	background: black;
+}
+.info{
+	display:inline-block;
+	width: 500px;
+	height: 30px;
+	position: relative;
+	left:10px;
+	top:-6px;
+/* 	border: 1px solid black; */
+}
+.time{
+	text-align:right;
+	display:inline-block;
+	width: 165px;
+	height: 30px;
+	position: relative;
+	right:-20px;
+	top:-6px;
+/* 	border: 1px solid black; */
+}
+.info a{
+	text-decoration: none;
+	color:black;
+}
+.info a:hover{
+	text-decoration: none;
+	color:orange;
+}
+a:FOCUS{
+	outline: none;
+}
+.notice_nav{
+	width: 700px;
+	height: 50px;
+	position: relative;
+	top:-50px;
+	left:20px;
+	line-height:50px;
+}
+.media_nav{
+	width: 700px;
+	height: 50px;
+	position: relative;
+	top:-70px;
+	left:20px;
+	line-height:50px;
+}
+.notice_nav ul,
+.media_nav ul{
+	list-style: none;
+	float: left;
+	position: relative;
+	top: -20px;
+	left: 155px;
+}
+.notice_nav ul li,
+.media_nav ul li{
+	float: left;
+	margin-right: 10px;
+	position:relative;
+	top:-30px;
+	left: 50px;
+}
+.text_info{
+	position: relative;
+	left: 60px;
+}
+.info_notice,
+.info_media{
+	position: relative;
+	left: 30px;
+}
+.notice_nav a,
+.media_nav a{
+	text-decoration: none;
+	color:black;
+}
+.notice_nav a:HOVER,
+.media_nav a:HOVER{
+	color:orange;
+}
+.more_notice_input,
+.more_media_input{
+	width:30px;
+	height: 20px;
+}
+

@@ -1,0 +1,67 @@
+.title{
+	width: 80%;
+	height:550px;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin-left:130px;
+	padding-top: 10px;
+	padding-left: 30%;
+}
+.title section{
+	width:160.3%;
+	height: 30px;
+	position:relative;
+	top:-5px;
+	left:-410px;
+	background: -webkit-gradient(linear, 
+	left top, left bottom, 
+	from(#ffffff), to(#ebebeb));
+}
+.title>section span:nth-child(1){
+	position:relative;
+	left:20px;
+	background:white;
+	text-align:center;
+	line-height:30px;
+	font-weight:bold;
+	font-size:15px;
+	color:#2b3b72;
+	display:inline-block;
+	width: 150px;
+	height: 30px;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+}
+.title>section span:nth-child(2),
+.title>section span:nth-child(3){
+	position:relative;
+	left:820px;
+	top:-3px;
+}
+.title>section span:nth-child(2) button,
+.title>section span:nth-child(3) button{
+	background: #2b3b72;
+	color: white;
+	border-color: #2b3b72;
+}
+.title>section span:nth-child(2) button:active,
+.title>section span:nth-child(3) button:active{
+	background: white;
+	color:#2b3b72;
+}
+.inputs_1{
+	position: relative;
+	right:220px;
+	top:30px;
+}
+.inputs_2{
+	position: relative;
+	right:220px;
+	top:60px;
+}
+.inputs_3{
+	position: relative;
+	right:300px;
+	top:90px;
+}

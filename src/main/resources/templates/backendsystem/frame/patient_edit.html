@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:fragment="patient_edit">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">患者修改</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">主页</a></li>
+                            <li class="breadcrumb-item active">患者修改</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-----------------------------------------------------------------  -->
+        <section class="content">
+            <div class="container-fluid" id="patientEdit">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Horizontal Form -->
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">患者信息修改</h3>
+                            </div>
+                            <form class="form-horizontal update_patients_form">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">患者姓名</label>
+                                        <div class="col-sm-12">
+                                            <input autocomplete="off" name="pinfoName" type="text" class="form-control" id="pinfoName_add_input"
+                                                   placeholder="" th:value="${info.pinfoName}">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">患者年龄</label>
+                                        <div class="col-sm-12">
+                                            <input autocomplete="off" name="pinfoAge" type="text" class="form-control" id="pinfoAge_add_input"
+                                                   placeholder="" th:value="${info.pinfoAge}">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="jiade" style="display: none;" th:value="${info.pinfoGender}"/>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="pinfoGender"id="pinfoGender1_add_input"
+                                                       value="男"> 男
+                                            </label>
+                                            <label style="margin-left: 50px;" class="radio-inline">
+                                                <input type="radio" name="pinfoGender" id="pinfoGender2_add_input"
+                                                       value="女">女
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">患者确诊</label>
+                                        <div class="col-sm-12">
+                                            <input autocomplete="off" type="text" class="form-control" name="ppinfoIllname"
+                                                   id="ppinfoIllname_add_input" placeholder="" th:value="${info.ppinfoIllname}">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">症状情况</label>
+                                        <div class="col-sm-12">
+                                            <input autocomplete="off" type="text" class="form-control" name="pinfoInfo"
+                                                   id="pinfoInfo_add_input" placeholder="" th:value="${info.pinfoInfo}">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">科室</label>
+                                        <div class="col-sm-4">
+                                            <!-- 部门提交部门id即可 -->
+                                            <select name="piId" class="form-control" id="dept_add_select">
+                                                <option th:each="dept:${departments}" th:value="${dept.deptId}" th:text="${dept.deptName}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" id="patients_update_btn" th:patient_update_id="${info.pinfoId}" class="btn btn-success">保存</button>
+                                    <button type="button" class="btn btn-default float-right">清除</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+<div th:replace="~{common/common_js::common_js}"></div>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script type="text/javascript">
+    $(".radio-inline input[name=pinfoGender]").val([$(".jiade").val()]);
+    $("#patients_update_btn").click(function(){
+        console.log($(".update_patients_form").serialize());
+        $.ajax({
+            url:"/medical/admin/updatepatients/" + $(this).attr("patient_update_id"),
+            type:"POST",
+            data:$(".update_patients_form").serialize(),
+            success:function(result){
+                if(result.code == 200){
+                    swal({
+                        title:"患者信息更新成功！",
+                        type:"success"
+                    },function(){
+                        location.href="/medical/admin/allpatients";
+                    });
+                }else{
+                    swal({
+                        title:"患者信息更新失败！",
+                        type:"error"
+                    },function(){
+                        window.location.reload();
+                    });
+                }
+            },
+            error:function(){
+                swal({
+                    title:"系统发生未知错误！请重试",
+                    type:"error"
+                });
+            }
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.DoctorRoleMapper">
+
+    <!-- 通过医师id在医师角色表查找角色id-->
+    <select id="getDoctorRoleByDoctorId" parameterType="integer" resultMap="getDoctorRoleByDoctorIdResultMap">
+        select * from tbl_doctor_role where doctor_id = #{doctorId}
+    </select>
+
+    <!--通过医师角色表中角色id在角色表中查找角色-->
+    <resultMap id="getDoctorRoleByDoctorIdResultMap" type="com.smxy.healthmedical.bean.DoctorRole">
+        <result column="role_id" property="roleId"/>
+        <association property="role" column="role_id" select="com.smxy.healthmedical.dao.RoleMapper.getDoctorRoleByRoleId">
+        </association>
+    </resultMap>
+
+    <!--通过医师角色id查找医师角色-->
+    <select id="getDoctorRoleByDoctorRoleId" parameterType="integer" resultMap="getDoctorRoleByDoctorRoleIdResultMap">
+        select * from tbl_doctor_role where doctor_role_id = #{doctorRoleId}
+    </select>
+
+    <resultMap id="getDoctorRoleByDoctorRoleIdResultMap" type="com.smxy.healthmedical.bean.DoctorRole">
+        <result column="doctor_role_id" property="doctorRoleId"/>
+        <association property="role" column="doctor_role_id" select="com.smxy.healthmedical.dao.RoleMapper.getDoctorRoleByRoleId">
+        </association>
+    </resultMap>
+
+    <!--通过医师角色id查找医师roleId-->
+    <select id="getDoctorRoleIdByDoctorId" parameterType="integer" resultMap="getDoctorRoleIdByDoctorIdResultMap">
+        select * from tbl_doctor_role where doctor_id = #{doctorId}
+    </select>
+
+    <!--通过角色id查找角色-->
+    <resultMap id="getDoctorRoleIdByDoctorIdResultMap" type="com.smxy.healthmedical.bean.DoctorRole">
+        <result column="role_id" property="roleId"/>
+        <association property="role" column="role_id" select="com.smxy.healthmedical.dao.RoleMapper.getDoctorRoleByRoleId">
+        </association>
+    </resultMap>
+</mapper>

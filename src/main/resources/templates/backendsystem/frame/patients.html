@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="patients">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+<body >
+<!----------------------------------------------------------------  -->
+<div class="wrapper">
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">宜家医坊后台管理</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">主页</a></li>
+                            <li class="breadcrumb-item active">患者基本资料</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info"
+                             onclick="window.open('/medical/admin/add_patients')"
+                             title="患者添加">
+                            <div class="inner">
+                                <p>新患者</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="javascript:;" class="small-box-footer">更多信息<i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>
+                                    53<sup style="font-size: 20px">%</sup>
+                                </h3>
+
+                                <p>女性所占比例</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">更多信息<i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning"
+                             onclick="window.open('/medical/admin/useradmin')"
+                             title="修改管理员权限">
+                            <div class="inner">
+                                <p>权限管理</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">更多信息<i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>65</h3>
+                                <p>主页访客</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">更多信息<i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--患者表单  ------------------------------------------------------------------------------------------>
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped"
+                                   style="text-align: center;">
+                                <thead>
+                                <tr style="line-height: 40px">
+                                    <th style="width: 30px">编号</th>
+                                    <th style="width: 40px">患者姓名</th>
+                                    <th style="width: 40px">年龄</th>
+                                    <th style="width: 40px">性别</th>
+                                    <th style="width:140px">患者症状</th>
+                                    <th style="width: 40px">症状详情</th>
+                                    <th style="width: 40px">所在部门</th>
+                                    <th style="width: 40px">工具</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>患者姓名</th>
+                                    <th>年龄</th>
+                                    <th>性别</th>
+                                    <th>患者症状</th>
+                                    <th>症状详情</th>
+                                    <th>所在部门</th>
+                                    <th>工具</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <div class="row" style="position: relative; left: -150px;">
+                                <!--分页文字信息  -->
+                                <div class="col-md-5" style="font-size:15px; color: gray;position: relative; left: 150px;top: 27px; " id="page_area"></div>
+                                <!--分页导航信息  -->
+                                <div class="col-md-7" style="position: relative; left: 150px;top: 17px;" id="page_nav_area"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="main-footer"> <strong>© 2018 YJYF
+        Medical Center. All Rights Reserved. 宜家医坊总裁办公室所有</strong>
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 3.0.0-alpha
+        </div>
+    </footer>
+</div>
+</body>
+<script th:src="@{/js/tooltip_js/tooltip.js}"></script>
+<script type="text/javascript">
+    topage(1);
+    function topage(pn){
+        $.ajax({
+           url:"/medical/admin/details",
+           data:"pn="+pn,
+           type:"GET",
+           success:function (result) {
+               build_patients_table(result);
+               build_page_info(result);
+               build_page_nav(result);
+               build_guide_patients(result);
+               build_guide_quanxian(result);
+           } 
+        });
+    }
+
+    var flag1 = true;
+    function build_guide_patients(result){
+        if(flag1){
+            // $(".bg-info .inner").empty();
+            var h3 = $("<h3></h3>").append(result.extend.sum);
+            h3.appendTo(".bg-info .inner");
+            flag1 = false;
+        }else{
+            return false;
+        }
+    }
+
+    var flag2 = true;
+    function  build_guide_quanxian(result){
+        if(flag2){
+            // $(".bg-warning .inner").empty();
+            var h3_q = $("<h3></h3>").append(result.extend.adminsum);
+            h3_q.appendTo(".bg-warning .inner");
+            flag2 = false;
+        }else{
+            return false;
+        }
+    }
+    function build_patients_table(result){
+        $("#example1 tbody").empty();
+        var patients = result.extend.PageInfo.list;
+        $.each(patients,function (index,item) {
+            var patientsIdTd = $("<td></td>").append(item.pinfoId);
+            var pinfoNameTd = $("<td></td>").append(item.pinfoName);
+            var pinfoAgeTd = $("<td></td>").append(item.pinfoAge);
+            var pinfoGenderTd = $("<td></td>").append(item.pinfoGender);
+            var ppinfoIllnameTd = $("<td></td>").append(item.ppinfoIllname);
+            var pinfoInfoTd = $("<td></td>").append(item.pinfoInfo);
+            var deptNameTd = $("<td></td>").append(item.department.deptName);
+            var editBtn = $("<a></a>").attr("href","/medical/admin/patients/"+item.pinfoId).addClass("btn btn-primary btn-sm edit_btn").append("编辑").css("margin-right","5px");
+            editBtn.attr("edit_id", item.pinfoId);
+            var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn").append("删除");
+            delBtn.attr("del_id", item.pinfoId);
+            var btnTd = $("<td></td>").append(editBtn).append(delBtn);
+            $("<tr></tr>").append(patientsIdTd)
+                .append(pinfoNameTd)
+                .append(pinfoAgeTd)
+                .append(pinfoGenderTd)
+                .append(ppinfoIllnameTd)
+                .append(pinfoInfoTd)
+                .append(deptNameTd)
+                .append(btnTd).appendTo("#example1 tbody");
+        })
+    }
+
+    //构件分页信息
+    function build_page_info(result){
+        $("#page_area").empty();
+        $("#page_area").append("当前第&nbsp;&nbsp;" + result.extend.PageInfo.pageNum +
+            "&nbsp;&nbsp;页 ," + "&nbsp;&nbsp;每页&nbsp;&nbsp;10&nbsp;&nbsp;条数据&nbsp;&nbsp;，"
+            + " 总共&nbsp;&nbsp;" + result.extend.PageInfo.pages + "&nbsp;&nbsp;页 , 总共&nbsp;&nbsp;"
+            + result.extend.PageInfo.total + "&nbsp;&nbsp;条数据");
+    }
+
+    //构建分页导航信息
+    function build_page_nav(result) {
+        $("#page_nav_area").empty();
+        var ul = $("<ul></ul>").addClass("pagination");
+        var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href", "javascript:;")).addClass("firstPageLi");
+        var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;"));
+        $(".firstPageLi").click(function () {
+           topage(1);
+        });
+        if (result.extend.PageInfo.hasPreviousPage == false) {
+            firstPageLi.addClass("disabled");
+            prePageLi.addClass("disabled");
+        } else {
+            firstPageLi.click(function() {
+                topage(1);
+            });
+            prePageLi.click(function() {
+                topage(result.extend.PageInfo.pageNum - 1);
+            });
+        }
+        var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;"));
+        var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "javascript:;")).addClass("lastPageLi");
+        $(".lastPageLi").click(function () {
+           topage(result.extend.PageInfo.pages);
+        });
+        if (result.extend.PageInfo.hasNextPage == false) {
+            nextPageLi.addClass("disabled");
+            lastPageLi.addClass("disabled");
+        } else {
+            nextPageLi.click(function() {
+                topage(result.extend.PageInfo.pageNum + 1);
+            });
+            lastPageLi.click(function() {
+                topage(result.extend.PageInfo.pages);
+            });
+        }
+        ul.append(firstPageLi).append(prePageLi);
+        $.each(result.extend.PageInfo.navigatepageNums, function(index, item) {
+            var numLi = $("<li></li>").append($("<a></a>").append(item));
+            if (result.extend.PageInfo.pageNum == item) {
+                numLi.addClass("active").css("background","#ddd");
+            }
+            numLi.click(function() {
+                topage(item);
+            });
+            ul.append(numLi);
+        });
+        ul.append(nextPageLi).append(lastPageLi);
+        var navEle = $("<nav></nav>").append(ul);
+        navEle.appendTo("#page_nav_area");
+    }
+
+    $(document).on("click",".delete_btn",function() {
+        var pinfoName = $(this).parents("tr").find("td:eq(1)").text();
+        var pinfoId = $(this).attr("del_id");
+        console.log(pinfoName + " " + pinfoId);
+        swal({
+            title : "确定删除该患者" + pinfoName + "的信息吗？",
+            type : "warning",
+            showCancelButton : true,
+            confirmButtonColor : "#DD6B55",
+            confirmButtonText : "确认",
+            cancelButtonText : "取消",
+            closeOnConfirm : false,
+            closeOnCancel : false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : "/medical/admin/delpatients/" + pinfoId,
+                    type : "DELETE",
+                    success : function(result) {
+                        if (result.code == 200) {
+                            swal({
+                                title : "删除成功！",
+                                type : "success"
+                            }, function() {
+                                location.href = "/medical/admin/to_main";
+                            });
+                        } else {
+                            swal({
+                                title : "删除失败！",
+                                type : "error"
+                            }, function() {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error : function() {
+                        swal({
+                            title : "系统发生未知错误！",
+                            type : "error"
+                        }, function() {
+                            window.location.reload();
+                        });
+                    }
+                });
+            } else {
+                swal({
+                    title : "您已取消删除！",
+                    type : "success"
+                });
+            }
+        });
+    });
+</script>
+</html>

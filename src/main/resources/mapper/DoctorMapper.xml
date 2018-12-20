@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.DoctorMapper">
+    <!--按照姓名查找医师-->
+    <select id="selectDoctorTipsByDoctorId" parameterType="Integer" resultMap="selectDoctorByDoctorIdResultMap">
+        select * from tbl_doctor where doctor_id = #{doctorId}
+    </select>
+
+    <!--根据医师id查出医师的角色-->
+    <select id="getDoctorRolesByDoctorId" parameterType="integer" resultMap="getDoctorRolesByDoctorIdResultMap">
+        select * from tbl_doctor where doctor_id = #{doctorId}
+    </select>
+
+    <resultMap id="getDoctorRolesByDoctorIdResultMap" type="com.smxy.healthmedical.bean.Doctor">
+        <id column="doctor_id" property="doctorId"/>
+        <collection property="doctorRoles" column="doctor_id" select="com.smxy.healthmedical.dao.DoctorRoleMapper.getDoctorRoleByDoctorRoleId">
+        </collection>
+    </resultMap>
+
+    <!--根据医师id查出医师的角色为查询权限-->
+    <select id="getDoctorRolesByDoctorIdForPermission" parameterType="integer" resultMap="getDoctorRolesByDoctorIdForPermissionResultMap">
+        select * from tbl_doctor where doctor_id = #{doctorId}
+    </select>
+
+    <resultMap id="getDoctorRolesByDoctorIdForPermissionResultMap" type="com.smxy.healthmedical.bean.Doctor">
+        <id column=""/>
+    </resultMap>
+
+    <!--根据id查找医生信息-->
+    <!--按照医师id查找医师小贴士及点赞评论-->
+    <select id="getDoctorById" parameterType="integer" resultMap="DoctorWithRoleResultMap">
+        select * from tbl_doctor where doctor_id = #{doctorId}
+    </select>
+
+    <!--医师个人信息结果集并关联小贴士表-->
+    <resultMap id="selectDoctorByDoctorIdResultMap" type="com.smxy.healthmedical.bean.Doctor">
+        <id column="doctor_id" property="doctorId"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="doctor_photosrc" property="doctorPhotoSrc"/>
+        <result column="d_tips_doctor_id" property="dTipsDoctorId"/>
+        <collection property="doctorTips" column="d_tips_doctor_id" select="com.smxy.healthmedical.dao.DoctorTipsMapper.getDoctortTipsBydoctorTipsDoctorId">
+        </collection>
+    </resultMap>
+
+    <!--查询出所有医生信息-->
+    <select id="getDoctorAll" resultMap="DoctorWithRoleResultMap">
+        select * from tbl_doctor
+    </select>
+
+    <!--关联角色表查找角色-->
+    <resultMap id="DoctorWithRoleResultMap" type="com.smxy.healthmedical.bean.Doctor">
+        <id column="doctor_id" property="doctorId"/>
+        <result column="d_tips_doctor_id" property="dTipsDoctorId"/>
+        <result column="d_id" property="dId"/>
+        <association property="department" column="d_id" select="com.smxy.healthmedical.dao.DepartmentMapper.getDeptByDeptId">
+        </association>
+        <collection property="doctorRoles" column="doctor_id" select="com.smxy.healthmedical.dao.DoctorRoleMapper.getDoctorRoleByDoctorId">
+        </collection>
+        <collection property="doctorTips" column="d_tips_doctor_id" select="com.smxy.healthmedical.dao.DoctorTipsMapper.getDoctortTipsBydoctorTipsDoctorId">
+        </collection>
+    </resultMap>
+
+
+
+</mapper>

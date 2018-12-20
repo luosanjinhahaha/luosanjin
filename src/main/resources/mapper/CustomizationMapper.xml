@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.CustomizationMapper">
+    <insert id="insertCustomization" parameterType="com.smxy.healthmedical.bean.Customization">
+        INSERT INTO tbl_customization (custom_id, custom_name, custom_age, custom_sex, custom_nation, custom_blood, custom_birth,
+            custom_work, custom_marriage, custom_phone, custom_email, custom_province, custom_city, custom_county, custom_healthCard,
+            custom_identityCard, custom_livePlace, custom_livePostcode, custom_man1, custom_man2, custom_department, custom_illType,
+            custom_details, custom_symptom, custom_time, custom_particulars, custom_duration, custom_season)
+        VALUES(#{customId}, #{customName}, #{customAge}, #{customSex}, #{customNation}, #{customBlood}, #{customBirth}, #{customWork},
+            #{customMarriage}, #{customPhone} ,#{customEmail}, #{customProvince}, #{customCity}, #{customCounty}, #{customHealthCard},
+            #{customIdentityCard}, #{customLivePlace}, #{customLivePostcode}, #{customMan1}, #{customMan2}, #{customDepartment}, #{customIllType},
+            #{customDetails}, #{customSymptom}, #{customTime}, #{customParticulars}, #{customDuration},#{customSeason})
+    </insert>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.AppointDoctorWithDeptMapper">
+    <select id="getAppointDoctorWithDept" parameterType="integer" resultMap="AppointDoctorWithDeptResultMap">
+        select * from tbl_dept where dept_id = #{deptId}
+    </select>
+    <resultMap id="AppointDoctorWithDeptResultMap" type="com.smxy.healthmedical.bean.Department">
+        <id column="dept_id" property="deptId"/>
+        <result column="dept_name" property="deptName"/>
+        <collection property="doctors" column="dept_id" select="getDoctorByDept" ofType="com.smxy.healthmedical.bean.Doctor">
+    </collection>
+    </resultMap>
+    <select id="getDoctorByDept" resultType="Doctor">
+        select * from tbl_doctor where d_id = #{deptId}
+    </select>
+</mapper>

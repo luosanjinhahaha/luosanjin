@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>宜家医坊</title>
+    <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/main_css/foundation-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}">
+</head>
+<body>
+<div th:replace="~{common/loading::loading}"></div>
+<div th:replace="~{common/header::header(activeUri= '/user/index')}"></div>
+<section class="hero-area">
+    <div class="hero-slides owl-carousel">
+        <div class="single-hero-slide bg-img bg-overlay-white"
+             style="background-image: url('/medical/images/homepage_images/bg-img/hero1.jpg');">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <div class="hero-slides-content">
+                            <h2 data-animation="fadeInUp" data-delay="100ms">宜家医坊</h2>
+                            <h6 data-animation="fadeInUp" data-delay="400ms">专业的健康信息服务，精准的健康管理方案，为你量身定做健康诊疗方案</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single-hero-slide bg-img bg-overlay-white"
+             style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb3.jpg');">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <div class="hero-slides-content">
+                            <h2 data-animation="fadeInUp" data-delay="100ms">可信赖的医师团队</h2>
+                            <h6 data-animation="fadeInUp" data-delay="400ms">专业的健康信息服务，精准的健康管理方案，为你量身定做健康诊疗方案</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single-hero-slide bg-img bg-overlay-white"
+             style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb1.jpg');">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <div class="hero-slides-content">
+                            <h2 data-animation="fadeInUp" data-delay="100ms">可信赖的医师团队</h2>
+                            <h6 data-animation="fadeInUp" data-delay="400ms">专业的健康信息服务，精准的健康管理方案，为你量身定做健康诊疗方案</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="medilife-book-an-appoinment-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="appointment-form-content">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-12 col-lg-9">
+                            <div class="medilife-appointment-form">
+                                <form id="appointForm">
+                                    <div class="row align-items-end">
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <select name="appointDeptname" id="appointDeptname" class="form-control">
+                                                    <option th:each="dept:${dept}" th:value="${dept.deptName}" th:text="${dept.deptName}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <select name="appointDrname" id="appointDrname" class="form-control">
+                                                    <option th:each="famdoctor:${famdoctor}" th:text="${famdoctor.drname}" th:value="${famdoctor.drname}">Doctors 1</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-2">
+                                            <div class="form-group">
+                                                <input name="appointDate" id="appointDate" autocomplete="off" style="width: 110px;" type="text" class="form-control" placeholder="日期">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-2">
+                                            <div class="form-group" style="width: 120px;">
+                                                <select name="appointTime" id="appointTime" class="form-control" >
+                                                    <option value="1" disabled>8:30上班</option>
+                                                    <option value="9:00-10:00">9:00-10:00</option>
+                                                    <option value="10:00-12:00">10:00-12:00</option>
+                                                    <option value="14:00-15:00">14:00-15:00</option>
+                                                    <option value="15:00-16:00">15:00-16:00</option>
+                                                    <option value="16:00-17:00">16:00-17:00</option>
+                                                    <option value="8" disabled>17:30下班</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <input name="appointName" id="appointName" autocomplete="off" type="text" class="form-control border-top-0 border-right-0 border-left-0" placeholder="姓名">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <input name="appointPhone" id="appointPhone" autocomplete="off" type="text" class="form-control border-top-0 border-right-0 border-left-0" placeholder="电话">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group">
+                                                <input name="appointEmail" id="appointEmail" autocomplete="off" type="email" class="form-control border-top-0 border-right-0 border-left-0" placeholder="邮箱">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-7">
+                                            <div class="form-group mb-0">
+                                                <input name="appointContent" id="appointContent" autocomplete="off" type="text" class="form-control mb-0 border-top-0 border-right-0 border-left-0" cols="30" rows="10" placeholder="内容">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-5 mb-0">
+                                            <div class="form-group mb-0">
+                                                <button type="submit" class="btn medilife-btn">预约 <span>+</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="medilife-contact-info">
+                                <div class="single-contact-info mb-30">
+                                    <img th:src="@{/images/homepage_images/icons/alarm-clock.png}" alt="">
+                                    <p>星期一至六 08:00 - 21:00 <br>星期日休息</p>
+                                </div>
+                                <!-- Single Contact Info -->
+                                <div class="single-contact-info mb-30">
+                                    <img th:src="@{/images/homepage_images/icons/envelope.png}" alt="">
+                                    <p>1234 673 729 766 <br>smxy@163.com</p>
+                                </div>
+                                <!-- Single Contact Info -->
+                                <div class="single-contact-info">
+                                    <img th:src="@{/images/homepage_images/icons/map-pin.png}" alt="">
+                                    <p>三明学院 <br>333号</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="medica-about-us-area section-padding-100-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-4">
+                <div class="medica-about-content">
+                    <h2>我们总是把病人放在第一位</h2>
+
+                    <a href="#" class="btn medilife-btn mt-50">查看服务 <span>+</span></a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <a th:href="@{/user/doctorlist}" class="single-service-area d-flex">
+                            <div class="service-icon">
+                                <i class="icon-doctor"></i>
+                            </div>
+                            <div class="service-content">
+                                <h5>优秀的医师团队</h5>
+                                <p>我们这里有着优秀的医师团队，相互合作，相互交流。</p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Single Service Area -->
+                    <div class="col-12 col-sm-6">
+                        <a th:href="@{/user/index}" class="single-service-area d-flex">
+                            <div class="service-icon">
+                                <i class="icon-blood-donation-1"></i>
+                            </div>
+                            <div class="service-content">
+                                <h5>强大的智能推荐</h5>
+                                <p>我们将根据您过往咨询的问题向您推出最适合的理疗方案</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <a th:href="@{/user/index}" class="single-service-area d-flex">
+                            <div class="service-icon">
+                                <i class="icon-flask-2"></i>
+                            </div>
+                            <div class="service-content">
+                                <h5>全面的问答社区</h5>
+                                <p>在这里，您可以畅所欲言，不仅有同样的患者可以为您解答，还有专业的医师为您解答</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <a th:href="@{/user/index}" class="single-service-area d-flex">
+                            <div class="service-icon">
+                                <i class="icon-emergency-call-1"></i>
+                            </div>
+                            <div class="service-content">
+                                <h5>专业的医师咨询系统</h5>
+                                <p>根据您咨询的问题，我们的专业的医师会做出最专业的服务态度，为您提供最好的解决方案。</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="medilife-gallery-area owl-carousel">
+    <div class="single-gallery-item">
+        <img th:src="@{/images/homepage_images/bg-img/g1.jpg}" alt="">
+        <div class="view-more-btn">
+            <a th:href="@{/images/homepage_images/bg-img/g1.jpg}" class="btn gallery-img">See More +</a>
+        </div>
+    </div>
+    <div class="single-gallery-item">
+        <img th:src="@{/images/homepage_images/bg-img/g2.jpg}" alt="">
+        <div class="view-more-btn">
+            <a th:href="@{/images/homepage_images/bg-img/g2.jpg}" class="btn gallery-img">See More +</a>
+        </div>
+    </div>
+    <div class="single-gallery-item">
+        <img th:src="@{/images/homepage_images/bg-img/g3.jpg}" alt="">
+        <div class="view-more-btn">
+            <a th:href="@{/images/homepage_images/bg-img/g3.jpg}" class="btn gallery-img">See More +</a>
+        </div>
+    </div>
+    <div class="single-gallery-item">
+        <img th:src="@{/images/homepage_images/bg-img/g4.jpg}" alt="">
+        <div class="view-more-btn">
+            <a th:href="@{/images/homepage_images/bg-img/g4.jpg}" class="btn gallery-img">See More +</a>
+        </div>
+    </div>
+</div>
+<div class="medilife-features-area section-padding-100">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-6">
+                <div class="features-content">
+                    <h2>个性化定制</h2>
+                    <p>根据患者特定情况，给出一对一的理疗方案并智能推荐医师进行专业详细的问诊，给患者最好的服务体验。</p>
+                    <a href="javascript:;" id="customization" class="btn medilife-btn mt-50">开始定制 </a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="features-thumbnail">
+                    <img th:src="@{/images/homepage_images/bg-img/medical1.png}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="medilife-blog-area section-padding-100-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-blog-area mb-100">
+                    <div class="blog-post-thumbnail">
+                        <img th:src="@{/images/homepage_images/blog-img/1.jpg}" alt="">
+                        <div class="post-date">
+                            <a href="#">2018年10月15日</a>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-author">
+                            <a href="#"><img th:src="@{/images/homepage_images/blog-img/p1.jpg}" alt=""></a>
+                        </div>
+                        <a href="#" class="headline">医学养生</a>
+                        <p>养生补血吃什么食物比较好？</p>
+                        <a href="#" class="comments">356 评论</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-blog-area mb-100">
+                    <div class="blog-post-thumbnail">
+                        <img th:src="@{/images/homepage_images/blog-img/2.jpg}" alt="">
+                        <div class="post-date">
+                            <a href="#">2018年10月11日</a>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-author">
+                            <a href="#"><img th:src="@{/images/homepage_images/blog-img/p2.jpg}" alt=""></a>
+                        </div>
+                        <a href="#" class="headline">疾病症状</a>
+                        <p>肚子绞疼一天了，是怎么回事？</p>
+                        <a href="#" class="comments">443 评论</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-blog-area mb-100">
+                    <div class="blog-post-thumbnail">
+                        <img th:src="@{/images/homepage_images/blog-img/3.jpg}" alt="">
+                        <div class="post-date">
+                            <a href="#">2018年10月10日</a>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-author">
+                            <a href="#"><img th:src="@{/images/homepage_images/blog-img/p3.jpg}" alt=""></a>
+                        </div>
+                        <a href="#" class="headline">家庭护理</a>
+                        <p>在家里对于鼻饲的护理应该怎么做？</p>
+                        <a href="#" class="comments">144 评论</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="medilife-emergency-area section-padding-100-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="emergency-content">
+                    <i class="icon-smartphone"></i>
+                    <h2>紧急呼叫</h2>
+                    <h3>+12-823-611-8721</h3>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <div class="single-emergency-helpline mb-50">
+                            <h5>三明学院南区</h5>
+                            <p>2333 673 729 766 <br> smxynq@company.com <br> 福建省三明市三元区 <br>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="single-emergency-helpline mb-50">
+                            <h5>三明学院北区</h5>
+                            <p>9877 673 729 766 <br> smxynq@company.com <br> 福建省三明市三元区 <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/footer::footer}"></div>
+</body>
+<script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/homepage_js/popper.min.js}"></script>
+<script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
+<script th:src="@{/js/homepage_js/plugins.js}"></script>
+<script th:src="@{/js/homepage_js/active.js}"></script>
+<script th:src="@{/js/main_js/foundation-datepicker.js}"></script>
+<script th:src="@{/js/main_js/foundation-datepicker.zh-CN.js}"></script>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script>
+    // 日期选择
+    $('#appointDate').fdatepicker({
+        format: 'yyyy-mm-dd',
+    });
+
+    //预约系统
+    $("#appointForm").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url:"/medical/user/havesession",
+            type:"GET",
+            success:function (res) {
+                if(res.code == 200){
+                    swal({
+                        title : "预约后将不可更改,您已确认预约信息了吗？",
+                        type : "warning",
+                        showCancelButton : true,
+                        confirmButtonColor : "#DD6B55",
+                        confirmButtonText : "确认",
+                        cancelButtonText : "取消",
+                        closeOnConfirm : false,
+                        closeOnCancel : false
+                    },function(isConfirm){
+                        if(isConfirm){
+                            $.ajax({
+                                url:"/medical/user/appoint",
+                                data:$("#appointForm").serialize(),
+                                type:"POST",
+                                success:function(res){
+                                    if(res.code == 200){
+                                        swal({
+                                            title : "您已成功预约！",
+                                            type : "success"
+                                        },function () {
+                                            location.reload();
+                                        });
+                                    }else{
+                                        swal({
+                                            title : "预约失败！请检查网络后重试",
+                                            type : "error"
+                                        });
+                                    }
+                                },
+                                error:function () {
+                                    swal({
+                                        title : "系统发生未知错误！请检查网络后重试",
+                                        type : "error"
+                                    });
+                                }
+                            });
+                        }else{
+                            swal({
+                                title : "您已取消删除！",
+                                type : "success"
+                            });
+                        }
+                    });
+                }else{
+                    swal({
+                        title:"请先登录！",
+                        type:"warning",
+                    },function () {
+                        location.href = "/medical/user/to_login";
+                    });
+                }
+            }
+        });
+    });
+
+    //个性化定制理疗方案
+    $("#customization").click(function () {
+        $.ajax({
+            url:"/medical/user/havesession",
+            type:"GET",
+            success:function (res) {
+                if(res.code == 200){
+                    location.href = "/medical/user/to_customization";
+                }else{
+                    swal({
+                        title:"请先登录！",
+                        type:"warning",
+                    },function () {
+                        location.href = "/medical/user/to_login";
+                    });
+                }
+            }
+        })
+    })
+</script>
+</html>
