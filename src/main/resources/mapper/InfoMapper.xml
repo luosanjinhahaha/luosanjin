@@ -119,7 +119,6 @@
     FROM tbl_patient_info p
 	LEFT JOIN tbl_dept d ON p.pi_id = d.dept_id
     <if test="_parameter != null">
-
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null">
