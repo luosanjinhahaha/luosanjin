@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.FastDfsDocMapper">
+	<select id="getDocPath" resultType="com.smxy.healthmedical.bean.FastDfsDoc">
+		select * from tbl_fastdfs_doc
+	</select>
+
+	<insert id="insertDocPath" parameterType="com.smxy.healthmedical.bean.FastDfsDoc">
+		insert into tbl_fastdfs_doc (doc_id, doc_path) values (#{docId}, #{docPath})
+	</insert>
+
+	<delete id="deleteDoc" parameterType="String">
+		delete from tbl_fastdfs_doc where doc_path = #{oldPath}
+	</delete>
+</mapper>
