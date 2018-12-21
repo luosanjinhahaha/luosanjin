@@ -27,10 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -50,11 +47,13 @@ public class BackStageController {
 	private final DoctorService doctorService;
 	private final RolePermissionService rolePermissionService;
 	private final PermissionService permissionService;
+	private final GetDocPathService getDocPathService;
 
 	@Autowired
 	public BackStageController(AdminService adminService,ReadFileService readFileService,InfoService infoService,
 							   DeptService deptService,FamdoctorService famdoctorService,GetImgPathService getImgPathService,
-							   DoctorService doctorService,RolePermissionService rolePermissionService,PermissionService permissionService){
+							   DoctorService doctorService,RolePermissionService rolePermissionService,
+							   PermissionService permissionService, GetDocPathService getDocPathService){
 		this.adminService = adminService;
 		this.readFileService = readFileService;
 		this.infoService = infoService;
@@ -64,8 +63,9 @@ public class BackStageController {
 		this.doctorService = doctorService;
 		this.rolePermissionService = rolePermissionService;
 		this.permissionService = permissionService;
+		this.getDocPathService = getDocPathService;
 	}
-	private final String http = "http://106.14.160.207:8888/";
+	private static final String HTTP = "http://106.14.160.207:8888/";
 
     private static final Logger logger = LoggerFactory.getLogger(BackStageController.class);
 
@@ -227,9 +227,13 @@ public class BackStageController {
 	 */
 	@GetMapping("/roleManager")
 	public String authority(Model model){
+
 		List<Doctor> doctorList = doctorService.getDoctorsAll();
+
 		model.addAttribute("doctorList", doctorList);
+
 		System.out.println(doctorList);
+
 		return "backendsystem/roleManager";
 	}
 
@@ -243,19 +247,27 @@ public class BackStageController {
 //	@RequiresRoles("dasdsa")
 	@GetMapping("/doctorProfile/{doctorId}")
 	public String doctorProfile(@PathVariable("doctorId") Integer doctorId,Model model){
+
         List<Doctor> doctorInfoList = doctorService.getDoctorsByDoctorId(doctorId);
+
 		for (Doctor doctorInfo : doctorInfoList) {
-			doctorInfo.setDoctorPhotoSrc(http + doctorInfo.getDoctorPhotoSrc());
+
+			doctorInfo.setDoctorPhotoSrc(HTTP + doctorInfo.getDoctorPhotoSrc());
 		}
+
         model.addAttribute("doctorInfoList",doctorInfoList);
+
         System.out.println(doctorInfoList);
+
         return "backendsystem/doctor-profile";
 	}
 
 	@GetMapping("/subordinate/{piId}")
 	@ResponseBody
 	public Msg subordinate(@PathVariable("piId") Integer piId){
+
 		List<Info> infoList = infoService.getInfoByPiId(piId);
+
 		return Msg.success().add("infoList",infoList);
 	}
 
@@ -267,12 +279,19 @@ public class BackStageController {
 	 */
 	@GetMapping("/doctorOverview")
 	public String doctorOverview(Model model){
+
 		List<Doctor> doctorOverviewList = doctorService.getDoctorsAll();
+
 		for (Doctor doctordoctorOverviewLists : doctorOverviewList) {
-			doctordoctorOverviewLists.setDoctorPhotoSrc(http + doctordoctorOverviewLists.getDoctorPhotoSrc());
+
+			doctordoctorOverviewLists.setDoctorPhotoSrc(HTTP + doctordoctorOverviewLists.getDoctorPhotoSrc());
+
 		}
+
 		model.addAttribute("doctorOverviewList",doctorOverviewList);
+
 		System.out.println(doctorOverviewList);
+
 		return "backendsystem/doctorOverview";
 	}
 
@@ -282,8 +301,11 @@ public class BackStageController {
 	 */
 	@ResponseBody
 	@PostMapping("/save_admin/{adminId}")
+
 	public Msg getLimitadmin(AdminUsers adminUsers){
+
 		adminService.updatelimitadmin(adminUsers);
+
 		return Msg.success();
 	}
 
@@ -293,17 +315,27 @@ public class BackStageController {
 	@PostMapping(value = "/upload")
 	@ResponseBody
 	public Msg upload(@RequestParam("file")MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException{
+
 		String realpath = "C:\\Users\\luoxin\\AppData\\Local\\Temp\\tomcat-docbase.7421224295315167926.8080\\upload"+"/"+file.getOriginalFilename();
+
 //		String path=request.getServletContext().getRealPath("/")+"/upload/file/2.jpg";
+
 		if(file.getSize() != 0){
+
 			file.transferTo(new File(realpath));
+
 			System.out.println(realpath);
+
 			readFileService.javaPoi(realpath);
+
 			return Msg.success();
 		}
+
 		else{
+
 			return Msg.fail();
 		}
+
 	}
 
 	/**
@@ -312,17 +344,28 @@ public class BackStageController {
 	@DeleteMapping("/delpatients/{ids}")
 	@ResponseBody
 	public Msg delPatients(@PathVariable("ids")String ids){
+
 		String reg = "-";
+
 		if(ids.contains(reg)){
+
 			List<Integer> delIds = new ArrayList<>();
+
 			String[] strIds = ids.split("-");
+
 			for (String string : strIds) {
+
 				delIds.add(Integer.parseInt(string));
 			}
+
 			infoService.deleteBatch(delIds);
+
 		}else{
+
 			Integer id = Integer.parseInt(ids);
+
 			infoService.delPatientsById(id);
+
 			return Msg.success();
 		}
 		return Msg.success();
@@ -375,7 +418,9 @@ public class BackStageController {
 	@PutMapping("/savepatients")
 	@ResponseBody
 	public Msg savePatients(Info info){
+
 		infoService.savePatients(info);
+
 		return Msg.success();
 	}
 
@@ -384,17 +429,25 @@ public class BackStageController {
 	 */
 	@RequestMapping("/allpatients")
 	public String getAllPatients(Model model) {
+
 		List<Info> patients = infoService.getAll();
+
 		List<AdminUsers> admin = adminService.getadmin();
+
 		model.addAttribute("adminsum",admin.size());
+
 		model.addAttribute("patients",patients);
+
 		model.addAttribute("sum",patients.size());
+
 		return "backendsystem/main";
 	}
 
 	@GetMapping("/filemanager")
 	public String filemanager(){
+
 		return "backendsystem/fileManager";
+
 	}
 
 	/**
@@ -406,31 +459,61 @@ public class BackStageController {
 	@PostMapping("/fastDFS_upload")
 	@ResponseBody
 	public Msg fastDFSUpload(MultipartFile file) throws Exception {
+
 		MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
+
 		System.out.println("-------->" + file.getSize());
+
 		String path = "";
+
 		if(!"".equals(file.getSize())){
+
 			path = myFastDfsApi.uploadImg(file);
+
 			System.out.println(path);
 		}
-		FastDfsImg fastDfsImg = new FastDfsImg();
-		fastDfsImg.setImgPath(path);
-		System.out.println(fastDfsImg);
-		getImgPathService.ImgPath(fastDfsImg);
+
+		if(file.getOriginalFilename().equals("jpg")){
+
+			FastDfsImg fastDfsImg = new FastDfsImg();
+
+			fastDfsImg.setImgPath(path);
+
+			getImgPathService.ImgPath(fastDfsImg);
+
+		}else if(file.getOriginalFilename().equals("doc")){
+
+			FastDfsDoc fastDfsDoc = new FastDfsDoc();
+
+			fastDfsDoc.setDocPath(path);
+
+			getDocPathService.DocPath(fastDfsDoc);
+
+		}
+
 		return Msg.success().add("path",path);
 	}
 
 	@PostMapping("/fastDFS_delete")
 	@ResponseBody
 	public Msg fastDFSDelete(String oldPath) throws Exception {
+
 		System.out.println(oldPath);
+
 		MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
+
 		if(!"".equals(oldPath)){
+
 			myFastDfsApi.deleteImg(oldPath);
+
 			getImgPathService.deleteImgByPath(oldPath);
+
 		}else{
+
 			return Msg.fail();
+
 		}
+
 		return Msg.success();
 	}
 
@@ -443,15 +526,56 @@ public class BackStageController {
 	@GetMapping("/showFastDfsImg")
 	@ResponseBody
 	public Msg showFastDfsImgAll(){
+
 		List<FastDfsImg> fastDfsImgs = getImgPathService.getImgPathAll();
-		for(FastDfsImg fastDfsImg : fastDfsImgs){
-			fastDfsImg.setImgPath(http + fastDfsImg.getImgPath());
+
+		List<FastDfsDoc> fastDfsDocs = getDocPathService.getDocPathAll();
+
+		List<FastDfsImg> fastDfsImgs_remove = new ArrayList<>();
+
+		for (FastDfsDoc fastDfsDoc : fastDfsDocs) {
+
+			fastDfsDoc.setDocPath(HTTP + fastDfsDoc.getDocPath());
+
 		}
-//        fastDfsImgs.forEach(item -> {
-//            System.out.println(item);
-//        });
-		logger.info(String.valueOf(fastDfsImgs));
-		return Msg.success().add("fastDfsImg",fastDfsImgs);
+
+		for(FastDfsImg fastDfsImg : fastDfsImgs){
+
+			/*特殊字符需要转义*/
+			String[] suffix = fastDfsImg.getImgPath().split("\\.");
+
+			if(suffix[1].equals("jpg")){
+
+				fastDfsImg.setImgPath(HTTP + fastDfsImg.getImgPath());
+
+			}else{
+
+				fastDfsImgs_remove.add(fastDfsImg);
+			}
+		}
+		fastDfsImgs.removeAll(fastDfsImgs_remove);
+
+		return Msg.success().add("fastDfsImg",fastDfsImgs).add("fastDfsDoc",fastDfsDocs);
+	}
+
+	/**
+	 * 获取诊疗方案在fastDFS的路径
+	 * @return Msg
+	 */
+	@GetMapping("/diagnosis")
+	@ResponseBody
+	public Msg diagnosisAll(){
+
+		List<FastDfsDoc> fastDfsDocs = getDocPathService.getDocPathAll();
+
+		for (FastDfsDoc fastDfsDoc : fastDfsDocs) {
+
+			fastDfsDoc.setDocPath(HTTP + fastDfsDoc.getDocPath());
+
+		}
+
+		return Msg.success().add("fastDfsDoc",fastDfsDocs);
+
 	}
 
 	/**
@@ -460,9 +584,13 @@ public class BackStageController {
 	@RequestMapping("/patients")
 	@ResponseBody
 	public Msg getPatients(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+
 		PageHelper.startPage(pn, 7);
+
 		List<Info> patients = infoService.getAll();
+
 		PageInfo page = new PageInfo(patients, 5);
+
 		return Msg.success().add("PageInfo", page);
 	}
 
@@ -471,8 +599,11 @@ public class BackStageController {
 	 */
 	@GetMapping(value = "/add_patients")
 	public String savePatients(Model model) {
+
 		List<Department> list = deptService.getDepts();
+
 		model.addAttribute("departments", list);
+
 		return "backendsystem/addpatients";
 	}
 
@@ -481,11 +612,16 @@ public class BackStageController {
 	 */
 	@GetMapping("/famous_dr")
 	public String famousDr(Model model){
+
 		List<Famous_Doctor> famdoctorlist = famdoctorService.getAll();
+
 		for (Famous_Doctor famousDoctor : famdoctorlist) {
-			famousDoctor.setDrphotosrc(http+famousDoctor.getDrphotosrc());
+
+			famousDoctor.setDrphotosrc(HTTP + famousDoctor.getDrphotosrc());
 		}
+
 		model.addAttribute("famdoctor", famdoctorlist);
+
 		return "backendsystem/Dr/drs";
 	}
 
@@ -494,6 +630,7 @@ public class BackStageController {
 	 */
 	@RequestMapping("/analyze")
 	public String analyze(){
+
 		return "backendsystem/analyze/analyze";
 	}
 
@@ -504,19 +641,32 @@ public class BackStageController {
 	@GetMapping("/illtypenum")
 	@ResponseBody
 	public Map<String, Object[]> illtypenum(){
+
 		List<Department> deptlist = deptService.getDepts();
+
 		Integer[] count = infoService.getAllInfoPiId();
+
 		String categories = "";
+
 		String deptData[] = {};
+
 		String regex = "&";
+
 		for (Department department : deptlist) {
+
 			categories += department.getDeptName() + "&";
 		}
+
 		categories = categories.trim();
+
 		deptData = categories.split(regex);
+
 		Map<String,Object[]> map = new HashMap<String, Object[]>();
+
 		map.put("dept", deptData);
+
 		map.put("num", count);
+
 		return map;
 	}
 }

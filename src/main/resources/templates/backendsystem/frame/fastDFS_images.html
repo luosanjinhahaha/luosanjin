@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <style>
-    html::-webkit-scrollbar{
+    html::-webkit-scrollbar {
         display: none;
     }
 </style>
@@ -27,130 +27,188 @@
                 </div>
             </div>
         </div>
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="small-box bg-info" onclick="window.open('/admin/add_patients')" title="患者添加">
-                            <a href="javascript:;" class="small-box-footer">图片管理中心</a>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="small-box bg-success">
-                            <a href="#" class="small-box-footer">体检表管理中心</a>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="small-box bg-warning" onclick="window.open('/admin/useradmin')" title="修改管理员权限">
-                            <a href="#" class="small-box-footer" style="color: white !important">病历管理中心</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!--<section class="content">-->
+        <!--<div class="container-fluid">-->
+        <!--<div class="row">-->
+        <!--<div class="col-md-2">-->
+        <!--<div class="small-box bg-info">-->
+        <!--<a href="javascript:;" id="ImgManager" style="background: #007bff" class="small-box-footer">图片管理中心</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-2" style="text-align: center">-->
+        <!--&lt;!&ndash;<div class="small-box"> 诊疗方案&ndash;&gt;-->
+        <!--<a href="javascript:;" id="diagnosisManager" class="small-box-footer">诊疗方案管理中心</a>-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="col-md-2">-->
+        <!--&lt;!&ndash;<div class="small-box" onclick="window.open('/admin/useradmin')" title="修改管理员权限">&ndash;&gt;-->
+        <!--<a href="#" class="small-box-footer">病历管理中心</a>-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</section>-->
 
         <!-- 文件区 -->
-        <section class="content">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body" id="imgSource">
+        <!--<section class="content">-->
+        <!--<div class="row">-->
+        <!--<div class="col-12">-->
+        <!--<div class="card grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>-->
+        <!--<div class="card-body grid-item" id="imgSource" style="height: 1100px;">-->
 
-                        </div>
+        <!--</div>-->
+        <!--<div class="card-body grid-item" id="docSource" style="height: 1100px;">-->
+
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="grid">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="grid-item" th:each="">&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</section>-->
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header p-2">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">图片管理中心</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">诊疗方案管理中心</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">病历管理中心</a></li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="activity"></div>
+                        <div class="tab-pane" id="timeline"></div>
+                        <div class="tab-pane" id="settings"></div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </div>
-<footer class="main-footer"> <strong>© 2018 YJYF
-    Medical Center. All Rights Reserved.  宜家医坊总裁办公室所有</strong>
+<footer class="main-footer"><strong>© 2018 YJYF
+    Medical Center. All Rights Reserved. 宜家医坊总裁办公室所有</strong>
     <div class="float-right d-none d-sm-inline-block">
         <b>Version</b> 3.0.0-alpha
     </div>
 </footer>
 </body>
 <script>
-    var http = "http://localhost:9527/medical"
-    window.onload = function(){
-        $('#imgSource').css('height','1100px');
+
+    window.onload = function () {
+        showFastDfsImg();
+        diagnosisManager();
+    }
+
+    function showFastDfsImg() {
         $.ajax({
             url: "/medical/admin/showFastDfsImg",
-            type:"GET",
+            type: "GET",
             xhrFields: {
                 withCredentials: true
             },
-            success:function(res){
+            success: function (res) {
                 console.log(res);
-            // .css('height','160px').css('object-fit','cover')
-                $.each(res.extend.fastDfsImg,function(index, item){
-                    var imtItem = $('<div></div>').addClass('imgItem').css('margin-right','8px').css('margin-bottom','8px').css('width','200px')
-                        .css('border','1px solid #ddd').css('border-radius','5px').css('padding','10px')
-                        .append($('<img></img>').attr('src',item.imgPath).css('width','180px').css('height','160px').css('object-fit','cover')
-                            .css('border','1px solid #ddd')).append($('<p></p>').text('参考路径：')
-                            .append($('<div style="height:100px;"></div>').addClass('fastDFS_path').text(item.imgPath))
-                            .append($('<button></button>').prop('id',item.imgId).css('position','relative').css('top','20px').css('left','120px')
-                                .addClass('btn btn-danger btn-sm deleteImg_btn').css('width','60px').append($('<span>删除</span>')))).appendTo('#imgSource');
+                $.each(res.extend.fastDfsImg, function (index, item) {
+                    $('<div></div>').addClass('imgItem').css('margin-right', '8px').css('margin-bottom', '8px').css('width', '200px')
+                        .css('border', '1px solid #ddd').css('border-radius', '5px').css('padding', '10px')
+                        .append($('<img/>').attr('src', item.imgPath).css('width', '180px').css('height', '160px').css('object-fit', 'cover')
+                            .css('border', '1px solid #ddd')).append($('<p></p>').text('参考路径：')
+                        .append($('<div style="height:100px;"></div>').addClass('fastDFS_path').text(item.imgPath))
+                        .append($('<button></button>').prop('id', item.imgId).css('position', 'relative').css('top', '20px').css('left', '120px')
+                            .addClass('btn btn-danger btn-sm deleteImg_btn').css('width', '60px').append($('<span>删除</span>')))).appendTo('#activity');
                 });
-                $('#imgSource').masonry({
+                $('#activity').masonry({
                     itemSelector: '.imgItem',
                 });
             }
         });
+    }
 
-        $(document).on('click','.deleteImg_btn',function(){
-            var oldPath = $(this).siblings('.fastDFS_path').text();
-            var path = oldPath.substring(27,oldPath.length);
-            console.log(path);
-            swal({
-                title: "确定从fastDFS上删除路径为" + path + "的文件吗？",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确认",
-                cancelButtonText: "取消",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },function(isConfirm){
-                if(isConfirm){
-                    $.ajax({
-                        // url:http + "/consumer/admin/fastDFS_delete",
-                        url:"/medical/admin/fastDFS_delete",
-                        type:"POST",
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        data:{oldPath:path},
-                        success:function(res){
-                            if(res.code = 200){
-                                swal({
-                                    title: "删除成功！",
-                                    type: "success"
-                                },function(){
-                                    window.location.reload();
-                                });
-                            }else{
-                                swal({
-                                    title: "删除失败！",
-                                    type: "error"
-                                });
-                            }
-                        },
-                        error:function(){
-                            swal({
-                                title:"系统发生未知错误！删除失败！",
-                                type:"error"
-                            });
-                        }
-                    });
-                }else{
-                    swal({
-                        title: "您已取消删除！",
-                        type: "success"
-                    });
-                }
-            });
+    function diagnosisManager() {
+        $.ajax({
+            url: "/medical/admin/diagnosis",
+            type: "GET",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (res) {
+                console.log(res);
+                $.each(res.extend.fastDfsDoc, function (index, item) {
+                    $('<div></div>').addClass('docItem').css('margin-right', '8px').css('margin-bottom', '8px').css('width', '226px')
+                        .css('border', '1px solid #ddd').css('border-radius', '5px').css('padding', '10px')
+                        .append($('<a></a>').attr("href",item.docPath).append(item.docName + ".doc").css("width","100%").css("height","30px").css("color","#007bff").css("cursor","pointer"))
+                        .append($('<p></p>').text('参考路径：').append($('<div style="height:100px;"></div>').addClass('fastDFS_path').text(item.docPath))
+                        .append($('<button></button>').prop('id', item.docId).css('position', 'relative').css('top', '20px').css('left', '143px')
+                            .addClass('btn btn-danger btn-sm deleteDoc_btn').css('width', '60px').append($('<span>删除</span>')))).appendTo('#timeline');
+                });
+                $('#timeline').masonry({
+                    itemSelector: '.docItem',
+                });
+            }
         });
     }
+
+
+
+    $(document).on('click', '.deleteImg_btn', function () {
+        var oldPath = $(this).siblings('.fastDFS_path').text();
+        var path = oldPath.substring(27, oldPath.length);
+        console.log(path);
+        swal({
+            title: "确定从fastDFS上删除路径为" + path + "的文件吗？",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    // url:http + "/consumer/admin/fastDFS_delete",
+                    url: "/medical/admin/fastDFS_delete",
+                    type: "POST",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    data: {oldPath: path},
+                    success: function (res) {
+                        if (res.code = 200) {
+                            swal({
+                                title: "删除成功！",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            swal({
+                                title: "删除失败！",
+                                type: "error"
+                            });
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            title: "系统发生未知错误！删除失败！",
+                            type: "error"
+                        });
+                    }
+                });
+            } else {
+                swal({
+                    title: "您已取消删除！",
+                    type: "success"
+                });
+            }
+        });
+    });
+
 </script>
 </html>
