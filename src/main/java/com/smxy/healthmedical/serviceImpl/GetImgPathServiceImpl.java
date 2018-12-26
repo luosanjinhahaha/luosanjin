@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * Created with IDEA
- *
  * @author Luoxin
  * Date 2018/11/15
  * Time 20:32
@@ -22,16 +21,19 @@ public class GetImgPathServiceImpl implements GetImgPathService {
     FastDfsImgMapper fastDfsImgMapper;
     @Override
     public List<FastDfsImg> getImgPathAll() {
+
         return fastDfsImgMapper.getImgPath();
     }
 
     @Override
-    public void ImgPath(FastDfsImg fastDfsImg) {
+    public void saveImgPath(FastDfsImg fastDfsImg) {
+
         fastDfsImgMapper.insertImgPath(fastDfsImg);
     }
 
     @Override
     public void deleteImgByPath(String oldPath) {
+
         fastDfsImgMapper.deleteImg(oldPath);
     }
 }

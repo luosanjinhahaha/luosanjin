@@ -41,6 +41,11 @@
         <collection property="doctorTips" column="d_tips_doctor_id" select="com.smxy.healthmedical.dao.DoctorTipsMapper.getDoctortTipsBydoctorTipsDoctorId">
         </collection>
     </resultMap>
+    
+    <!--查询医生所有信息带文章-->
+    <select id="getDoctorAllWithTips" resultMap="selectDoctorByDoctorIdResultMap">
+        select * from tbl_doctor
+    </select>
 
     <!--查询出所有医生信息-->
     <select id="getDoctorAll" resultMap="DoctorWithRoleResultMap">

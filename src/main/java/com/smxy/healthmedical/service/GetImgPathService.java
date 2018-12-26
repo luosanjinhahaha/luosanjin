@@ -8,7 +8,7 @@ public interface GetImgPathService {
 
     List<FastDfsImg> getImgPathAll();
 
-    void ImgPath(FastDfsImg fastDfsImg);
+    void saveImgPath(FastDfsImg fastDfsImg);
 
     void deleteImgByPath(String oldPath);
 }

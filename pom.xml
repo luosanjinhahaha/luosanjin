@@ -27,6 +27,12 @@
     </properties>
 
     <dependencies>
+        <!--alibaba json依赖 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.51</version>
+        </dependency>
         <!--java操作fastDFS-->
         <dependency>
             <groupId>org.csource</groupId>
@@ -37,6 +43,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <!--aop 依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!--热部署-->
         <dependency>
@@ -54,6 +65,7 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+        <!--WebSocket相关依赖-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
@@ -68,17 +80,7 @@
             <artifactId>stomp-websocket</artifactId>
             <version>2.3.3</version>
         </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.3.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-
+        <!--WebSocket相关依赖结束-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -166,7 +168,7 @@
         </dependency>
         <!--读取Excel文件的jar包支持 结束-->
 
-        <!--Spring Mail Spring邮件 开始 -->
+        <!--Spring Mail 开始 -->
               <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
@@ -182,13 +184,7 @@
             <artifactId>spring-context-support</artifactId>
             <version>5.0.8.RELEASE</version>
         </dependency>
-        <!--pring Mail Spring邮件 结束-->
-        <!--热部署-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
+        <!--spring Mail  结束-->
     </dependencies>
 
     <build>
@@ -198,6 +194,22 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>/src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>static/css/fonts/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>/src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>static/css/fonts/**</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 

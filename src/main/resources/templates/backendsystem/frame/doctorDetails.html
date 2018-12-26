@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="doctorDetails">
 <head>
     <meta charset="UTF-8">
@@ -158,39 +159,41 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-body" th:each="doctorTip:${doctorInfoLists.doctorTips}">
+                        <div class="card-body" >
                             <div class="tab-content">
                                 <div class="active tab-pane" id="activity">
-                                    <div class="post">
-                                        <div class="user-block">
-                                            <img class="img-circle img-bordered-sm"
-                                                 th:src="${doctorInfoLists.doctorPhotoSrc}" style="object-fit: cover;"
-                                                 alt="user image">
-                                            <span class="username">
+                                    <!--<div >-->
+                                        <div class="post" th:each="doctorTip:${doctorInfoLists.doctorTips}">
+                                            <div class="user-block">
+                                                <img class="img-circle img-bordered-sm"
+                                                     th:src="${doctorInfoLists.doctorPhotoSrc}" style="object-fit: cover;"
+                                                     alt="user image">
+                                                <span class="username">
                                               <a href="#" th:text="${doctorInfoLists.doctorName}"></a>
                                               <a href="#" class="float-right btn-tool"><i class="fa fa-times"></i></a>
                                             </span>
-                                            <span class="description"
-                                                  th:text="'分享于&emsp;' + ${doctorTip.doctorTipsTime}"></span>
-                                        </div>
-                                        <p style="font-weight: bold" th:text="${doctorTip.doctorTipsName}"></p>
-                                        <p th:text="${doctorTip.doctorTipsDescription}"></p>
+                                                <span class="description"
+                                                      th:text="'分享于&emsp;' + ${doctorTip.doctorTipsTime}"></span>
+                                            </div>
+                                            <p style="font-weight: bold" th:text="${doctorTip.doctorTipsName}"></p>
+                                            <p th:text="${doctorTip.doctorTipsDescription}"></p>
 
-                                        <p>
-                                            <a href="#" class="link-black text-sm mr-2"><i class="fa fa-share mr-1"></i>
-                                                分享</a>
-                                            <a href="#" class="link-black text-sm"><i
-                                                    class="fa fa-thumbs-o-up mr-1"></i>[['点赞(' +
-                                                ${doctorTip.doctorTipsLike} + ')']]</a>
-                                            <span class="float-right">
+                                            <p>
+                                                <a href="#" class="link-black text-sm mr-2"><i class="fa fa-share mr-1"></i>
+                                                    分享</a>
+                                                <a href="#" class="link-black text-sm"><i
+                                                        class="fa fa-thumbs-o-up mr-1"></i>[['点赞(' +
+                                                    ${doctorTip.doctorTipsLike} + ')']]</a>
+                                                <span class="float-right">
                                               <a href="#" class="link-black text-sm" data-toggle="tooltip" title="查看评论">
                                                 <i class="fa fa-comments-o mr-1"></i> Comments (5)
                                               </a>
                                             </span>
-                                        </p>
-                                        <input class="form-control form-control-sm" type="text"
-                                               placeholder="发表评论">
-                                    </div>
+                                            </p>
+                                            <input class="form-control form-control-sm" type="text"
+                                                   placeholder="发表评论">
+                                        </div>
+                                    <!--</div>-->
                                 </div>
                                 <!--timeline锚点区-->
                                 <div class="tab-pane " id="timeline">
@@ -355,7 +358,6 @@
 </footer>
 <aside class="control-sidebar control-sidebar-dark">
 </aside>
-</div>
 </body>
 <script>
     $(function () {
@@ -386,7 +388,7 @@
                 .append($("<td></td>").append(item.pinfoGender))
                 .append($("<td></td>").append(item.ppinfoIllname))
                 .append($("<td></td>").append(item.pinfoInfo))
-                .append($("<td></td>").append(item.department.deptName))
+                .append($("<td></td>").append(item.department.deptName));
             tr.appendTo("#example1 tbody");
         })
     }

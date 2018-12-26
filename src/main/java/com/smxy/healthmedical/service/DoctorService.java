@@ -12,6 +12,9 @@ public interface DoctorService {
     /*根据id查找医生信息*/
     List<Doctor> getDoctorsByDoctorId(Integer id);
 
+    /*查询医生所有信息带文章*/
+    List<Doctor> getDoctorsInfoAll();
+
     /*查询出所有医生信息*/
     List<Doctor> getDoctorsAll();
 

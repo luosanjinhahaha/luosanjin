@@ -17,6 +17,9 @@ public interface DoctorMapper {
     /*根据id查找医生信息*/
     List<Doctor> getDoctorById(Integer doctorId);
 
+    /*查询医生所有信息带文章*/
+    List<Doctor> getDoctorAllWithTips();
+
     /*查询出所有医生信息*/
     List<Doctor> getDoctorAll();
 

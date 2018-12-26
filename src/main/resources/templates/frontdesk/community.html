@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -59,60 +60,92 @@
     </div>
 </section>
 <div th:replace="~{common/footer::footer}"></div>
-<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">-->
-    <!--<div class="modal-dialog" role="document">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>-->
-                <!--</button>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--<form>-->
-                    <!--<p>请选择发帖区：-->
-                    <!--<div class="Select">-->
-                        <!--<select id="city" class="select">-->
-                            <!--<option value="疾病症状区">疾病症状</option>-->
-                            <!--<option value="医学养生区">医学养生</option>-->
-                            <!--<option value="家庭护理区">家庭护理</option>-->
-                            <!--<option value="用药指南区">用药指南</option>-->
-                            <!--<option value="检验查询区">检验查询</option>-->
-                            <!--<option value="听力康复区">听力康复</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="recipient-name" class="control-label">标题：</label>-->
-                        <!--<input type="text" class="form-control" id="recipient-name" value="示范：本人女，24岁,患XX疾病，有XX症状...."-->
-                               <!--onfocus="if(this.value=='示范：本人女，24岁,患XX疾病，有XX症状....'){this.value='';}">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="message-text" class="control-label">详细描述：</label>-->
-                        <!--<textarea class="form-control" id="message-text"></textarea>-->
-                    <!--</div>-->
-                <!--</form>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-                <!--<button type="button" class="btn btn-primary">发布</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 </body>
 <script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
 <script th:src="@{/js/homepage_js/popper.min.js}"></script>
 <script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
 <script th:src="@{/js/homepage_js/plugins.js}"></script>
 <script th:src="@{/js/homepage_js/active.js}"></script>
+<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+<script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
 <script>
     $(window).load(function () {
         $(".loading").fadeOut(750);
     });
     $('#exampleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget)
-        var recipient = button.data('whatever')
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
+        var button = $(event.relatedTarget);
+        var recipient = button.data('whatever');
+        var modal = $(this);
+        modal.find('.modal-title').text('New message to ' + recipient);
         modal.find('.modal-body input').val(recipient)
-    })
+    });
+
+    /*WebSocket 配置*/
+    var stompClient = null;
+
+    function setConnected(connected) {
+        $("#connect").prop("disabled", connected);
+        $("#disconnect").prop("disabled", !connected);
+        if (connected) {
+            $("#conversation").show();
+        }
+        else {
+            $("#conversation").hide();
+        }
+        $("#notice").html("");
+    }
+
+    /*连接*/
+    function connect() {
+
+        /*连接上端点(基站)*/
+        var socket = new SockJS('/medical/endpoint-websocket');
+
+        /*用stom进行包装，规范协议*/
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            console.log('Connected: ' + frame);
+
+            /*订阅/topic/server_info信道的消息*/
+            stompClient.subscribe('/topic/diagnosis', function (result) {
+                showContent(JSON.parse(result.body));
+            });
+        });
+    }
+
+    /*断开*/
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log("Disconnected");
+    }
+
+    /*推送消息*/
+    function sendName() {
+        stompClient.send("/app/topic/subscription", {}, JSON.stringify({'content': $("#send").parent("div").find("div:eq(0)").text()}));
+    }
+
+    function showContent(body) {
+        $("#notice").prepend("<tr><td>" + body.content + "</td> <td>" + new Date(body.time).toLocaleString() + "</td></tr>");
+    }
+
+    $(function () {
+        $("form").on('submit', function (e) {
+            e.preventDefault();
+        });
+
+        /*连接*/
+        connect();
+
+        $("#disconnect").click(function () {
+            disconnect();
+        });
+
+        /*推送消息*/
+        $( "#send" ).click(function() { sendName(); });
+    });
 </script>
 </html>

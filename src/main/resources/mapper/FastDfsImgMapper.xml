@@ -5,7 +5,7 @@
 		select * from tbl_fastdfs_img
 	</select>
 
-	<insert id="insertImgPath" parameterType="FastDfsImg">
+	<insert id="insertImgPath" parameterType="com.smxy.healthmedical.bean.FastDfsImg">
 		insert into tbl_fastdfs_img(img_id, img_path) values(#{imgId}, #{imgPath})
 	</insert>
 

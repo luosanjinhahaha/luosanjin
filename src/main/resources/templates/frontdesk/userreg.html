@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -295,7 +296,6 @@
     //点击获取验证码
     //点击解除
     $("#free_code_btn").click(function () {
-        console.log("dasdsad");
         swal({
             title: "验证码已发送请查收",
             type: "success",
@@ -312,7 +312,6 @@
                     type: "success"
                 });
                 code(result);
-                console.log(result.extend.code);
             }
         });
     });

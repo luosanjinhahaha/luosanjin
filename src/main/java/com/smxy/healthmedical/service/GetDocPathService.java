@@ -8,7 +8,7 @@ public interface GetDocPathService {
 
     List<FastDfsDoc> getDocPathAll();
 
-    void DocPath(FastDfsDoc fastDfsDoc);
+    void saveDocPath(FastDfsDoc fastDfsDoc);
 
     void deleteDocByPath(String oldPath);
 }

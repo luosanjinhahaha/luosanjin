@@ -3,15 +3,13 @@ package com.smxy.healthmedical.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smxy.healthmedical.bean.*;
-import com.smxy.healthmedical.bean.Permission;
 import com.smxy.healthmedical.realm.UserToken;
 import com.smxy.healthmedical.realm.UserType;
 import com.smxy.healthmedical.service.*;
 import com.smxy.healthmedical.utils.MyFastDfsApi;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -24,10 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -48,12 +48,13 @@ public class BackStageController {
 	private final RolePermissionService rolePermissionService;
 	private final PermissionService permissionService;
 	private final GetDocPathService getDocPathService;
+	private final UserPvService userPvService;
 
 	@Autowired
-	public BackStageController(AdminService adminService,ReadFileService readFileService,InfoService infoService,
-							   DeptService deptService,FamdoctorService famdoctorService,GetImgPathService getImgPathService,
-							   DoctorService doctorService,RolePermissionService rolePermissionService,
-							   PermissionService permissionService, GetDocPathService getDocPathService){
+	public BackStageController(AdminService adminService, ReadFileService readFileService, InfoService infoService,
+                               DeptService deptService, FamdoctorService famdoctorService, GetImgPathService getImgPathService,
+                               DoctorService doctorService, RolePermissionService rolePermissionService,
+                               PermissionService permissionService, GetDocPathService getDocPathService, UserPvService userPvService){
 		this.adminService = adminService;
 		this.readFileService = readFileService;
 		this.infoService = infoService;
@@ -64,10 +65,9 @@ public class BackStageController {
 		this.rolePermissionService = rolePermissionService;
 		this.permissionService = permissionService;
 		this.getDocPathService = getDocPathService;
-	}
+        this.userPvService = userPvService;
+    }
 	private static final String HTTP = "http://106.14.160.207:8888/";
-
-    private static final Logger logger = LoggerFactory.getLogger(BackStageController.class);
 
     private static final String ADMIN_USER_TYPE = UserType.ADMIN.toString();
 
@@ -75,7 +75,7 @@ public class BackStageController {
 
 	@RequestMapping("/background")
 	public String background(){
-		return "frontdesk/adminlogin";
+		return "frontdesk/adminLogin";
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class BackStageController {
 		UserToken token = new UserToken(adminUsers.getAdminName(),adminUsers.getAdminPassword(),ADMIN_USER_TYPE);
 		token.setRememberMe(false);
 
-		LOGGER.info(token.getUsername() + "-------->" + token.getPassword());
+		/*LOGGER.info(token.getUsername() + "-------->" + token.getPassword());*/
 		try {
             /*执行认证:传到ModularRealmAuthenticator类中，然后根据ADMIN_USER_TYPE传到AdminShiroRealm的方法进行认证*/
             subject.login(token);
@@ -125,12 +125,18 @@ public class BackStageController {
 	@GetMapping("/details")
 	@ResponseBody
 	public Msg toDetails(@RequestParam(value = "pn",defaultValue = "1") Integer pn){
+
 		List<AdminUsers> admin = adminService.getadmin();
+
 		List<Info> patients1 = infoService.getAll();
+
 		/*患者分页查询*/
 		PageHelper.startPage(pn,10);
+
 		List<Info> patients = infoService.getAll();
+
 		PageInfo<Info> page = new PageInfo<>(patients,6);
+
 		return Msg.success().add("PageInfo",page).add("sum",patients1.size()).add("adminsum",admin.size());
 	}
 
@@ -144,8 +150,8 @@ public class BackStageController {
 	public Msg getRolePermission(@PathVariable("roleId") Integer roleId){
 		List<RolePermission> doctorPermissions =  rolePermissionService.getDoctorPermissionByRoleId(roleId);
 		List<Permission> permissions = permissionService.getPermissionAll();
-		LOGGER.info("所有权限为：" + permissions.toString());
-        LOGGER.info(doctorPermissions.toString());
+		/*LOGGER.info("所有权限为：" + permissions.toString());*/
+        /*LOGGER.info(doctorPermissions.toString());*/
         return Msg.success().add("doctorPermissions",doctorPermissions).add("permissions",permissions);
     }
 
@@ -159,7 +165,7 @@ public class BackStageController {
 	@ResponseBody
     public Msg addDoctorPermission(@RequestParam("doctorRoleId") Integer doctorRoleId,
 								   @RequestParam("addPermissionId") String addPermissionId){
-    	LOGGER.info(doctorRoleId + "------>" + addPermissionId);
+    	/*LOGGER.info(doctorRoleId + "------>" + addPermissionId);*/
     	if(addPermissionId.contains("-")){
     		List<Integer> permissionId = new ArrayList<>();
     		String[] permissionIds = addPermissionId.split("-");
@@ -204,7 +210,7 @@ public class BackStageController {
 			RolePermission rolePermission = new RolePermission();
 			rolePermission.setRoleId(doctorRoleId);
 			rolePermission.setPermissionId(Integer.parseInt(removePermissionId));
-			LOGGER.info(rolePermission.toString());
+			/*LOGGER.info(rolePermission.toString());*/
 			rolePermissionService.deleteDoctorPermission(rolePermission);
 			return Msg.success();
 		}
@@ -443,89 +449,14 @@ public class BackStageController {
 		return "backendsystem/main";
 	}
 
-	@GetMapping("/filemanager")
-	public String filemanager(){
-
-		return "backendsystem/fileManager";
-
-	}
-
-	/**
-	 * 功能描述:上传图片到fastDFS
-	 * @return map
-	 * @author luoxin
-	 * @date 2018/11/14 20:40
-	 */
-	@PostMapping("/fastDFS_upload")
-	@ResponseBody
-	public Msg fastDFSUpload(MultipartFile file) throws Exception {
-
-		MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
-
-		System.out.println("-------->" + file.getSize());
-
-		String path = "";
-
-		if(!"".equals(file.getSize())){
-
-			path = myFastDfsApi.uploadImg(file);
-
-			System.out.println(path);
-		}
-
-		if(file.getOriginalFilename().equals("jpg")){
-
-			FastDfsImg fastDfsImg = new FastDfsImg();
-
-			fastDfsImg.setImgPath(path);
-
-			getImgPathService.ImgPath(fastDfsImg);
-
-		}else if(file.getOriginalFilename().equals("doc")){
-
-			FastDfsDoc fastDfsDoc = new FastDfsDoc();
-
-			fastDfsDoc.setDocPath(path);
-
-			getDocPathService.DocPath(fastDfsDoc);
-
-		}
-
-		return Msg.success().add("path",path);
-	}
-
-	@PostMapping("/fastDFS_delete")
-	@ResponseBody
-	public Msg fastDFSDelete(String oldPath) throws Exception {
-
-		System.out.println(oldPath);
-
-		MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
-
-		if(!"".equals(oldPath)){
-
-			myFastDfsApi.deleteImg(oldPath);
-
-			getImgPathService.deleteImgByPath(oldPath);
-
-		}else{
-
-			return Msg.fail();
-
-		}
-
-		return Msg.success();
-	}
-
 	/**
 	 * 功能描述:回显fastDFS文件于页面
 	 * @return 返回fastDFS对象
 	 * @author luoxin
 	 * @date 2018/11/15 20:43
 	 */
-	@GetMapping("/showFastDfsImg")
-	@ResponseBody
-	public Msg showFastDfsImgAll(){
+	@GetMapping("/fileManager")
+	public String fileManager(Model model){
 
 		List<FastDfsImg> fastDfsImgs = getImgPathService.getImgPathAll();
 
@@ -555,8 +486,122 @@ public class BackStageController {
 		}
 		fastDfsImgs.removeAll(fastDfsImgs_remove);
 
-		return Msg.success().add("fastDfsImg",fastDfsImgs).add("fastDfsDoc",fastDfsDocs);
+		model.addAttribute("fastDfsImg",fastDfsImgs);
+
+		model.addAttribute("fastDfsDoc",fastDfsDocs);
+
+		return "backendsystem/fileManager";
+
 	}
+
+	/**
+	 * 功能描述:上传图片到fastDFS
+	 * @return map
+	 * @author luoxin
+	 * @date 2018/11/14 20:40
+	 */
+	@PostMapping("/fastDFS_upload")
+	@ResponseBody
+	public Msg fastDFSUpload(MultipartFile file) throws Exception {
+
+		MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
+
+		String path = "";
+
+		if(!"".equals(file.getSize())){
+
+			path = myFastDfsApi.uploadImg(file);
+
+			String[] suffix = file.getOriginalFilename().split("\\.");
+
+			if(suffix[1].equals("jpg")){
+
+				FastDfsImg fastDfsImg = new FastDfsImg();
+
+				fastDfsImg.setImgPath(path);
+
+				/*LOGGER.info("========>>>>>" + fastDfsImg.getImgPath());*/
+
+				getImgPathService.saveImgPath(fastDfsImg);
+
+			}else if(suffix[1].equals("doc")){
+
+				FastDfsDoc fastDfsDoc = new FastDfsDoc();
+
+				fastDfsDoc.setDocPath(path);
+
+				fastDfsDoc.setDocName(file.getOriginalFilename());
+
+				/*LOGGER.info("==========>" + fastDfsDoc.toString());*/
+
+				getDocPathService.saveDocPath(fastDfsDoc);
+
+			}
+
+
+
+		}
+
+		return Msg.success().add("path",path);
+	}
+
+	@PostMapping("/fastDFS_delete")
+	@ResponseBody
+	public Msg fastDFSDelete(String oldPath) throws Exception {
+
+		System.out.println(oldPath);
+
+		MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
+
+		if(!"".equals(oldPath)){
+
+			myFastDfsApi.deleteImg(oldPath);
+
+			getImgPathService.deleteImgByPath(oldPath);
+
+		}else{
+
+			return Msg.fail();
+
+		}
+
+		return Msg.success();
+	}
+
+//	@GetMapping("/showFastDfsImg")
+//	@ResponseBody
+//	public Msg showFastDfsImgAll(){
+//
+//		List<FastDfsImg> fastDfsImgs = getImgPathService.getImgPathAll();
+//
+//		List<FastDfsDoc> fastDfsDocs = getDocPathService.getDocPathAll();
+//
+//		List<FastDfsImg> fastDfsImgs_remove = new ArrayList<>();
+//
+//		for (FastDfsDoc fastDfsDoc : fastDfsDocs) {
+//
+//			fastDfsDoc.setDocPath(HTTP + fastDfsDoc.getDocPath());
+//
+//		}
+//
+//		for(FastDfsImg fastDfsImg : fastDfsImgs){
+//
+//			/*特殊字符需要转义*/
+//			String[] suffix = fastDfsImg.getImgPath().split("\\.");
+//
+//			if(suffix[1].equals("jpg")){
+//
+//				fastDfsImg.setImgPath(HTTP + fastDfsImg.getImgPath());
+//
+//			}else{
+//
+//				fastDfsImgs_remove.add(fastDfsImg);
+//			}
+//		}
+//		fastDfsImgs.removeAll(fastDfsImgs_remove);
+//
+//		return Msg.success().add("fastDfsImg",fastDfsImgs).add("fastDfsDoc",fastDfsDocs);
+//	}
 
 	/**
 	 * 获取诊疗方案在fastDFS的路径
@@ -669,4 +714,39 @@ public class BackStageController {
 
 		return map;
 	}
+
+	@GetMapping("/getUserPvCount")
+	@ResponseBody
+	public Msg getUserPvCount(UserPv userPv){
+
+		UserPv userPvByExample = userPvService.findUserPvByExample(userPv);
+
+		return Msg.success().add("userPv",userPvByExample);
+	}
+
+
+	/**
+	 * 有记录就更新pvSum，没有就新增
+	 * @param userPv 用户pv操作
+	 * @return  Msg通用类
+	 */
+	@PostMapping("/pageViews")
+    @ResponseBody
+	public Msg addPageViews(UserPv userPv){
+
+        LOGGER.info(userPv.toString());
+
+		UserPv userPvByExample = userPvService.findUserPvByExample(userPv);
+
+		if(userPvByExample != null){
+
+			userPvService.updatePvUserInfo(userPv);
+
+			return Msg.success().add("msg","记录更新成功");
+		}
+
+		userPvService.addUserPv(userPv);
+
+		return Msg.success();
+    }
 }

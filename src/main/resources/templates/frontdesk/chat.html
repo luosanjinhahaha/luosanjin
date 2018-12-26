@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -10,6 +11,7 @@
     <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
     <link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
     <link rel="stylesheet" th:href="@{/css/homepage_css/chat.css}">
+    <link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}">
 </head>
 <body>
 <div th:replace="~{common/loading::loading}"></div>
@@ -65,6 +67,7 @@
 <script th:src="@{/js/homepage_js/plugins.js}"></script>
 <script th:src="@{/js/homepage_js/active.js}"></script>
 <script th:src="@{/js/main_js/chat.js}"></script>
+<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
 <script>
     $(window).load(function () {
         $(".loading").fadeOut(750);

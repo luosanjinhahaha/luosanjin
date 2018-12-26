@@ -33,6 +33,12 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.getDoctorById(doctorId);
     }
 
+    /*查询医生所有信息带文章*/
+    @Override
+    public List<Doctor> getDoctorsInfoAll() {
+        return doctorMapper.getDoctorAllWithTips();
+    }
+
     /*查询出所有医生信息*/
     @Override
     public List<Doctor> getDoctorsAll() {

@@ -7,6 +7,8 @@ import com.smxy.healthmedical.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +53,10 @@ public class UserController {
 
 	}
 
+	private static final String HTTP = "http://106.14.160.207:8888/";
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
 	@GetMapping("/havesession")
 	@ResponseBody
 	public Msg getSession(){
@@ -70,30 +76,61 @@ public class UserController {
 	@GetMapping("/doctorlist")
 	public String doctorList(Model model){
 		List<Famous_Doctor> famousDoctors = famdoctorService.getAll();
-		String http = "http://127.0.0.1:8082";
 		for (Famous_Doctor famousDoctor : famousDoctors) {
-			famousDoctor.setDrphotosrc(http + famousDoctor.getDrphotosrc());
+			famousDoctor.setDrphotosrc(HTTP + famousDoctor.getDrphotosrc());
 		}
 		model.addAttribute("famousdoctors",famousDoctors);
 		return "frontdesk/doctorlist";
 	}
 
+	/**
+	 * 健康科普页
+	 * @return 健康科普页
+	 */
+	@GetMapping("/popularization")
+	public String popularization( Model model){
+
+		List<Doctor> doctorInfoList = doctorService.getDoctorsInfoAll();
+
+		for (Doctor doctorInfo : doctorInfoList) {
+
+			doctorInfo.setDoctorPhotoSrc(HTTP + doctorInfo.getDoctorPhotoSrc());
+		}
+
+		LOGGER.info(doctorInfoList.toString());
+
+
+		model.addAttribute("doctorInfoList",doctorInfoList);
+
+		return "frontdesk/popularization";
+	}
+
 	@GetMapping("/to_customization")
 	public String toCustomization(Model model){
+
 		Subject subject = SecurityUtils.getSubject();
+
 		Session session = subject.getSession();
+
 		String username = (String) session.getAttribute("realname");
+
 		User user = regService.queryuserbyid(username);
+
 		System.out.println(user);
+
 		model.addAttribute("customizationInfo",user);
+
 		return "frontdesk/customization";
 	}
 
 	@PostMapping("/customization")
 	@ResponseBody
 	public Msg customization(Customization customization){
+
 		customizationService.insertCustomizationInfo(customization);
+
 		System.out.println(customization);
+
 		return Msg.success();
 	}
 
@@ -105,47 +142,70 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/mailsender")
 	public Msg mailSender(String email) {
+
 		String code = mailService.send(email);
+
 		return Msg.success().add("code", code);
 	}
 
 	@GetMapping("/index")
 	public String userIndex(Model model){
+
 		List<Department> list = deptService.getDepts();
+
 		List<Famous_Doctor> famdoctorlist = famdoctorService.getAll();
+
 		model.addAttribute("famdoctor",famdoctorlist);
+
 		model.addAttribute("dept",list);
+
 		return "frontdesk/homepage";
 	}
 
 	@GetMapping("/consult")
 	public String userAppointconsult( Model model){
+
 		List<Department> list = deptService.getDepts();
+
 		model.addAttribute("dept",list);
+
 		return "frontdesk/consult";
 	}
 
 	@GetMapping("/consult/{id}")
 	@ResponseBody
 	public Msg userConsult(@PathVariable("id") Integer id,@RequestParam(value = "pn",defaultValue = "1") Integer pn){
+
 		List<Department> list = deptService.getDepts();
+
 		PageHelper.startPage(pn,3);
+
 		Department departmentList = appointDoctorWithDeptService.getDeptAll(id);
-		String http = "http://127.0.0.1:8082";
+
 		for (Doctor deptList : departmentList.getDoctors()) {
-			deptList.setDoctorPhotoSrc(http + deptList.getDoctorPhotoSrc());
+
+			deptList.setDoctorPhotoSrc(HTTP + deptList.getDoctorPhotoSrc());
+
 		}
+
 		List<Department> list1 = new LinkedList<>();
+
 		list1.add(departmentList);
+
 		PageInfo<Department> page = new PageInfo<>(list1, 5);
+
 		System.out.println(list1);
+
 		return Msg.success().add("departmentList",page).add("dept",list);
 	}
 
 	@GetMapping("/deptWithDoct/{id}")
 	public String deptWithDoct(@PathVariable("id") Integer id, Model model){
+
 		List<Doctor> doctors = doctorService.getDoctorsByDoctorId(id);
+
 		model.addAttribute("doctors", doctors);
+
 		return "frontdesk/consultDoct";
 	}
 
@@ -162,24 +222,35 @@ public class UserController {
 
 	@GetMapping("/chat")
 	public String userchat(Model model){
+
 		List<Department> deptList = deptService.getDepts();
+
 		model.addAttribute("deptLists",deptList);
+
 		return "frontdesk/chat";
 	}
 
 	@GetMapping("/community")
 	public String usercommunity(Model model){
+
 		List<Department> list = deptService.getDepts();
+
 		List<Questions> questionsList = questionService.getAllQuestions();
+
 		model.addAttribute("dept",list);
+
 		model.addAttribute("question",questionsList);
+
 		System.out.println(questionsList);
+
 		return "frontdesk/community";
 	}
 
 	@GetMapping("/communityDetails/{id}")
 	public String communityDetails(@PathVariable("id") Integer id, Model model){
+
 		Questions questions = questionService.QuestionsCommentById(id);
+
 		model.addAttribute("questions",questions);
 
 		/*同步锁*/
@@ -189,22 +260,34 @@ public class UserController {
 //		}
 
 		System.out.println(questions);
+
 		return "frontdesk/CommunityDetails";
 	}
 
 	@PostMapping("/commentMessage")
 	@ResponseBody
 	public Msg commentMessage(String content,String qid, String date,Comment comment){
+
 		Subject subject = SecurityUtils.getSubject();
+
 		Session session = subject.getSession();
+
 		String username = (String) session.getAttribute("realname");
+
 		User user = regService.queryuserbyid(username);
+
 		comment.setCommentQuestionId(qid);
+
 		comment.setCommentUserId(String.valueOf(user.getId()));
+
 		comment.setCommentContent(content);
+
 		comment.setCommentTime(date);
+
 		System.out.println(comment);
+
 		commentService.InsertComments(comment);
+
 		return Msg.success().add("comment",comment);
 	}
 
@@ -231,9 +314,8 @@ public class UserController {
 	@ResponseBody
 	public Msg famDr(){
 		List<Famous_Doctor> famdoctorlist = famdoctorService.getAll();
-		String http = "http://127.0.0.1:8082";
 		for (Famous_Doctor famousDoctor : famdoctorlist) {
-			famousDoctor.setDrphotosrc(http+famousDoctor.getDrphotosrc());
+			famousDoctor.setDrphotosrc(HTTP + famousDoctor.getDrphotosrc());
 		}
 		return Msg.success().add("famdoctor", famdoctorlist);
 	}

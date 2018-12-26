@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="docList">
 <head>
     <meta charset="UTF-8">
@@ -42,28 +43,228 @@
 </div>
 <!--结束-->
 </body>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script>
+    console.log(returnCitySN["cip"]+','+returnCitySN["cname"]);
     window.onload = function () {
-        console.log($('.deptId').attr('id'));
         $.ajax({
             url:'/medical/user/consult/1',
             type:"GET",
             success:function (res) {
-                console.log(res.extend.departmentList.list[0].doctors);
                 buildDoctor(res);
             }
         });
-    }
+    };
+
+    var xinxueCount;
+    var xiaohuaCount;
+    var zhongyiCount;
+    var yiliaobaojianCount;
+    var xueyeCount;
+    var gandanCount;
+    var puwaiCount;
+    var xinxiongCount;
+    var miniaoCount;
+    var jiaoxingCount;
+    var shenjingCount;
+    var zhongliuCount;
+
+    var pvIp = returnCitySN["cip"];
+
+    var pvHomeLocation = returnCitySN["cname"];
+
+    $(function () {
+        $.ajax({
+            url: "/medical/admin/getUserPvCount",
+            type: "GET",
+            data: {
+                "pvUserName": $("#user_name").text(),
+            },
+            success: function (res) {
+                console.log(res.extend.userPv);
+                if (res.extend.userPv == null) {
+                    xinxueCount = 0;
+                    xiaohuaCount = 0;
+                    zhongyiCount = 0;
+                    yiliaobaojianCount = 0;
+                    xueyeCount = 0;
+                    gandanCount = 0;
+                    puwaiCount = 0;
+                    xinxiongCount = 0;
+                    miniaoCount = 0;
+                    jiaoxingCount = 0;
+                    shenjingCount = 0;
+                    zhongliuCount = 0;
+                }else {
+                    if (res.extend.userPv.pvXinxueSum == null) {
+                        xinxueCount = 0;
+
+                    }else if(res.extend.userPv.pvXinxueSum != null){
+                        xinxueCount = res.extend.userPv.pvXinxueSum;
+
+                    }
+
+                    if(res.extend.userPv.pvXiaohuaSum == null){
+                        xiaohuaCount = 0;
+
+                    }else if(res.extend.userPv.pvZhongyiSum != null){
+
+                        xiaohuaCount = res.extend.userPv.pvXiaohuaSum;;
+                    }
+
+                    if(res.extend.userPv.pvZhongyiSum == null){
+                        zhongyiCount = 0;
+
+                    }else if(res.extend.userPv.pvZhongyiSum != null){
+                        zhongyiCount = res.extend.userPv.pvZhongyiSum;
+
+                    }
+
+                     if(res.extend.userPv.pvYiliaobaojianSum == null){
+                        yiliaobaojianCount = 0;
+
+                    }else if(res.extend.userPv.pvYiliaobaojianSum != null){
+                        yiliaobaojianCount = res.extend.userPv.pvYiliaobaojianSum;
+
+                    }
+
+                    if(res.extend.userPv.pvXueyeSum == null){
+                        xueyeCount = 0;
+
+                    }else if(res.extend.userPv.pvXueyeSum != null){
+                        gandanCount =  res.extend.userPv.pvXueyeSum;
+
+                    }
+
+                    if(res.extend.userPv.pvGandanSum == null){
+                        gandanCount = 0;
+
+                    }else  if(res.extend.userPv.pvGandanSum != null){
+                        gandanCount = res.extend.userPv.pvGandanSum;
+
+                    }
+
+                    if(res.extend.userPv.pvPuwaiSum == null){
+                        puwaiCount = 0;
+
+                    }else if(res.extend.userPv.pvPuwaiSum != null){
+                        puwaiCount = res.extend.userPv.pvPuwaiSum;
+
+                    }
+
+                    if(res.extend.userPv.pvXinxiongSum == null){
+                        xinxiongCount = 0;
+
+                    }else if(res.extend.userPv.pvXinxiongSum != null){
+                        xinxiongCount = res.extend.userPv.pvXinxiongSum;
+
+                    }
+
+                    if(res.extend.userPv.pvMiniaoSum == null){
+                        miniaoCount = 0;
+
+                    }else if(res.extend.userPv.pvMiniaoSum != null){
+                        miniaoCount = res.extend.userPv.pvMiniaoSum;
+
+                    }
+
+                    if(res.extend.userPv.pvJiaoxingSum == null){
+                        jiaoxingCount = 0;
+
+                    }else if(res.extend.userPv.pvJiaoxingSum != null){
+                        jiaoxingCount = res.extend.userPv.pvJiaoxingSum;
+
+                    }
+
+                    if(res.extend.userPv.pvShenjingSum == null){
+                        shenjingCount = 0;
+
+                    }else if(res.extend.userPv.pvShenjingSum != null){
+                        shenjingCount = res.extend.userPv.pvShenjingSum;
+
+                    }
+
+                    if(res.extend.userPv.pvZhongliuSum == null){
+                        zhongliuCount = 0;
+
+                    }else if(res.extend.userPv.pvZhongliuSum != null){
+                        zhongliuCount = res.extend.userPv.pvZhongliuSum;
+
+                    }
+                }
+            }
+        });
+    });
+
     $('.deptId').click(function () {
+        if($(this).attr("id") == 1){
+            var pvXinxueSum = ++xinxueCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation + "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvXinxueSum=" + pvXinxueSum;
+            check(pvData);
+        }else if($(this).attr("id") == 2){
+            var pvXiaohuaSum = ++xiaohuaCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvXiaohuaSum=" + pvXiaohuaSum ;
+            check(pvData);
+        }else if($(this).attr("id") == 3){
+            var pvZhongyiSum = ++zhongyiCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvZhongyiSum=" + pvZhongyiSum ;
+            check(pvData);
+        }else if($(this).attr("id") == 4){
+            var pvYiliaobaojianSum = ++yiliaobaojianCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvYiliaobaojianSum=" + pvYiliaobaojianSum;
+            check(pvData);
+        }else if($(this).attr("id") == 5){
+            var pvXueyeSum = ++xueyeCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvXueyeSum=" + pvXueyeSum ;
+            check(pvData);
+        }else if($(this).attr("id") == 6){
+            var pvGandanSum = ++gandanCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" +  "pvGandanSum=" + pvGandanSum;
+            check(pvData);
+        }else if($(this).attr("id") == 7){
+            var pvPuwaiSum = ++puwaiCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvPuwaiSum=" + pvPuwaiSum;
+            check(pvData);
+        }else if($(this).attr("id") == 8){
+            var pvXinxiongSum = ++xinxiongCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvXinxiongSum=" + pvXinxiongSum;
+            check(pvData);
+        }else if($(this).attr("id") == 9){
+            var pvMiniaoSum = ++miniaoCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvMiniaoSum=" + pvMiniaoSum;
+            check(pvData);
+        }else if($(this).attr("id") == 10){
+            var pvJiaoxingSum = ++jiaoxingCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvJiaoxingSum=" + pvJiaoxingSum;
+            check(pvData);
+        }else if($(this).attr("id") == 11){
+            var pvShenjingSum = ++shenjingCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvShenjingSum=" + pvShenjingSum;
+            check(pvData);
+        }else if($(this).attr("id") == 12){
+            var pvZhongliuSum = ++zhongliuCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation +  "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvZhongliuSum=" + pvZhongliuSum;
+            check(pvData);
+        }
         $.ajax({
             url:'/medical/user/consult/' +  $(this).attr('id'),
             type:"GET",
             success:function (res) {
-                console.log(res.extend.departmentList.list[0].doctors);
                 buildDoctor(res);
             }
         });
-    })
+    });
+
+    function check(pvData) {
+        $.ajax({
+            url: "/medical/admin/pageViews",
+            type: "POST",
+            data: pvData,
+            success: function (res) {
+            }
+        });
+    }
+
     function buildDoctor(res) {
         $(".parent").empty();
         $.each(res.extend.departmentList.list,function (index, item) {

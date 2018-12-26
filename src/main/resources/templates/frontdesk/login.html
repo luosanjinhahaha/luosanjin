@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -7,76 +8,79 @@
     <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/validation/dist/jquery.validate.min.js}"></script>
     <script th:src="@{/validation/dist/localization/messages_zh.js}"></script>
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}"  rel="stylesheet"/>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/css/others_css/login.css}">
-    <link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}" />
+    <link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}"/>
 </head>
 <body>
-    <div th:replace="~{common/loading::loading}"></div>
-    <div class="bg bg-blur"></div>
-    <div class="intro">
-        <h1 style="color: white;">Health Care Administration</h1>
-        <h3 style="color: white;">欢迎登录基于大数据技术的健康服务平台后台管理系统</h3>
-    </div>
-    <div class="login">
-        <h2 style="color:black; font-family:'宋体'; text-align: center;">用户登录</h2>
-        <div>
-            <form class="form-horizontal" id="login_form">
-                <div class="form-group" style="margin-left:20px;">
-                    <div class="col-sm-10">
-                        <input type="text" autocomplete="off" class="form-control" id="adminName" name="adminName"
-                               placeholder="Username">
-                        <span id="adminname_check" class="help-block"></span>
-                    </div>
+<div th:replace="~{common/loading::loading}"></div>
+<div class="bg bg-blur"></div>
+<div class="intro">
+    <h1 style="color: white;">Health Care Administration</h1>
+    <h3 style="color: white;">欢迎登录基于大数据技术的健康服务平台后台管理系统</h3>
+</div>
+<div class="login">
+    <h2 style="color:black; font-family:'宋体'; text-align: center;">用户登录</h2>
+    <div>
+        <form class="form-horizontal" id="login_form">
+            <div class="form-group" style="margin-left:20px;">
+                <div class="col-sm-10">
+                    <input type="text" autocomplete="off" class="form-control" id="adminName" name="adminName"
+                           placeholder="Username">
+                    <span id="adminname_check" class="help-block"></span>
                 </div>
-                <div class="form-group" style="margin-left:20px;">
-                    <div class="col-sm-10">
-                        <input type="password" autocomplete="off" class="form-control" id="adminPassword" name="adminPassword"
-                               placeholder="Password">
-                        <span id="adminpassword_check" class="help-block"></span>
-                    </div>
+            </div>
+            <div class="form-group" style="margin-left:20px;">
+                <div class="col-sm-10">
+                    <input type="password" autocomplete="off" class="form-control" id="adminPassword"
+                           name="adminPassword"
+                           placeholder="Password">
+                    <span id="adminpassword_check" class="help-block"></span>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="button" id="login_btn" style="margin-left:-30px; width:260px;" class="btn btn-primary btn-lg btn-block">Sign in</button>
-                    </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" id="login_btn" style="margin-left:-30px; width:260px;"
+                            class="btn btn-primary btn-lg btn-block">Sign in
+                    </button>
                 </div>
-            </form>
-            <div style="width:400px;">
-                <span style="margin-left:60px;color:#bdbdbd">-------------------链接-------------------</span>
             </div>
-            <div class="login_a" style="margin-top:20px;">
-                <span style="margin-left:25px;height:50px;"><a href="#" style="margin-top:25px;">没有账号？请注册</a></span>
-                <span style="margin-left:25px;height:50px;"><a href="#" style="margin-top:25px;">忘记密码？请找回</a></span>
-            </div>
-            <div class="Inc" style="margin-top:20px;margin-left:60px;">
-                <span><a href="#"><img alt="新浪微博" th:src="@{/images/weibo.png}"></a></span>
-                <span style="margin-left:40px;"><a href="#"><img alt="微信" th:src="@{/images/weixin.png}"></a></span>
-                <span style="margin-left:40px;"><a href="#"><img alt="QQ" th:src="@{/images/QQ.png}"></a></span>
-            </div>
+        </form>
+        <div style="width:400px;">
+            <span style="margin-left:60px;color:#bdbdbd">-------------------链接-------------------</span>
+        </div>
+        <div class="login_a" style="margin-top:20px;">
+            <span style="margin-left:25px;height:50px;"><a href="#" style="margin-top:25px;">没有账号？请注册</a></span>
+            <span style="margin-left:25px;height:50px;"><a href="#" style="margin-top:25px;">忘记密码？请找回</a></span>
+        </div>
+        <div class="Inc" style="margin-top:20px;margin-left:60px;">
+            <span><a href="#"><img alt="新浪微博" th:src="@{/images/weibo.png}"></a></span>
+            <span style="margin-left:40px;"><a href="#"><img alt="微信" th:src="@{/images/weixin.png}"></a></span>
+            <span style="margin-left:40px;"><a href="#"><img alt="QQ" th:src="@{/images/QQ.png}"></a></span>
         </div>
     </div>
+</div>
 </body>
 <script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
 <script type="text/javascript">
-    $("#login_btn").click(function(){
+    $("#login_btn").click(function () {
         $.ajax({
-            url:"/medical/admin/adminlogin",
-            type:"POST",
-            data:$("#login_form").serialize(),
-            success:function(result){
-                if(result.code == 200){
+            url: "/medical/admin/adminlogin",
+            type: "POST",
+            data: $("#login_form").serialize(),
+            success: function (result) {
+                if (result.code == 200) {
                     swal({
-                        title:"登录成功！",
-                        type:"success"
-                    },function(){
-                        location.href="/medical/admin/to_main"
+                        title: "登录成功！",
+                        type: "success"
+                    }, function () {
+                        location.href = "/medical/admin/to_main"
                     });
-                }else{
+                } else {
                     swal({
-                        title:"密码错误或没有该管理员信息，请重新登录！",
-                        type:"error"
-                    },function(){
+                        title: "密码错误或没有该管理员信息，请重新登录！",
+                        type: "error"
+                    }, function () {
                         window.location.reload();
                     });
                 }

@@ -58,10 +58,9 @@ pagehelper:
 
 #日志
 #logback 配置
-#logging:
-#  level: debug
-#  file: D:/IDEA Case/medical-hadoop.log
-#  path: /log/medical-hadoop
-#  pattern:
-#    console: %d{yyyy-MM-dd} [%thread] %-5level %logger{50} - %msg%n
-#    file: %d{yyyy-MM-dd} ==== [%thread] ==== %-5level ==== %logger{50} ==== %msg%n
+logging:
+  level:
+    com.smxy.healthmedical.controller.BackStageController.addPageViews: debug
+  file: D:/IDEA Case/medical-hadoop.log
+  path: /log/medical-hadoop
+

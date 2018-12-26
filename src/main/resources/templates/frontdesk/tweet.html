@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="tweet">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+   /*.post{*/
+       /*border-bottom: none;*/
+       /*padding-bottom: unset;*/
+   /*}*/
+</style>
+<body>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item hygiene"><a class="nav-link active" href="javascript:;" data-toggle="tab">保健</a>
+                            </li>
+                            <li class="nav-item protection"><a class="nav-link" href="javascript:;"
+                                                              data-toggle="tab">养生</a></li>
+                            <li class="nav-item guard"><a class="nav-link" href="javascript:;" data-toggle="tab">预防</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" >
+                            <div class="active tab-pane" id="hygiene">
+                                <div th:each="doctorInfoLists:${doctorInfoList}">
+                                    <div class="post"  th:each="doctorTip:${doctorInfoLists.doctorTips}">
+                                        <div class="user-block">
+                                            <img class="img-circle img-bordered-sm"
+                                                 th:src="${doctorInfoLists.doctorPhotoSrc}" style="object-fit: cover;"
+                                                 alt="user image">
+                                            <span class="username">
+                                              <a href="#" th:text="${doctorInfoLists.doctorName}"></a>
+                                              <a href="#" class="float-right btn-tool"><i class="fa fa-times"></i></a>
+                                            </span>
+                                            <span class="description"
+                                                  th:text="'分享于&emsp;' + ${doctorTip.doctorTipsTime}"></span>
+                                        </div>
+                                        <p style="font-weight: bold" th:text="${doctorTip.doctorTipsName}"></p>
+                                        <p th:text="${doctorTip.doctorTipsDescription}"></p>
+
+                                        <p>
+                                            <a href="#" class="link-black text-sm mr-2"><i class="fa fa-share mr-1"></i>
+                                                分享</a>
+                                            <a href="#" class="link-black text-sm"><i
+                                                    class="fa fa-thumbs-o-up mr-1"></i>[['点赞(' +
+                                                ${doctorTip.doctorTipsLike} + ')']]</a>
+                                            <span class="float-right">
+                                              <a href="#" class="link-black text-sm" data-toggle="tooltip" title="查看评论">
+                                                <i class="fa fa-comments-o mr-1"></i> Comments (5)
+                                              </a>
+                                            </span>
+                                        </p>
+                                        <input class="form-control form-control-sm" type="text"
+                                               placeholder="发表评论">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--protection锚点区-->
+                            <div class="tab-pane " id="protection">
+
+                            </div>
+                            <!--guard锚点区-->
+                            <div class="tab-pane" id="guard">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script>
+    console.log(returnCitySN["cip"]+','+returnCitySN["cname"]);
+    Date.prototype.format = function (format) {
+        var args = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3), 
+            "S": this.getMilliseconds()
+        };
+        if (/(y+)/.test(format))
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var i in args) {
+            var n = args[i];
+            if (new RegExp("(" + i + ")").test(format))
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+        }
+        return format;
+
+    };
+
+    var baojianCount;
+    var yangShengCount;
+    var yuFangCount;
+
+    /*记录点击推文保健类的PV操作*/
+    var pvIp = returnCitySN["cip"];
+
+    var pvHomeLocation = returnCitySN["cname"];
+
+    var pvUserName = $("#user_name").text();
+
+    var pvTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+
+    $(function () {
+        $.ajax({
+            url:"/medical/admin/getUserPvCount",
+            type:"GET",
+            data:{
+                "pvUserName" : $("#user_name").text(),
+            },
+            success:function (res) {
+                if(res.extend.userPv == null){
+                    baojianCount = 0;
+                    yangShengCount = 0;
+                    yuFangCount = 0;
+                }else{
+                    if(res.extend.userPv.pvBaojianSum == null){
+                        baojianCount = 0;
+                    }else if(res.extend.userPv.pvBaojianSum != null){
+                        baojianCount = res.extend.userPv.pvBaojianSum;
+                    }
+
+                    if(res.extend.userPv.pvYangShengSum == null){
+                        yangShengCount = 0;
+                    }else if(res.extend.userPv.pvYangShengSum != null){
+                        yangShengCount = res.extend.userPv.pvYangShengSum;
+                    }
+                    if(res.extend.userPv.pvYufangSum == null) {
+                        yuFangCount = 0;
+                    }else if(res.extend.userPv.pvYufangSum != null) {
+                        yuFangCount = res.extend.userPv.pvYufangSum;
+                    }
+                }
+            }
+        });
+
+        $(".hygiene").click(function () {
+            $(".hygiene, .protection, .guard").removeClass("active");
+            $("#hygiene, #protection, #guard").removeClass("active");
+            $(this).addClass("active");
+            $("#protection, #guard").css("display","none");
+            $("#hygiene").css("display","block");
+            /*.tab-content>.tab-pane*/
+            $('#hygiene').addClass("active");
+
+            var pvBaojianSum = ++baojianCount;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation + "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime  + "&" + "pvBaojianSum=" + pvBaojianSum;
+            $.ajax({
+                url:"/medical/admin/pageViews",
+                type:"POST",
+                data:pvData,
+                success:function (res) {
+                }
+            });
+
+        });
+
+        $(".protection").click(function () {
+            $(".hygiene, .protection, .guard").removeClass("active");
+            $("#hygiene, #protection, #guard").removeClass("active");
+            $(this).addClass("active");
+            $("#hygiene, #guard").css("display","none");
+            $("#protection").css("display","block");
+            $('#protection').addClass("active");
+
+            var pvYangShengSum = ++yangShengCount;
+            var pvData = "pvUrl=" + pvUrl + "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime  + "&" + "pvYangShengSum=" + pvYangShengSum;
+
+            $.ajax({
+                url:"/medical/admin/pageViews",
+                type:"POST",
+                data:pvData,
+                success:function (res) {
+                }
+            });
+        });
+
+        $(".guard").click(function () {
+            $(".hygiene, .protection, .guard").removeClass("active");
+            $("#hygiene, #protection, #guard").removeClass("active");
+            $(this).addClass("active");
+            $("#hygiene, #protection").css("display","none");
+            $("#guard").css("display","block");
+            $('#guard').addClass("active");
+
+            var pvYufangSum = ++yuFangCount;
+            var pvData = "pvUrl=" + pvUrl + "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime  + "&" + "pvYufangSum=" + pvYufangSum;
+
+            $.ajax({
+                url:"/medical/admin/pageViews",
+                type:"POST",
+                data:pvData,
+                success:function (res) {
+                }
+            });
+        });
+
+    });
+</script>
+</html>

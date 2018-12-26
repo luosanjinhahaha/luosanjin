@@ -32,7 +32,8 @@ public class GetDocPathServiceImpl implements GetDocPathService {
     }
 
     @Override
-    public void DocPath(FastDfsDoc fastDfsDoc) {
+    public void saveDocPath(FastDfsDoc fastDfsDoc) {
+
         fastDfsDocMapper.insertDocPath(fastDfsDoc);
     }
 

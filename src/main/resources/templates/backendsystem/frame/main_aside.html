@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="main_aside">
 <head>
     <meta charset="UTF-8">
@@ -12,8 +13,8 @@
 </style>
 <body scroll="no" style="overflow-y: hidden">
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="index3.html" class="brand-link">
-        <img th:src="@{/images/main_image/AdminLTELogo.png}" alt="AdminLTE Logo"
+    <a href="#" class="brand-link">
+        <img src="" th:src="@{/images/main_image/AdminLTELogo.png}" alt="AdminLTE Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8"/>
         <span class="brand-text font-weight-light">超级管理员</span>
@@ -21,7 +22,7 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img th:src="@{/images/main_image/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+                <img src="" th:src="@{/images/main_image/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <div class="d-block" style="margin-top: 4px; color: green; font-weight: bold; font-size: 13px;cursor: pointer">在线</div>
@@ -45,7 +46,7 @@
                             <i class="fa fa-circle-o nav-icon"></i>
                             <p>角色权限信息管理</p>
                         </a></li>
-                        <li class="nav-item"><a th:href="@{/admin/filemanager}" class="nav-link">
+                        <li class="nav-item"><a th:href="@{/admin/fileManager}" class="nav-link">
                             <i class="fa fa-circle-o nav-icon"></i>
                             <p>文件方案管理中心</p>
                         </a></li>
@@ -63,11 +64,11 @@
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>患者基本资料</p>
                             </a></li>
-                        <li class="nav-item"><a href="./index2.html" class="nav-link">
+                        <li class="nav-item"><a href="#" class="nav-link">
                             <i class="fa fa-circle-o nav-icon"></i>
                             <p>患者病情资料</p>
                         </a></li>
-                        <li class="nav-item"><a href="./index3.html" class="nav-link">
+                        <li class="nav-item"><a href="#" class="nav-link">
                             <i class="fa fa-circle-o nav-icon"></i>
                             <p>患者治疗方案</p>
                         </a></li>
@@ -106,13 +107,13 @@
                     <p>推送信息管理<i class="fa fa-angle-left right"></i></p>
                 </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item"><a href="/admin/notice_crud" class="nav-link"> <i
+                        <li class="nav-item"><a href="#" class="nav-link"> <i
                                 class="fa fa-circle-o nav-icon"></i>
-                            <p>通知公告</p>
+                            <p>订阅信息管理</p>
                         </a></li>
-                        <li class="nav-item"><a href="pages/forms/advanced.html" class="nav-link"> <i
+                        <li class="nav-item"><a href="#" class="nav-link"> <i
                                 class="fa fa-circle-o nav-icon"></i>
-                            <p>媒体聚焦</p>
+                            <p>自动推送管理</p>
                         </a></li>
                     </ul>
                 </li>
@@ -123,11 +124,11 @@
                     <p>个性定制管理<i class="fa fa-angle-left right"></i></p>
                 </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item"><a href="/admin/notice_crud" class="nav-link"> <i
+                        <li class="nav-item"><a href="#" class="nav-link"> <i
                                 class="fa fa-circle-o nav-icon"></i>
                             <p>定制人信息管理</p>
                         </a></li>
-                        <li class="nav-item"><a href="pages/forms/advanced.html" class="nav-link"> <i
+                        <li class="nav-item"><a href="#" class="nav-link"> <i
                                 class="fa fa-circle-o nav-icon"></i>
                             <p>定制方案管理</p>
                         </a></li>
@@ -174,27 +175,27 @@
                                     class="btn btn-block btn-success">提交
                             </button>
                         </li>
-                        <li class="nav-item" style="margin-top: 20px;"><a href="/medical/upload/Fast.xls"
+                        <li class="nav-item" style="margin-top: 20px;"><a href="#"
                                                                           class="nav-link">
                             <i class="fa fa-circle-o nav-icon"></i>
                             <p>患者信息表下载</p>
                         </a></li>
-                        <li class="nav-item"><a href="pages/forms/editors.html" class="nav-link"> <i
+                        <li class="nav-item"><a href="#" class="nav-link"> <i
                                 class="fa fa-circle-o nav-icon"></i>
                             <p>患者病情表下载</p>
                         </a></li>
-                        <li class="nav-item"><a href="pages/forms/editors.html" class="nav-link"> <i
+                        <li class="nav-item"><a href="#" class="nav-link"> <i
                                 class="fa fa-circle-o nav-icon"></i>
                             <p>患者治疗表下载</p>
                         </a></li>
-                        <li class="nav-item"><a href="pages/forms/editors.html" class="nav-link"> <i
+                        <li class="nav-item"><a href="#" class="nav-link"> <i
                                 class="fa fa-circle-o nav-icon"></i>
                             <p>医师排班表下载</p>
                         </a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:;" class="nav-link"><i class="nav-icon fa fa-th"></i>
+                    <a href="javascript:void(0)" class="nav-link"><i class="nav-icon fa fa-th"></i>
                         <p>通知公告 <span class="right badge badge-danger">New</span></p>
                     </a></li>
                 <!--医生简介-->

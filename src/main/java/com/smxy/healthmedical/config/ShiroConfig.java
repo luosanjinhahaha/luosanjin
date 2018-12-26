@@ -60,6 +60,8 @@ public class ShiroConfig {
         Map<String,String> filterMap = new LinkedHashMap<>();
         filterMap.put("/user/index","anon");
         filterMap.put("/admin/adminlogin","anon");
+        filterMap.put("/admin/pageViews","anon");
+        filterMap.put("/admin/getUserPvCount","anon");
         filterMap.put("/admin/**","admin");
         filterMap.put("/doctor/**","doctor");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);

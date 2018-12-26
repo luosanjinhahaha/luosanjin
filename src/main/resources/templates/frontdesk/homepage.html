@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -70,26 +71,33 @@
                                     <div class="row align-items-end">
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
-                                                <select name="appointDeptname" id="appointDeptname" class="form-control">
-                                                    <option th:each="dept:${dept}" th:value="${dept.deptName}" th:text="${dept.deptName}"></option>
+                                                <select name="appointDeptname" id="appointDeptname"
+                                                        class="form-control">
+                                                    <option th:each="dept:${dept}" th:value="${dept.deptName}"
+                                                            th:text="${dept.deptName}"></option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
                                                 <select name="appointDrname" id="appointDrname" class="form-control">
-                                                    <option th:each="famdoctor:${famdoctor}" th:text="${famdoctor.drname}" th:value="${famdoctor.drname}">Doctors 1</option>
+                                                    <option th:each="famdoctor:${famdoctor}"
+                                                            th:text="${famdoctor.drname}"
+                                                            th:value="${famdoctor.drname}">Doctors 1
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-2">
                                             <div class="form-group">
-                                                <input name="appointDate" id="appointDate" autocomplete="off" style="width: 110px;" type="text" class="form-control" placeholder="日期">
+                                                <input name="appointDate" id="appointDate" autocomplete="off"
+                                                       style="width: 110px;" type="text" class="form-control"
+                                                       placeholder="日期">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-2">
                                             <div class="form-group" style="width: 120px;">
-                                                <select name="appointTime" id="appointTime" class="form-control" >
+                                                <select name="appointTime" id="appointTime" class="form-control">
                                                     <option value="1" disabled>8:30上班</option>
                                                     <option value="9:00-10:00">9:00-10:00</option>
                                                     <option value="10:00-12:00">10:00-12:00</option>
@@ -102,27 +110,40 @@
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
-                                                <input name="appointName" id="appointName" autocomplete="off" type="text" class="form-control border-top-0 border-right-0 border-left-0" placeholder="姓名">
+                                                <input name="appointName" id="appointName" autocomplete="off"
+                                                       type="text"
+                                                       class="form-control border-top-0 border-right-0 border-left-0"
+                                                       placeholder="姓名">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
-                                                <input name="appointPhone" id="appointPhone" autocomplete="off" type="text" class="form-control border-top-0 border-right-0 border-left-0" placeholder="电话">
+                                                <input name="appointPhone" id="appointPhone" autocomplete="off"
+                                                       type="text"
+                                                       class="form-control border-top-0 border-right-0 border-left-0"
+                                                       placeholder="电话">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-group">
-                                                <input name="appointEmail" id="appointEmail" autocomplete="off" type="email" class="form-control border-top-0 border-right-0 border-left-0" placeholder="邮箱">
+                                                <input name="appointEmail" id="appointEmail" autocomplete="off"
+                                                       type="email"
+                                                       class="form-control border-top-0 border-right-0 border-left-0"
+                                                       placeholder="邮箱">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-7">
                                             <div class="form-group mb-0">
-                                                <input name="appointContent" id="appointContent" autocomplete="off" type="text" class="form-control mb-0 border-top-0 border-right-0 border-left-0" cols="30" rows="10" placeholder="内容">
+                                                <input name="appointContent" id="appointContent" autocomplete="off"
+                                                       type="text"
+                                                       class="form-control mb-0 border-top-0 border-right-0 border-left-0"
+                                                       cols="30" rows="10" placeholder="内容">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-5 mb-0">
                                             <div class="form-group mb-0">
-                                                <button type="submit" class="btn medilife-btn">预约 <span>+</span></button>
+                                                <button type="submit" class="btn medilife-btn">预约 <span>+</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -259,42 +280,6 @@
         </div>
     </div>
 </div>
-<div class="medilife-blog-area section-padding-100-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-blog-area mb-100">
-                    <div class="blog-post-thumbnail">
-                        <img th:src="@{/images/homepage_images/blog-img/1.jpg}" alt="">
-                        <div class="post-date">
-                            <a href="#">2018年10月15日</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-blog-area mb-100">
-                    <div class="blog-post-thumbnail">
-                        <img th:src="@{/images/homepage_images/blog-img/2.jpg}" alt="">
-                        <div class="post-date">
-                            <a href="#">2018年10月11日</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-blog-area mb-100">
-                    <div class="blog-post-thumbnail">
-                        <img th:src="@{/images/homepage_images/blog-img/3.jpg}" alt="">
-                        <div class="post-date">
-                            <a href="#">2018年10月10日</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="medilife-emergency-area section-padding-100-50">
     <div class="container">
         <div class="row">
@@ -334,7 +319,30 @@
 <script th:src="@{/js/main_js/foundation-datepicker.js}"></script>
 <script th:src="@{/js/main_js/foundation-datepicker.zh-CN.js}"></script>
 <script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script>
+    console.log(returnCitySN["cip"]+','+returnCitySN["cname"]);
+    Date.prototype.format = function (format) {
+        var args = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            "S": this.getMilliseconds()
+        };
+        if (/(y+)/.test(format))
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var i in args) {
+            var n = args[i];
+            if (new RegExp("(" + i + ")").test(format))
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+        }
+        return format;
+
+    };
+
     // 日期选择
     $('#appointDate').fdatepicker({
         format: 'yyyy-mm-dd',
@@ -344,59 +352,59 @@
     $("#appointForm").submit(function (e) {
         e.preventDefault();
         $.ajax({
-            url:"/medical/user/havesession",
-            type:"GET",
-            success:function (res) {
-                if(res.code == 200){
+            url: "/medical/user/havesession",
+            type: "GET",
+            success: function (res) {
+                if (res.code == 200) {
                     swal({
-                        title : "预约后将不可更改,您已确认预约信息了吗？",
-                        type : "warning",
-                        showCancelButton : true,
-                        confirmButtonColor : "#DD6B55",
-                        confirmButtonText : "确认",
-                        cancelButtonText : "取消",
-                        closeOnConfirm : false,
-                        closeOnCancel : false
-                    },function(isConfirm){
-                        if(isConfirm){
+                        title: "预约后将不可更改,您已确认预约信息了吗？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确认",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
                             $.ajax({
-                                url:"/medical/user/appoint",
-                                data:$("#appointForm").serialize(),
-                                type:"POST",
-                                success:function(res){
-                                    if(res.code == 200){
+                                url: "/medical/user/appoint",
+                                data: $("#appointForm").serialize(),
+                                type: "POST",
+                                success: function (res) {
+                                    if (res.code == 200) {
                                         swal({
-                                            title : "您已成功预约！",
-                                            type : "success"
-                                        },function () {
+                                            title: "您已成功预约！",
+                                            type: "success"
+                                        }, function () {
                                             location.reload();
                                         });
-                                    }else{
+                                    } else {
                                         swal({
-                                            title : "预约失败！请检查网络后重试",
-                                            type : "error"
+                                            title: "预约失败！请检查网络后重试",
+                                            type: "error"
                                         });
                                     }
                                 },
-                                error:function () {
+                                error: function () {
                                     swal({
-                                        title : "系统发生未知错误！请检查网络后重试",
-                                        type : "error"
+                                        title: "系统发生未知错误！请检查网络后重试",
+                                        type: "error"
                                     });
                                 }
                             });
-                        }else{
+                        } else {
                             swal({
-                                title : "您已取消删除！",
-                                type : "success"
+                                title: "您已取消删除！",
+                                type: "success"
                             });
                         }
                     });
-                }else{
+                } else {
                     swal({
-                        title:"请先登录！",
-                        type:"warning",
-                    },function () {
+                        title: "请先登录！",
+                        type: "warning",
+                    }, function () {
                         location.href = "/medical/user/to_login";
                     });
                 }
@@ -404,24 +412,69 @@
         });
     });
 
+    /*记录点击推文保健类的PV操作*/
+    var customizationCount;
+
+    var pvIp = returnCitySN["cip"];
+
+    var pvHomeLocation = returnCitySN["cname"];
+
+    var pvUserName = $("#user_name").text();
+
+    var pvTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+
+    $(function () {
+        $.ajax({
+            url: "/medical/admin/getUserPvCount",
+            type: "GET",
+            data: {
+                "pvUserName": $("#user_name").text(),
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.extend.userPv == null) {
+                    customizationCount = 0;
+                }else {
+                    if (res.extend.userPv.pvCustomizationSum == null) {
+                        customizationCount = 0;
+                    } else {
+                        customizationCount = res.extend.userPv.pvCustomizationSum;
+                    }
+                }
+            }
+        });
+    });
+
     //个性化定制理疗方案
     $("#customization").click(function () {
+
+        var pvCustomizationSum = ++customizationCount;
+        var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation + "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime + "&" + "pvCustomizationSum=" + pvCustomizationSum;
         $.ajax({
-            url:"/medical/user/havesession",
-            type:"GET",
-            success:function (res) {
-                if(res.code == 200){
+            url: "/medical/admin/pageViews",
+            type: "POST",
+            data: pvData,
+            success: function (res) {
+                console.log(res);
+            }
+        });
+
+        $.ajax({
+            url: "/medical/user/havesession",
+            type: "GET",
+            success: function (res) {
+                if (res.code == 200) {
                     location.href = "/medical/user/to_customization";
-                }else{
+                } else {
                     swal({
-                        title:"请先登录！",
-                        type:"warning",
-                    },function () {
+                        title: "请先登录！",
+                        type: "warning",
+                    }, function () {
                         location.href = "/medical/user/to_login";
                     });
                 }
             }
-        })
-    })
+        });
+    });
 </script>
 </html>

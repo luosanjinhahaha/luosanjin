@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.UserPvMapper">
+	<insert id="insertUserPvByPvName" parameterType="UserPv">
+		insert into tbl_user_pv
+
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pvIp != null">
+				pv_ip,
+			</if>
+			<if test="pvHomeLocation != null">
+				pv_home_location,
+			</if>
+			<if test="pvUserName != null">
+				pv_userName,
+			</if>
+			<if test="pvTime != null">
+				pv_time,
+			</if>
+			<if test="pvBaojianSum != null">
+				pv_baojian_sum,
+			</if>
+			<if test="pvYangShengSum != null">
+				pv_yangsheng_sum,
+			</if>
+			<if test="pvYufangSum != null">
+				pv_yufang_sum,
+			</if>
+			<if test="pvCustomizationSum != null">
+				pv_customization_sum,
+			</if>
+			<if test="pvChatSum != null">
+				pv_chat_sum,
+			</if>
+			<if test="pvConsultSum != null">
+				pv_consult_sum,
+			</if>
+			<if test="pvCommunitySum != null">
+				pv_community_sum,
+			</if>
+			<if test="pvXinxueSum != null">
+				pv_xinxue_sum,
+			</if>
+			<if test="pvXiaohuaSum != null">
+				pv_xiaohua_sum,
+			</if>
+			<if test="pvZhongyiSum != null">
+				pv_zhongyi_sum,
+			</if>
+			<if test="pvYiliaobaojianSum != null">
+				pv_yiliaobaojian_sum,
+			</if>
+			<if test="pvXueyeSum != null">
+				pv_xueye_sum,
+			</if>
+			<if test="pvGandanSum != null">
+				pv_gandan_sum,
+			</if>
+			<if test="pvPuwaiSum != null">
+				pv_puwai_sum,
+			</if>
+			<if test="pvXinxiongSum != null">
+				pv_xinxiong_sum,
+			</if>
+			<if test="pvMiniaoSum != null">
+				pv_miniao_sum,
+			</if>
+			<if test="pvJiaoxingSum != null">
+				pv_jiaoxing_sum,
+			</if>
+			<if test="pvShenjingSum != null">
+				pv_shenjing_sum,
+			</if>
+			<if test="pvZhongliuSum != null">
+				pv_zhongliu_sum
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pvIp != null">
+				#{pvIp},
+			</if>
+			<if test="pvHomeLocation != null">
+				#{pvHomeLocation},
+			</if>
+			<if test="pvUserName != null">
+				#{pvUserName},
+			</if>
+			<if test="pvTime != null">
+				#{pvTime},
+			</if>
+			<if test="pvBaojianSum != null">
+				#{pvBaojianSum},
+			</if>
+			<if test="pvYangShengSum != null">
+				#{pvYangShengSum}
+			</if>
+			<if test="pvYufangSum != null">
+				#{pvYufangSum},
+			</if>
+			<if test="pvCustomizationSum != null">
+				#{pvCustomizationSum},
+			</if>
+			<if test="pvChatSum != null">
+				#{pvChatSum},
+			</if>
+			<if test="pvConsultSum != null">
+				#{pvConsultSum},
+			</if>
+			<if test="pvCommunitySum != null">
+				#{pvCommunitySum},
+			</if>
+			<if test="pvXinxueSum != null">
+				#{pvXinxueSum},
+			</if>
+			<if test="pvXiaohuaSum != null">
+				#{pvXiaohuaSum},
+			</if>
+			<if test="pvZhongyiSum != null">
+				#{pvZhongyiSum},
+			</if>
+			<if test="pvYiliaobaojianSum != null">
+				#{pvYiliaobaojianSum},
+			</if>
+			<if test="pvXueyeSum != null">
+				#{pvXueyeSum},
+			</if>
+			<if test="pvGandanSum != null">
+				#{pvGandanSum},
+			</if>
+			<if test="pvPuwaiSum != null">
+				#{pvPuwaiSum},
+			</if>
+			<if test="pvXinxiongSum != null">
+				#{pvXinxiongSum},
+			</if>
+			<if test="pvMiniaoSum != null">
+				#{pvMiniaoSum},
+			</if>
+			<if test="pvJiaoxingSum != null">
+				#{pvJiaoxingSum},
+			</if>
+			<if test="pvShenjingSum != null">
+				#{pvShenjingSum},
+			</if>
+			<if test="pvZhongliuSum != null">
+				#{pvZhongliuSum}
+			</if>
+		</trim>
+
+	</insert>
+
+	<select id="getUserPvAll" resultType="com.smxy.healthmedical.bean.UserPv">
+		select * from tbl_user_pv
+	</select>
+
+	<update id="updateUserPv" parameterType="com.smxy.healthmedical.bean.UserPv">
+		update tbl_user_pv
+
+		<set>
+			<if test="pvIp != null">
+				pv_ip = #{pvIp},
+			</if>
+			<if test="pvHomeLocation != null">
+				pv_home_location = #{pvHomeLocation},
+			</if>
+			<if test="pvTime != null">
+				pv_time = #{pvTime},
+			</if>
+			<if test="pvBaojianSum != null">
+				pv_baojian_sum = #{pvBaojianSum},
+			</if>
+
+			<if test="pvYangShengSum != null">
+				pv_yangsheng_sum = #{pvYangShengSum},
+			</if>
+
+			<if test="pvYufangSum != null">
+				pv_yufang_sum = #{pvYufangSum},
+			</if>
+			<if test="pvCustomizationSum != null">
+				pv_customization_sum = #{pvCustomizationSum},
+			</if>
+			<if test="pvChatSum != null">
+				pv_chat_sum = #{pvChatSum},
+			</if>
+			<if test="pvConsultSum != null">
+				pv_consult_sum = #{pvConsultSum},
+			</if>
+			<if test="pvCommunitySum != null">
+				pv_community_sum = #{pvCommunitySum}
+			</if>
+			<if test="pvXinxueSum != null">
+				pv_xinxue_sum = #{pvXinxueSum},
+			</if>
+			<if test="pvXiaohuaSum != null">
+				pv_xiaohua_sum = #{pvXiaohuaSum},
+			</if>
+			<if test="pvZhongyiSum != null">
+				pv_zhongyi_sum = #{pvZhongyiSum},
+			</if>
+			<if test="pvYiliaobaojianSum != null">
+				pv_yiliaobaojian_sum = #{pvYiliaobaojianSum},
+			</if>
+			<if test="pvXueyeSum != null">
+				pv_xueye_sum = #{pvXueyeSum},
+			</if>
+			<if test="pvGandanSum != null">
+				pv_gandan_sum = #{pvGandanSum},
+			</if>
+			<if test="pvPuwaiSum != null">
+				pv_puwai_sum = #{pvPuwaiSum},
+			</if>
+			<if test="pvXinxiongSum != null">
+				pv_xinxiong_sum = #{pvXinxiongSum},
+			</if>
+			<if test="pvMiniaoSum != null">
+				pv_miniao_sum = #{pvMiniaoSum},
+			</if>
+			<if test="pvJiaoxingSum != null">
+				pv_jiaoxing_sum = #{pvJiaoxingSum},
+			</if>
+			<if test="pvShenjingSum != null">
+				pv_shenjing_sum = #{pvShenjingSum},
+			</if>
+			<if test="pvZhongliuSum != null">
+				pv_zhongliu_sum = #{pvZhongliuSum}
+			</if>
+		</set>
+
+		where pv_userName = #{pvUserName}
+	</update>
+
+	<select id="getUserPvByNameAndModule" parameterType="com.smxy.healthmedical.bean.UserPv" resultType="com.smxy.healthmedical.bean.UserPv">
+		select * from tbl_user_pv where pv_userName = #{pvUserName}
+	</select>
+
+
+</mapper>

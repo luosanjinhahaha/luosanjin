@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="fastDFS_images">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +10,7 @@
         display: none;
     }
 </style>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_888320_p99dmt9e38g.css">
 <body>
 <div class="wrapper">
     <div class="content-wrapper">
@@ -27,63 +29,51 @@
                 </div>
             </div>
         </div>
-        <!--<section class="content">-->
-        <!--<div class="container-fluid">-->
-        <!--<div class="row">-->
-        <!--<div class="col-md-2">-->
-        <!--<div class="small-box bg-info">-->
-        <!--<a href="javascript:;" id="ImgManager" style="background: #007bff" class="small-box-footer">图片管理中心</a>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-2" style="text-align: center">-->
-        <!--&lt;!&ndash;<div class="small-box"> 诊疗方案&ndash;&gt;-->
-        <!--<a href="javascript:;" id="diagnosisManager" class="small-box-footer">诊疗方案管理中心</a>-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</div>-->
-        <!--<div class="col-md-2">-->
-        <!--&lt;!&ndash;<div class="small-box" onclick="window.open('/admin/useradmin')" title="修改管理员权限">&ndash;&gt;-->
-        <!--<a href="#" class="small-box-footer">病历管理中心</a>-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</section>-->
-
-        <!-- 文件区 -->
-        <!--<section class="content">-->
-        <!--<div class="row">-->
-        <!--<div class="col-12">-->
-        <!--<div class="card grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>-->
-        <!--<div class="card-body grid-item" id="imgSource" style="height: 1100px;">-->
-
-        <!--</div>-->
-        <!--<div class="card-body grid-item" id="docSource" style="height: 1100px;">-->
-
-        <!--</div>-->
-        <!--&lt;!&ndash;<div class="grid">&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="grid-item" th:each="">&ndash;&gt;-->
-        <!--&lt;!&ndash;&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</section>-->
 
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">图片管理中心</a>
+                        <li class="nav-item imgSource"><a class="nav-link active" href="javascript:;" data-toggle="tab">图片管理中心</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">诊疗方案管理中心</a></li>
+                        <li class="nav-item docSource"><a class="nav-link" href="javascript:;"
+                                                          data-toggle="tab">诊疗方案管理中心</a></li>
                         <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">病历管理中心</a></li>
                     </ul>
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="active tab-pane" id="activity"></div>
-                        <div class="tab-pane" id="timeline"></div>
+                        <div class="active tab-pane" id="imgSource">
+                            <div th:each="Imgitem:${fastDfsImg}" class="imgItem"
+                                 style="margin-right: 8px; margin-bottom: 8px; width: 200px; border: 1px solid rgb(221, 221, 221); border-radius: 5px; padding: 10px; position: absolute; left: 0px; top: 0px;">
+                                <img th:src="${Imgitem.imgPath}"
+                                     style="width: 180px;border: 1px solid rgb(221, 221, 221);">
+                                <p>参考路径：
+                                <div style="height:100px;" class="fastDFS_path" th:text="${Imgitem.imgPath}"></div>
+                                <button th:id="${Imgitem.imgId}" class="btn btn-danger btn-sm deleteImg_btn"
+                                        style="position: relative; top: 20px; left: 120px; width: 60px;"><span>删除</span>
+                                </button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="docSource">
+                            <div th:each="docItem:${fastDfsDoc}" class="docItem"
+                                 style="margin-right: 8px; margin-bottom: 8px; width: 230px; border: 1px solid rgb(221, 221, 221); border-radius: 5px; padding: 10px; position: absolute; left: 0px; top: 0px;">
+                                <a th:href="${docItem.docPath}"
+                                   style="width: 100%; height: 30px; color: rgb(0, 123, 255); cursor: pointer;"
+                                   th:text="${docItem.docName}"></a>
+                                <p>参考路径：
+                                <div style="height:100px;" class="fastDFSDoc_path" th:text="${docItem.docPath}"></div>
+                                <button th:id="${docItem.docId}" class="btn btn-danger btn-sm deleteDoc_btn"
+                                        style="margin-left: 10px; float: right; width: 60px;"><span>删除</span>
+                                </button>
+                                <button id="send" th:docId="${docItem.docId}" class="btn btn-sm subscriptionDoc_btn"
+                                        style="color: white; background: #577b93; float: right;  width: 60px;">
+                                    <span>推送</span>
+                                </button>
+                                </p>
+                            </div>
+                        </div>
                         <div class="tab-pane" id="settings"></div>
                     </div>
                 </div>
@@ -100,61 +90,29 @@
 </body>
 <script>
 
-    window.onload = function () {
-        showFastDfsImg();
-        diagnosisManager();
-    }
-
-    function showFastDfsImg() {
-        $.ajax({
-            url: "/medical/admin/showFastDfsImg",
-            type: "GET",
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (res) {
-                console.log(res);
-                $.each(res.extend.fastDfsImg, function (index, item) {
-                    $('<div></div>').addClass('imgItem').css('margin-right', '8px').css('margin-bottom', '8px').css('width', '200px')
-                        .css('border', '1px solid #ddd').css('border-radius', '5px').css('padding', '10px')
-                        .append($('<img/>').attr('src', item.imgPath).css('width', '180px').css('height', '160px').css('object-fit', 'cover')
-                            .css('border', '1px solid #ddd')).append($('<p></p>').text('参考路径：')
-                        .append($('<div style="height:100px;"></div>').addClass('fastDFS_path').text(item.imgPath))
-                        .append($('<button></button>').prop('id', item.imgId).css('position', 'relative').css('top', '20px').css('left', '120px')
-                            .addClass('btn btn-danger btn-sm deleteImg_btn').css('width', '60px').append($('<span>删除</span>')))).appendTo('#activity');
-                });
-                $('#activity').masonry({
-                    itemSelector: '.imgItem',
-                });
-            }
+    $(function () {
+        $('#imgSource').masonry({
+            itemSelector: '.imgItem'
         });
-    }
 
-    function diagnosisManager() {
-        $.ajax({
-            url: "/medical/admin/diagnosis",
-            type: "GET",
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (res) {
-                console.log(res);
-                $.each(res.extend.fastDfsDoc, function (index, item) {
-                    $('<div></div>').addClass('docItem').css('margin-right', '8px').css('margin-bottom', '8px').css('width', '226px')
-                        .css('border', '1px solid #ddd').css('border-radius', '5px').css('padding', '10px')
-                        .append($('<a></a>').attr("href",item.docPath).append(item.docName + ".doc").css("width","100%").css("height","30px").css("color","#007bff").css("cursor","pointer"))
-                        .append($('<p></p>').text('参考路径：').append($('<div style="height:100px;"></div>').addClass('fastDFS_path').text(item.docPath))
-                        .append($('<button></button>').prop('id', item.docId).css('position', 'relative').css('top', '20px').css('left', '143px')
-                            .addClass('btn btn-danger btn-sm deleteDoc_btn').css('width', '60px').append($('<span>删除</span>')))).appendTo('#timeline');
-                });
-                $('#timeline').masonry({
-                    itemSelector: '.docItem',
-                });
-            }
+        $(".imgSource").click(function () {
+            $(".imgSource,.docSource").removeClass("active");
+            $("#imgSource,#docSource").removeClass("active");
+            $(this).addClass("active");
+            $('#imgSource').addClass("active").masonry({
+                itemSelector: ".imgItem"
+            });
         });
-    }
 
-
+        $(".docSource").click(function () {
+            $(".imgSource,.docSource").removeClass("active");
+            $("#imgSource,#docSource").removeClass("active");
+            $(this).addClass("active");
+            $('#docSource').addClass("active").masonry({
+                itemSelector: ".docItem"
+            });
+        })
+    });
 
     $(document).on('click', '.deleteImg_btn', function () {
         var oldPath = $(this).siblings('.fastDFS_path').text();
@@ -209,6 +167,73 @@
             }
         });
     });
+
+    $(function () {
+        // $("form").on('submit', function (e) {
+        //     e.preventDefault();
+        // });
+
+        connect();
+
+        $("#disconnect").click(function () {
+            disconnect();
+        });
+
+        /*推送消息*/
+        $( "#send" ).click(function() { sendName(); });
+    });
+
+    /*推送消息*/
+    function sendName() {
+        stompClient.send("/app/topic/subscription", {}, JSON.stringify({'content': $("#send").parent("div").find("div:eq(0)").text()}));
+    }
+
+    /*WebSocket 配置*/
+    var stompClient = null;
+
+    function setConnected(connected) {
+        $("#connect").prop("disabled", connected);
+        $("#disconnect").prop("disabled", !connected);
+        if (connected) {
+            $("#conversation").show();
+        }
+        else {
+            $("#conversation").hide();
+        }
+        $("#notice").html("");
+    }
+
+    /*连接*/
+    function connect() {
+
+        /*连接上端点(基站)*/
+        var socket = new SockJS('/medical/endpoint-websocket');
+
+        /*用stom进行包装，规范协议*/
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            console.log('Connected: ' + frame);
+
+            /*订阅/topic/server_info信道的消息*/
+            stompClient.subscribe('/topic/diagnosis', function (result) {
+                showContent(JSON.parse(result.body));
+            });
+        });
+    }
+
+    /*断开*/
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log("Disconnected");
+    }
+
+    function showContent(body) {
+        $("#notice").prepend("<tr><td>" + body.content + "</td> <td>" + new Date(body.time).toLocaleString() + "</td></tr>");
+    }
 
 </script>
 </html>
