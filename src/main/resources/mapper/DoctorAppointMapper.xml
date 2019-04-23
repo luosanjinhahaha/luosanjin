@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.DoctorAppointMapper">
+    <insert id="insertAppointInfo" parameterType="com.smxy.healthmedical.bean.DoctorAppoint">
+        insert into tbl_doctor_appoint(dA_id, appoint_name, age, sex, appoint_time, d_id, doctor_id, doctor_name)
+        values (#{dAId}, #{appintName}, #{age} , #{sex}, #{appointTime}, #{dId}, #{doctorId}, #{dockerName})
+    </insert>
+</mapper>

@@ -26,4 +26,12 @@
 	<select id="queryByUserName" parameterType="String" resultMap="ResultMap">
 		select * from tbl_user where realname = #{realname}
 	</select>
+	
+	<!--在登录时找到用户的喜好-->
+	<select id="queryPreference" parameterType="string" resultType="UserPv">
+		select pv_userName, greatest(pv_baojian_sum, pv_yangsheng_sum, pv_yufang_sum, pv_customization_sum, pv_chat_sum,
+		pv_consult_sum, pv_community_sum, pv_xinxue_sum, pv_xiaohua_sum, pv_zhongyi_sum, pv_yiliaobaojian_sum,
+		pv_xueye_sum, pv_gandan_sum, pv_puwai_sum, pv_xinxiong_sum, pv_miniao_sum, pv_jiaoxing_sum, pv_shenjing_sum,
+		pv_zhongliu_sum) as num from tbl_user_pv where pv_userName = #{realname,jdbcType=VARCHAR}  limit 10;
+	</select>
 </mapper>

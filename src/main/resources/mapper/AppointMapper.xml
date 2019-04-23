@@ -27,17 +27,6 @@
 		appoint_id, appoint_name, appoint_drid, appoint_drname, appoint_deptid, appoint_deptname, appoint_date, appoint_time
 	</sql>
 
-	<select id="AppointWithDeptWithDoctor" parameterType="com.smxy.healthmedical.bean.Appoint" resultMap="WithDeptDoctorResultMap">
-		SELECT
-		<include refid="WithDeptDoctor_Column_List"/>
-		SELECT appoint_id, appoint_deptname, appoint_drname, appoint_date, appoint_time, appoint_name,
-		appoint_phone, appoint_email, appoint_content
-
-		FROM  tbl_appoint
-
-		WHERE appoint_id = #{appointId}
-	</select>
-
 	<insert id="insertAppoint" parameterType="com.smxy.healthmedical.bean.Appoint">
 		INSERT INTO tbl_appoint
 

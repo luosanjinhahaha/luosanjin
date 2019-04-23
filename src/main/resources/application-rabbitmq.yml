@@ -1,0 +1,8 @@
+spring:
+  rabbitmq:
+    host: 106.14.160.207
+    port: 5672
+    username: guest
+    password: guest
+    exchange: amp.direct
+    queue: appoint

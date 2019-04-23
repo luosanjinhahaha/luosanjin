@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.healthmedical.dao.PushContentMapper">
+	<select id="selectPushContentAll" resultType="com.smxy.healthmedical.bean.PushContent">
+		select * from tbl_push_content
+	</select>
+
+	<!--查找推送的文章-->
+	<select id="selectPushContentByPushId" parameterType="String" resultType="com.smxy.healthmedical.bean.PushContent">
+		select * from tbl_push_content where push_id = #{pushId,jdbcType=VARCHAR}
+	</select>
+
+	<!--查找推送的方案-->
+	<select id="selectPushDocByDocId" parameterType="String" resultType="FastDfsDoc">
+		select * from tbl_fastdfs_doc where doc_id = #{docId,jdbcType=VARCHAR}
+	</select>
+</mapper>

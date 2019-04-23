@@ -238,7 +238,7 @@
 </section>
 <div class="medilife-gallery-area owl-carousel">
     <div class="single-gallery-item">
-        <img th:src="@{/images/homepage_images/bg-img/g1.jpg}" alt="">
+        <img th:src="@{/images/homepage_images/bg-img/g1.jpg}" th:text="${'您近期浏览养生类较多'}">
         <div class="view-more-btn">
             <a th:href="@{/images/homepage_images/bg-img/g1.jpg}" class="btn gallery-img">See More +</a>
         </div>
@@ -432,10 +432,11 @@
             },
             success: function (res) {
                 console.log(res);
-                if (res.extend.userPv == null) {
+                if (res.extend.userPv == 0) {
                     customizationCount = 0;
                 }else {
-                    if (res.extend.userPv.pvCustomizationSum == null) {
+                    if (res.extend.userPv.pvCustomizationSum == 0) {
+
                         customizationCount = 0;
                     } else {
                         customizationCount = res.extend.userPv.pvCustomizationSum;

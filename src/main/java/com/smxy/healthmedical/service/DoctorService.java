@@ -18,6 +18,8 @@ public interface DoctorService {
     /*查询出所有医生信息*/
     List<Doctor> getDoctorsAll();
 
+    List<Doctor> getPuWaiDor();
+
     /*根据医师id查询出医师发布的小贴士*/
     List<Doctor> getDoctorTipsByDoctorId(Integer doctorId);
 

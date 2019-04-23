@@ -4,18 +4,25 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smxy.healthmedical.bean.*;
 import com.smxy.healthmedical.service.*;
+import com.smxy.healthmedical.utils.RabbitMQReceiver;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 /**
  * 功能描述:
@@ -34,12 +41,15 @@ public class UserController {
 	private final CommentService commentService;
 	private final AppointDoctorWithDeptService appointDoctorWithDeptService;
 	private final DoctorService doctorService;
+	private final DoctorAppointService doctorAppointService;
+	private final RabbitMQReceiver rabbitMQReceiver;
 
 	@Autowired
-	public UserController(RegService regService,MailService mailService,FamdoctorService famdoctorService,
-						  DeptService deptService,AppointService appointService, CustomizationService customizationService,
-						  QuestionService questionService,CommentService commentService,
-						  AppointDoctorWithDeptService appointDoctorWithDeptService, DoctorService doctorService){
+	public UserController(RegService regService, MailService mailService, FamdoctorService famdoctorService,
+						  DeptService deptService, AppointService appointService, CustomizationService customizationService,
+						  QuestionService questionService, CommentService commentService,
+						  AppointDoctorWithDeptService appointDoctorWithDeptService, DoctorService doctorService,
+						  DoctorAppointService doctorAppointService, RabbitMQReceiver rabbitMQReceiver){
 		this.regService = regService;
 		this.mailService = mailService;
 		this.famdoctorService = famdoctorService;
@@ -50,7 +60,8 @@ public class UserController {
 		this.commentService = commentService;
 		this.appointDoctorWithDeptService = appointDoctorWithDeptService;
 		this.doctorService = doctorService;
-
+        this.doctorAppointService = doctorAppointService;
+		this.rabbitMQReceiver = rabbitMQReceiver;
 	}
 
 	private static final String HTTP = "http://106.14.160.207:8888/";
@@ -123,16 +134,24 @@ public class UserController {
 		return "frontdesk/customization";
 	}
 
+	/**
+	 * 定制诊疗方案
+	 * @param customization 定制诊疗方案类
+	 * @return Msg
+	 */
 	@PostMapping("/customization")
 	@ResponseBody
 	public Msg customization(Customization customization){
-
 		customizationService.insertCustomizationInfo(customization);
-
+		List<Doctor> puWaiDor = doctorService.getPuWaiDor();
+		for (Doctor doctor : puWaiDor) {
+			doctor.setDoctorPhotoSrc(HTTP + doctor.getDoctorPhotoSrc());
+		}
 		System.out.println(customization);
-
-		return Msg.success();
+		return Msg.success().add("puWaiDor", puWaiDor);
 	}
+
+
 
 	/**
 	 * 发送邮箱验证码
@@ -175,82 +194,70 @@ public class UserController {
 	@GetMapping("/consult/{id}")
 	@ResponseBody
 	public Msg userConsult(@PathVariable("id") Integer id,@RequestParam(value = "pn",defaultValue = "1") Integer pn){
-
 		List<Department> list = deptService.getDepts();
-
 		PageHelper.startPage(pn,3);
-
 		Department departmentList = appointDoctorWithDeptService.getDeptAll(id);
-
 		for (Doctor deptList : departmentList.getDoctors()) {
-
 			deptList.setDoctorPhotoSrc(HTTP + deptList.getDoctorPhotoSrc());
-
 		}
-
 		List<Department> list1 = new LinkedList<>();
-
 		list1.add(departmentList);
-
 		PageInfo<Department> page = new PageInfo<>(list1, 5);
-
 		System.out.println(list1);
-
 		return Msg.success().add("departmentList",page).add("dept",list);
 	}
 
 	@GetMapping("/deptWithDoct/{id}")
 	public String deptWithDoct(@PathVariable("id") Integer id, Model model){
-
 		List<Doctor> doctors = doctorService.getDoctorsByDoctorId(id);
-
 		model.addAttribute("doctors", doctors);
-
 		return "frontdesk/consultDoct";
 	}
 
-//	@PostMapping("/appointFinish/${id}")
-//	@ResponseBody
-//	public Msg appointFinish(@PathVariable("id") Integer id){
-//
-//	}
+	@PostMapping("/appointFinish/{id}")
+	@ResponseBody
+	public Msg appointFinish(@PathVariable("id") Integer id, @RequestParam String appointName, @RequestParam("weekend") String weekend) throws KeyManagementException, TimeoutException, NoSuchAlgorithmException, IOException, URISyntaxException, InterruptedException {
+		User user = regService.queryuserbyid(appointName);
+		List<Doctor> doctor = doctorService.getDoctorsByDoctorId(id);
+		DoctorAppoint doctorAppoint = new DoctorAppoint();
+		doctorAppoint.setAppintName(appointName);
+		doctorAppoint.setAge(user.getAge());
+		doctorAppoint.setSex(user.getSex());
+		doctorAppoint.setWeekend(weekend);
+		for (Doctor doctor1 : doctor) {
+			doctorAppoint.setDId(doctor1.getDId());
+			doctorAppoint.setDoctorId(doctor1.getDoctorId());
+			doctorAppoint.setDockerName(doctor1.getDoctorName());
+		}
+		doctorAppointService.insertDoctorAppointIntoRabbitmq(doctorAppoint);
+		return Msg.success();
+	}
 
-//	@GetMapping("/doctAppoint/{id}}")
-//	public String doctAppoint(){
-//		return "frontdesk/consultDoct";
-//	}
+	@GetMapping("/doctAppoint/{id}")
+	public String doctAppoint(){
+		return "frontdesk/consultDoct";
+	}
 
 	@GetMapping("/chat")
 	public String userchat(Model model){
-
 		List<Department> deptList = deptService.getDepts();
-
 		model.addAttribute("deptLists",deptList);
-
 		return "frontdesk/chat";
 	}
 
 	@GetMapping("/community")
 	public String usercommunity(Model model){
-
 		List<Department> list = deptService.getDepts();
-
 		List<Questions> questionsList = questionService.getAllQuestions();
-
 		model.addAttribute("dept",list);
-
 		model.addAttribute("question",questionsList);
-
 		System.out.println(questionsList);
-
 		return "frontdesk/community";
 	}
 
 	@GetMapping("/communityDetails/{id}")
 	public String communityDetails(@PathVariable("id") Integer id, Model model){
-
 		Questions questions = questionService.QuestionsCommentById(id);
-
 		model.addAttribute("questions",questions);
 
 		/*同步锁*/
@@ -258,36 +265,23 @@ public class UserController {
 //		synchronized (this){
 //			num--;
 //		}
-
 		System.out.println(questions);
-
 		return "frontdesk/CommunityDetails";
 	}
 
 	@PostMapping("/commentMessage")
 	@ResponseBody
 	public Msg commentMessage(String content,String qid, String date,Comment comment){
-
 		Subject subject = SecurityUtils.getSubject();
-
 		Session session = subject.getSession();
-
 		String username = (String) session.getAttribute("realname");
-
 		User user = regService.queryuserbyid(username);
-
 		comment.setCommentQuestionId(qid);
-
 		comment.setCommentUserId(String.valueOf(user.getId()));
-
 		comment.setCommentContent(content);
-
 		comment.setCommentTime(date);
-
 		System.out.println(comment);
-
 		commentService.InsertComments(comment);
-
 		return Msg.success().add("comment",comment);
 	}
 
@@ -364,6 +358,9 @@ public class UserController {
 		user = regService.queryuser(user);
 		if(user != null){
 			session.setAttribute("realname", user.getRealname());
+			UserPv preference = regService.queryPreference(user.getRealname());
+			session.setAttribute("preference", preference);
+			System.out.println(session.getAttribute("preference"));
 			return Msg.success();
 		}else{
 			return Msg.fail();

@@ -1,6 +1,8 @@
 package com.smxy.healthmedical.serviceImpl;
 
 import com.smxy.healthmedical.bean.User;
+import com.smxy.healthmedical.bean.UserPreference;
+import com.smxy.healthmedical.bean.UserPv;
 import com.smxy.healthmedical.dao.RegMapper;
 import com.smxy.healthmedical.service.RegService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +25,12 @@ public class RegServiceImpl implements RegService {
 	@Override
 	public User queryuserbyid(String username) {
 		return regMapper.queryByUserName(username);
+	}
+
+	@Override
+	public UserPv queryPreference(String realname) {
+		UserPv preference = regMapper.queryPreference(realname);
+		System.out.println("preference:" + preference);
+		return preference;
 	}
 }

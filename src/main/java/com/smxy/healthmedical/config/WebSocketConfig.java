@@ -36,7 +36,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
 
-        registry.enableSimpleBroker("/topic", "/chat");
+        registry.enableSimpleBroker("/topic", "/chat", "/push");
 
         registry.setApplicationDestinationPrefixes("/app");
 

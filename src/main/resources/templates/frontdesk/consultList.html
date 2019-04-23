@@ -82,7 +82,7 @@
             },
             success: function (res) {
                 console.log(res.extend.userPv);
-                if (res.extend.userPv == null) {
+                if (res.extend.userPv == 0) {
                     xinxueCount = 0;
                     xiaohuaCount = 0;
                     zhongyiCount = 0;
@@ -96,98 +96,98 @@
                     shenjingCount = 0;
                     zhongliuCount = 0;
                 }else {
-                    if (res.extend.userPv.pvXinxueSum == null) {
+                    if (res.extend.userPv.pvXinxueSum == 0) {
                         xinxueCount = 0;
 
-                    }else if(res.extend.userPv.pvXinxueSum != null){
+                    }else if(res.extend.userPv.pvXinxueSum != 0){
                         xinxueCount = res.extend.userPv.pvXinxueSum;
 
                     }
 
-                    if(res.extend.userPv.pvXiaohuaSum == null){
+                    if(res.extend.userPv.pvXiaohuaSum == 0){
                         xiaohuaCount = 0;
 
-                    }else if(res.extend.userPv.pvZhongyiSum != null){
+                    }else if(res.extend.userPv.pvZhongyiSum != 0){
 
                         xiaohuaCount = res.extend.userPv.pvXiaohuaSum;;
                     }
 
-                    if(res.extend.userPv.pvZhongyiSum == null){
+                    if(res.extend.userPv.pvZhongyiSum == 0){
                         zhongyiCount = 0;
 
-                    }else if(res.extend.userPv.pvZhongyiSum != null){
+                    }else if(res.extend.userPv.pvZhongyiSum != 0){
                         zhongyiCount = res.extend.userPv.pvZhongyiSum;
 
                     }
 
-                     if(res.extend.userPv.pvYiliaobaojianSum == null){
+                     if(res.extend.userPv.pvYiliaobaojianSum == 0){
                         yiliaobaojianCount = 0;
 
-                    }else if(res.extend.userPv.pvYiliaobaojianSum != null){
+                    }else if(res.extend.userPv.pvYiliaobaojianSum != 0){
                         yiliaobaojianCount = res.extend.userPv.pvYiliaobaojianSum;
 
                     }
 
-                    if(res.extend.userPv.pvXueyeSum == null){
+                    if(res.extend.userPv.pvXueyeSum == 0){
                         xueyeCount = 0;
 
-                    }else if(res.extend.userPv.pvXueyeSum != null){
+                    }else if(res.extend.userPv.pvXueyeSum != 0){
                         gandanCount =  res.extend.userPv.pvXueyeSum;
 
                     }
 
-                    if(res.extend.userPv.pvGandanSum == null){
+                    if(res.extend.userPv.pvGandanSum == 0){
                         gandanCount = 0;
 
-                    }else  if(res.extend.userPv.pvGandanSum != null){
+                    }else  if(res.extend.userPv.pvGandanSum != 0){
                         gandanCount = res.extend.userPv.pvGandanSum;
 
                     }
 
-                    if(res.extend.userPv.pvPuwaiSum == null){
+                    if(res.extend.userPv.pvPuwaiSum == 0){
                         puwaiCount = 0;
 
-                    }else if(res.extend.userPv.pvPuwaiSum != null){
+                    }else if(res.extend.userPv.pvPuwaiSum != 0){
                         puwaiCount = res.extend.userPv.pvPuwaiSum;
 
                     }
 
-                    if(res.extend.userPv.pvXinxiongSum == null){
+                    if(res.extend.userPv.pvXinxiongSum == 0){
                         xinxiongCount = 0;
 
-                    }else if(res.extend.userPv.pvXinxiongSum != null){
+                    }else if(res.extend.userPv.pvXinxiongSum != 0){
                         xinxiongCount = res.extend.userPv.pvXinxiongSum;
 
                     }
 
-                    if(res.extend.userPv.pvMiniaoSum == null){
+                    if(res.extend.userPv.pvMiniaoSum == 0){
                         miniaoCount = 0;
 
-                    }else if(res.extend.userPv.pvMiniaoSum != null){
+                    }else if(res.extend.userPv.pvMiniaoSum != 0){
                         miniaoCount = res.extend.userPv.pvMiniaoSum;
 
                     }
 
-                    if(res.extend.userPv.pvJiaoxingSum == null){
+                    if(res.extend.userPv.pvJiaoxingSum == 0){
                         jiaoxingCount = 0;
 
-                    }else if(res.extend.userPv.pvJiaoxingSum != null){
+                    }else if(res.extend.userPv.pvJiaoxingSum != 0){
                         jiaoxingCount = res.extend.userPv.pvJiaoxingSum;
 
                     }
 
-                    if(res.extend.userPv.pvShenjingSum == null){
+                    if(res.extend.userPv.pvShenjingSum == 0){
                         shenjingCount = 0;
 
-                    }else if(res.extend.userPv.pvShenjingSum != null){
+                    }else if(res.extend.userPv.pvShenjingSum != 0){
                         shenjingCount = res.extend.userPv.pvShenjingSum;
 
                     }
 
-                    if(res.extend.userPv.pvZhongliuSum == null){
+                    if(res.extend.userPv.pvZhongliuSum == 0){
                         zhongliuCount = 0;
 
-                    }else if(res.extend.userPv.pvZhongliuSum != null){
+                    }else if(res.extend.userPv.pvZhongliuSum != 0){
                         zhongliuCount = res.extend.userPv.pvZhongliuSum;
 
                     }

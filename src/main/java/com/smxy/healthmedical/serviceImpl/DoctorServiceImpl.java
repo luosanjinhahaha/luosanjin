@@ -45,6 +45,15 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.getDoctorAll();
     }
 
+    /**
+     * 查找普外医生
+     * @return
+     */
+    @Override
+    public List<Doctor> getPuWaiDor() {
+        return doctorMapper.getPuWaiDor();
+    }
+
     /*根据医师id查询出医师发布的小贴士*/
     @Override
     public List<Doctor> getDoctorTipsByDoctorId(Integer doctorId) {

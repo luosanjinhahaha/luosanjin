@@ -1,0 +1,30 @@
+.col-md-11 {
+    border-left: 1px solid #e1e1e1;
+    float: left;
+    height: 15%;
+}
+
+.ranking-table {
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+}
+
+.ranking-table td:first-child {
+    font-weight: 700;
+}
+
+.ranking-table td {
+    padding-right: 10px;
+}
+
+.ranking-table td > div {
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    line-height: 17px;
+    font-size: 10px;
+}
+
+.ranking-table td a {
+    font-weight: 500;
+}

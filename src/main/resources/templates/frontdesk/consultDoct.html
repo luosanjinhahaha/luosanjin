@@ -1,245 +1,1 @@
-<!DOCTYPE html>
-<!--suppress ALL-->
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="docList">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<link rel="icon" th:href="@{/images/homepage_images/core-/images/homepage_images/favicon.ico}">
-<link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
-<link rel="stylesheet" th:href="@{/css/homepage_css/consult.css}">
-<link rel="stylesheet" th:href="@{/css/loading.css/loading.css}"/>
-<link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}">
-<body>
-<div th:replace="~{common/loading::loading}"></div>
-<div th:replace="~{common/header::header(activeUri = '/user/consult')}"></div>
-<section class="breadcumb-area bg-img gradient-background-overlay" style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb2.jpg');">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center">
-            <div class="col-12">
-                <div class="breadcumb-content">
-                    <h3 class="breadcumb-title" th:text="${doctors.doctorName}"></h3>
-                    <p></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--显示日期-->
-<div class="arrange_area">
-    <div class="pb_head">
-        <div class="pb_title">
-            <span></span>
-            <span><a href="#">&lt;</a></span>
-            <span><a href="#">&gt;</a></span>
-            <span><a href="#">本周</a></span>
-            <span>请在对应的表格内打勾(请选择一个时间段预约)</span>
-        </div>
-    </div>
-</div>
-<!--医师团队列表-->
-<section class="content">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped"
-                           style="text-align: center;">
-                        <thead>
-                        <tr style="line-height: 40px;">
-                            <th>时间</th>
-                            <th>周一/10-22</th>
-                            <th>周二/10-23</th>
-                            <th>周三/10-24</th>
-                            <th>周四/10-25</th>
-                            <th>周五/10-26</th>
-                            <th>周六/10-27</th>
-                            <th>周日/10-28</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>8:30-12:00</td>
-                                <td class="a1b1" data-id="1-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="2-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="3-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="4-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="5-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="6-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="7-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                            </tr>
-                            <tr><td th:colspan="8">下班</td></tr>
-                            <tr>
-                                <td>14:00-18:30</td>
-                                <td class="a1b1" data-id="1-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="2-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="3-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="4-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="5-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="6-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                                <td class="a1b1" data-id="7-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>时间</th>
-                            <th>周一/10-22</th>
-                            <th>周二/10-23</th>
-                            <th>周三/10-24</th>
-                            <th>周四/10-25</th>
-                            <th>周五/10-26</th>
-                            <th>周六/10-27</th>
-                            <th>周日/10-28</th>
-                        </tr>
-                        </tfoot>
-                    </table>
-                    <div class="appoint-btn">
-                        <button id="appointBtn" class="btn btn-primary btn-block">预约</button>
-                        <!--<button class="btn btn-danger btn-block">取消</button>-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<div th:replace="~{common/footer::footer}"></div>
-</body>
-<script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
-<script th:src="@{/js/homepage_js/popper.min.js}"></script>
-<script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
-<script th:src="@{/js/homepage_js/plugins.js}"></script>
-<script th:src="@{/js/homepage_js/active.js}"></script>
-<script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
-<script type="text/javascript">
-    //日期计算
-    function Start(){
-        var now = new Date();
-        var nowTime = now.getTime() ;
-        var day = now.getDay();
-        var oneDayLong = 24*60*60*1000 ;
-        var MondayTime = nowTime - (day-1)*oneDayLong  ;
-        var monday = new Date(MondayTime);
-        var year = monday.getFullYear();
-        var month = monday.getMonth()+1;
-        var day =  monday.getDate();
-        var day2 = monday.getDate()+6;
-        var startTime = year + '年' + month +'月'+day + '日';
-        return startTime;
-    }
-    function End(){
-        var now = new Date();
-        var nowTime = now.getTime() ;
-        var day = now.getDay();
-        var oneDayLong = 24*60*60*1000 ;
-        var MondayTime = nowTime - (day-1)*oneDayLong  ;
-        var monday = new Date(MondayTime);
-        var year = monday.getFullYear();
-        var month = monday.getMonth()+1;
-        var day =  monday.getDate();
-        var day2 = monday.getDate()+6;
-        var endTime = year + '年' + month +'月'+day2 + '日';
-        return endTime;
-    }
-    $(".pb_title").find("span:eq(0)").append("本周(" + Start() + " -- " + End() + ")");
-
-    /*选择预约时间*/
-    var flag = false;
-    var list = null;
-    var appointTime = null;
-    var weekend = null;
-    var time = null;
-    //周一上午
-    $(".a1b1").click(function () {
-        if($(this).children('img').css('display') == 'none'){
-            if(flag){
-                swal({title:"您已达预约上限！",type:"warning"});
-                return false;
-            }
-            $(this).children('img').css("display","inline-block");
-            list = $(this).data('id');
-            flag = true;
-            appointTime = $(this).data('id').split('-');
-            switch (appointTime[0]) {
-                case '1': weekend = '周一';break;
-                case '2': weekend = '周二';break;
-                case '3': weekend = '周三';break;
-                case '4': weekend = '周四';break;
-                case '5': weekend = '周五';break;
-                case '6': weekend = '周六';break;
-                default: weekend = '周日';
-            }
-            if(appointTime[1] == 1){
-                time = '上午';
-            }else{
-                time = '下午';
-            }
-            console.log(weekend + " " + time);
-        }else{
-            $(this).children('img').css("display","none");
-            list = null;
-            flag = false;
-        }
-    });
-
-    $("#appointBtn").click(function () {
-        if(flag == 0){
-            swal({title:"您没有预约！",type:"error"});
-        }else{
-            swal({
-                title : "您预约的医师是：" + "[[${doctors.doctorName}]]" + "\n预约时间是：" + weekend + " " + time,
-                type : "warning",
-                showCancelButton : true,
-                confirmButtonColor : "#DD6B55",
-                confirmButtonText : "确认",
-                cancelButtonText : "取消",
-                closeOnConfirm : false,
-                closeOnCancel : false
-            },function(isConfirm){
-                if(isConfirm){
-                    swal({
-                        title:'您已预约成功！请勿重复预约！',
-                        text:'具体信息等医师确认后将由邮件的形式发送至您的手机',
-                        type:'success'
-                    },function () {
-                        location.href = '/medical/user/consult';
-                    });
-                    // $.ajax({
-                    //    url:'/medical/user/appointFinish/' + "[[${doctors.doctorId}]]",
-                    //    type:'POST',
-                    //    success:function (res) {
-                    //        if(res == 200){
-                    //            swal({
-                    //               title:'您已预约成功！请勿重复预约！',
-                    //               text:'具体信息等医师确认后将由邮件的形式发送至您的手机',
-                    //               type:'success'
-                    //            },function () {
-                    //                location.href = 'medical/user/consult/1';
-                    //            });
-                    //        }else{
-                    //            swal({
-                    //                title:'您预约失败！请确认信息后重新预约',
-                    //                type:'error'
-                    //            },function () {
-                    //                location.href = 'medical/user/consult/1';
-                    //            });
-                    //        }
-                    //    },
-                    //     error:function () {
-                    //         swal({
-                    //             title:'系统发生未知错误！请重试',
-                    //             type:'error'
-                    //         });
-                    //     }
-                    // });
-                }else{
-                    swal({
-                        title:"您已取消！",
-                        type:"success"
-                    });
-                }
-            });
-        }
-        console.log(list);
-    });
-</script>
-</html>
+<!DOCTYPE html><!--suppress ALL--><html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="docList"><head>    <meta charset="UTF-8">    <title>Title</title></head><link rel="icon" th:href="@{/images/homepage_images/core-/images/homepage_images/favicon.ico}"><link rel="stylesheet" th:href="@{/css/homepage_css/style.css}"><link rel="stylesheet" th:href="@{/css/homepage_css/consult.css}"><link rel="stylesheet" th:href="@{/css/loading.css/loading.css}"/><link rel="stylesheet" th:href="@{/css/sweetalert_css/sweet-alert.css}"><body><div th:replace="~{common/loading::loading}"></div><div th:replace="~{common/header::header(activeUri = '/user/consult')}"></div><section class="breadcumb-area bg-img gradient-background-overlay" style="background-image: url('/medical/images/homepage_images/bg-img/breadcumb2.jpg');">    <div class="container h-100">        <div class="row h-100 align-items-center">            <div class="col-12">                <div class="breadcumb-content" th:each="doctor:${doctors}">                    <h3 class="breadcumb-title" th:text="${doctor.doctorName}" th:yid="${doctor.getDoctorId()}"></h3>                    <p></p>                </div>            </div>        </div>    </div></section><!--显示日期--><div class="arrange_area">    <div class="pb_head">        <div class="pb_title">            <span></span>            <span><a href="#">&lt;</a></span>            <span><a href="#">&gt;</a></span>            <span><a href="#">本周</a></span>            <span>请在对应的表格内打勾(请选择一个时间段预约)</span>        </div>    </div></div><!--医师团队列表--><section class="content">    <div class="row">        <div class="col-12">            <div class="card">                <div class="card-body">                    <table id="example1" class="table table-bordered table-striped"                           style="text-align: center;">                        <thead>                            <tr style="line-height: 40px;">                                <th>时间</th>                                <th></th>                                <th></th>                                <th></th>                                <th></th>                                <th></th>                                <th></th>                                <th></th>                            </tr>                        </thead>                        <tbody>                            <tr>                                <td>8:30-12:00</td>                                <td class="a1b1" data-id="1-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="2-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="3-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="4-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="5-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="6-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="7-1"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                            </tr>                            <tr><td th:colspan="8">下班</td></tr>                            <tr>                                <td>14:00-18:30</td>                                <td class="a1b1" data-id="1-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="2-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="3-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="4-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="5-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="6-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                                <td class="a1b1" data-id="7-2"><img style="display: none;" th:src="@{/images/sure.png}" alt=""></td>                            </tr>                        </tbody>                        <tfoot>                        <tr>                            <th>时间</th>                            <th></th>                            <th></th>                            <th></th>                            <th></th>                            <th></th>                            <th></th>                            <th></th>                        </tr>                        </tfoot>                    </table>                    <div class="appoint-btn">                        <button id="appointBtn" class="btn btn-primary btn-block">预约</button>                        <!--<button class="btn btn-danger btn-block">取消</button>-->                    </div>                </div>            </div>        </div>    </div></section><div th:replace="~{common/footer::footer}"></div></body><script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script><script th:src="@{/js/homepage_js/popper.min.js}"></script><script th:src="@{/js/homepage_js/bootstrap.min.js}"></script><script th:src="@{/js/homepage_js/plugins.js}"></script><script th:src="@{/js/homepage_js/active.js}"></script><script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script><script type="text/javascript">    var now = new Date();    var nowTime = now.getTime() ;    var day = now.getDay();    var oneDayLong = 24*60*60*1000 ;    var MondayTime = nowTime - (day-1)*oneDayLong  ;    var monday = new Date(MondayTime);    var year = monday.getFullYear();    var month = monday.getMonth()+1;    var day =  monday.getDate();    var day2 = monday.getDate()+6;    var startTime = year + '年' + month +'月'+day + '日';    $(".pb_title").find("span:eq(0)").append("本周(" + year + '年' + month +'月'+day + '日' + " -- " + year + '年' + month +'月'+day2 + '日' + ")");    console.log(month + "-" + (day - 1));    $("#example1 thead tr, #example1 tfoot tr").find("th:eq(1)").append("周一/" + month + "-" + (day));    $("#example1 thead tr, #example1 tfoot tr").find("th:eq(2)").append("周二/" + month + "-" + (day + 1));    $("#example1 thead tr, #example1 tfoot tr").find("th:eq(3)").append("周三/" + month + "-" + (day + 2));    $("#example1 thead tr, #example1 tfoot tr").find("th:eq(4)").append("周四/" + month + "-" + (day + 4));    $("#example1 thead tr, #example1 tfoot tr").find("th:eq(5)").append("周五/" + month + "-" + (day + 5));    $("#example1 thead tr, #example1 tfoot tr").find("th:eq(6)").append("周六/" + month + "-" + (day + 6));    $("#example1 thead tr, #example1 tfoot tr").find("th:eq(7)").append("周日/" + month + "-" + (day + 7));    /*选择预约时间*/    var flag = false;    var list = null;    var appointTime = null;    var weekend = null;    var time = null;    //周一上午    $(".a1b1").click(function () {        if($(this).children('img').css('display') == 'none'){            if(flag){                swal({title:"您已达预约上限！",type:"warning"});                return false;            }            $(this).children('img').css("display","inline-block");            list = $(this).data('id');            flag = true;            appointTime = $(this).data('id').split('-');            switch (appointTime[0]) {                case '1': weekend = '周日';break;                case '2': weekend = '周一';break;                case '3': weekend = '周二';break;                case '4': weekend = '周三';break;                case '5': weekend = '周四';break;                case '6': weekend = '周五';break;                default: weekend = '周六';            }            if(appointTime[1] == 1){                time = '上午';            }else{                time = '下午';            }            console.log(weekend + " " + time);        }else{            $(this).children('img').css("display","none");            list = null;            flag = false;        }    });    $("#appointBtn").click(function () {        if(flag == 0){            swal({title:"您没有预约！",type:"error"});        }else{            swal({                title : "您预约的医师是：" + $(".breadcumb-title").text() + "\n预约时间是：" + weekend + " " + time,                type : "warning",                showCancelButton : true,                confirmButtonColor : "#DD6B55",                confirmButtonText : "确认",                cancelButtonText : "取消",                closeOnConfirm : false,                closeOnCancel : false            },function(isConfirm){                if(isConfirm){                    $.ajax({                        url:'/medical/user/appointFinish/' + $(".breadcumb-title").attr("yid"),                        type:'POST',                        data: {                            "appointName" : "[[${session.realname}]]",                            "weekend" : (weekend + " " + time),                        },                        success:function (res) {                            if(res.code == 200){                                swal({                                    title:'您已预约成功！请勿重复预约！',                                    text:'具体信息等医师确认后将由邮件的形式发送至您的邮箱',                                    type:'success'                                },function () {                                    location.href = '/medical/user/consult';                                });                            }else{                                swal({                                    title:'您预约失败！请确认信息后重新预约',                                    type:'error'                                },function () {                                    // location.href = '/medical/user/consult/1';                                });                            }                        },                        error:function () {                            swal({                                title:'系统发生未知错误！请重试',                                type:'error'                            });                        }                    });                }else{                    swal({                        title:"您已取消！",                        type:"success"                    });                }            });        }        console.log(list);    });</script></html>

@@ -19,4 +19,13 @@ public interface FastDfsDocMapper {
     /*根据路径参数查出文档信息*/
     FastDfsDoc getFastDfsDocInfoByInPath(Integer id);
 
+    /**
+     * 根据id查询治疗方案
+     * @param docId 方案id
+     */
+    FastDfsDoc selectPushDocByDocId(String docId);
+
+    List<FastDfsDoc> selectPushDocsByDocIds(String id);
+
+    List<FastDfsDoc> selectCustomDetails(String customDetails);
 }

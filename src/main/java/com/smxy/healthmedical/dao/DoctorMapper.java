@@ -5,6 +5,7 @@ import com.smxy.healthmedical.bean.DoctorRole;
 import com.smxy.healthmedical.bean.Permission;
 import com.smxy.healthmedical.bean.Role;
 
+import javax.print.Doc;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public interface DoctorMapper {
     /*查询出所有医生信息*/
     List<Doctor> getDoctorAll();
 
+    List<Doctor> getPuWaiDor();
+
     /*根据医师id查询出医师发布的小贴士*/
     List<Doctor> selectDoctorTipsByDoctorId(Integer doctorId);
 
@@ -31,4 +34,5 @@ public interface DoctorMapper {
 
     /*根据医师id查出医师的角色为查询权限*/
     List<Permission> getDoctorRolesByDoctorIdForPermission(Integer doctorId);
+
 }

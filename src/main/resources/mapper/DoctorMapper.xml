@@ -65,6 +65,8 @@
         </collection>
     </resultMap>
 
-
+    <select id="getPuWaiDor" resultType="Doctor">
+        select * from tbl_doctor where d_id = 7;
+    </select>
 
 </mapper>

@@ -17,37 +17,37 @@ public class FastDfsClient {
     private StorageServer storageServer;
 
 
-    public FastDfsClient( String conf) throws Exception {
+    public FastDfsClient(String conf) throws Exception {
         String classpath = "classpath";
         if (conf.startsWith(classpath)) {
-            conf=conf.replace("classpath:", getClass().getResource("/").getPath());
+            conf = conf.replace("classpath:", getClass().getResource("/").getPath());
         }
         ClientGlobal.init(conf);
-        trackerClient=new TrackerClient();
-        trackerServer=trackerClient.getConnection();
-        storageClient=new StorageClient1(trackerServer, storageServer);
+        trackerClient = new TrackerClient();
+        trackerServer = trackerClient.getConnection();
+        storageClient = new StorageClient1(trackerServer, storageServer);
     }
 
-    public String uploadFile( String fileName, String extName, NameValuePair[]
+    public String uploadFile(String fileName, String extName, NameValuePair[]
             pairs) throws Exception {
         return storageClient.upload_file1(fileName, extName, pairs);
     }
 
-    public String uploadFile(String fileName) throws Exception{
+    public String uploadFile(String fileName) throws Exception {
         return uploadFile(fileName, null, null);
     }
 
-    public String uploadFile(String fileName,String extName) throws Exception{
+    public String uploadFile(String fileName, String extName) throws Exception {
         return uploadFile(fileName, extName, null);
     }
 
-    public String uploadFile(String fileName,NameValuePair[] pairs) throws
-            Exception{
+    public String uploadFile(String fileName, NameValuePair[] pairs) throws
+            Exception {
         return uploadFile(fileName, null, pairs);
     }
 
-    public String uploadFile(byte[] source,String extName,NameValuePair[] pairs)
-            throws Exception{
+    public String uploadFile(byte[] source, String extName, NameValuePair[] pairs)
+            throws Exception {
         return storageClient.upload_file1(source, extName, pairs);
     }
 

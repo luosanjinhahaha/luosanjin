@@ -7,7 +7,6 @@ import com.smxy.healthmedical.realm.UserToken;
 import com.smxy.healthmedical.realm.UserType;
 import com.smxy.healthmedical.service.*;
 import com.smxy.healthmedical.utils.MyFastDfsApi;
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -49,12 +48,15 @@ public class BackStageController {
 	private final PermissionService permissionService;
 	private final GetDocPathService getDocPathService;
 	private final UserPvService userPvService;
+	private final PushContentService pushContentService;
+//	private final MyFastDfsApi myFastDfsApi;
 
 	@Autowired
 	public BackStageController(AdminService adminService, ReadFileService readFileService, InfoService infoService,
                                DeptService deptService, FamdoctorService famdoctorService, GetImgPathService getImgPathService,
                                DoctorService doctorService, RolePermissionService rolePermissionService,
-                               PermissionService permissionService, GetDocPathService getDocPathService, UserPvService userPvService){
+                               PermissionService permissionService, GetDocPathService getDocPathService, UserPvService userPvService,
+                               PushContentService pushContentService){
 		this.adminService = adminService;
 		this.readFileService = readFileService;
 		this.infoService = infoService;
@@ -66,6 +68,8 @@ public class BackStageController {
 		this.permissionService = permissionService;
 		this.getDocPathService = getDocPathService;
         this.userPvService = userPvService;
+        this.pushContentService = pushContentService;
+//        this.myFastDfsApi = myFastDfsApi;
     }
 	private static final String HTTP = "http://106.14.160.207:8888/";
 
@@ -457,39 +461,28 @@ public class BackStageController {
 	 */
 	@GetMapping("/fileManager")
 	public String fileManager(Model model){
-
 		List<FastDfsImg> fastDfsImgs = getImgPathService.getImgPathAll();
-
 		List<FastDfsDoc> fastDfsDocs = getDocPathService.getDocPathAll();
-
+        List<PushContent> pushContentList = pushContentService.getPushContentAll();
 		List<FastDfsImg> fastDfsImgs_remove = new ArrayList<>();
-
 		for (FastDfsDoc fastDfsDoc : fastDfsDocs) {
-
 			fastDfsDoc.setDocPath(HTTP + fastDfsDoc.getDocPath());
-
 		}
-
+		System.out.println(fastDfsDocs);
 		for(FastDfsImg fastDfsImg : fastDfsImgs){
-
 			/*特殊字符需要转义*/
 			String[] suffix = fastDfsImg.getImgPath().split("\\.");
-
-			if(suffix[1].equals("jpg")){
-
+			if("jpg".equals(suffix[1]) || "png".equals(suffix[1]) || "gif".equals(suffix[1])){
 				fastDfsImg.setImgPath(HTTP + fastDfsImg.getImgPath());
-
 			}else{
-
 				fastDfsImgs_remove.add(fastDfsImg);
 			}
 		}
 		fastDfsImgs.removeAll(fastDfsImgs_remove);
-
+        System.out.println(pushContentList);
 		model.addAttribute("fastDfsImg",fastDfsImgs);
-
 		model.addAttribute("fastDfsDoc",fastDfsDocs);
-
+		model.addAttribute("pushContentList",pushContentList);
 		return "backendsystem/fileManager";
 
 	}
@@ -503,105 +496,58 @@ public class BackStageController {
 	@PostMapping("/fastDFS_upload")
 	@ResponseBody
 	public Msg fastDFSUpload(MultipartFile file) throws Exception {
-
-		MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
-
-		String path = "";
-
-		if(!"".equals(file.getSize())){
-
+		if (file.getSize() >= 1048576) {
+			return Msg.fail().add("msg","文件过大上传失败");
+		}else if ("".equals(file.getSize())) {
+			return Msg.fail().add("msg","空文件无法上传，请重新选择");
+		}else {
+			MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
+			String path;
 			path = myFastDfsApi.uploadImg(file);
-
 			String[] suffix = file.getOriginalFilename().split("\\.");
-
-			if(suffix[1].equals("jpg")){
-
+			if("jpg".equals(suffix[1]) || "png".equals(suffix[1]) || "gif".equals(suffix[1])){
 				FastDfsImg fastDfsImg = new FastDfsImg();
-
 				fastDfsImg.setImgPath(path);
-
-				/*LOGGER.info("========>>>>>" + fastDfsImg.getImgPath());*/
-
 				getImgPathService.saveImgPath(fastDfsImg);
-
-			}else if(suffix[1].equals("doc")){
-
+			}else if("doc".equals(suffix[1]) || "docx".equals(suffix[1]) || "xls".equals(suffix[1]) || "xlsx".equals(suffix[1])){
 				FastDfsDoc fastDfsDoc = new FastDfsDoc();
-
 				fastDfsDoc.setDocPath(path);
-
 				fastDfsDoc.setDocName(file.getOriginalFilename());
-
-				/*LOGGER.info("==========>" + fastDfsDoc.toString());*/
-
+				System.out.println(fastDfsDoc.getDocPath());
+				System.out.println(fastDfsDoc.getDocName());
 				getDocPathService.saveDocPath(fastDfsDoc);
-
 			}
-
-
-
+			return Msg.success().add("path",path);
 		}
-
-		return Msg.success().add("path",path);
 	}
 
+	/**
+	 * 删除FastDFS存储的文件
+	 * @param oldPath 传入需要删除的路径
+	 * @return Msg
+	 */
 	@PostMapping("/fastDFS_delete")
 	@ResponseBody
 	public Msg fastDFSDelete(String oldPath) throws Exception {
+		System.out.println("oldPath:" + oldPath);
+		String[] suffix = oldPath.split("\\.");
+		System.out.println("suffix:" + suffix[1]);
+		if (!"".equals(oldPath)) {
+			MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
+			if("jpg".equals(suffix[1]) || "png".equals(suffix[1]) || "gif".equals(suffix[1])) {
+				myFastDfsApi.deleteImg(oldPath);
+				getImgPathService.deleteImgByPath(oldPath);
+				return Msg.success();
+			}
 
-		System.out.println(oldPath);
-
-		MyFastDfsApi myFastDfsApi = new MyFastDfsApi();
-
-		if(!"".equals(oldPath)){
-
-			myFastDfsApi.deleteImg(oldPath);
-
-			getImgPathService.deleteImgByPath(oldPath);
-
-		}else{
-
-			return Msg.fail();
-
+			if ("doc".equals(suffix[1]) || "docx".equals(suffix[1]) || "xls".equals(suffix[1]) || "xlsx".equals(suffix[1])) {
+				myFastDfsApi.deleteImg(oldPath);
+				getDocPathService.deleteDocByPath(oldPath);
+				return Msg.success();
+			}
 		}
-
-		return Msg.success();
+		return Msg.fail();
 	}
-
-//	@GetMapping("/showFastDfsImg")
-//	@ResponseBody
-//	public Msg showFastDfsImgAll(){
-//
-//		List<FastDfsImg> fastDfsImgs = getImgPathService.getImgPathAll();
-//
-//		List<FastDfsDoc> fastDfsDocs = getDocPathService.getDocPathAll();
-//
-//		List<FastDfsImg> fastDfsImgs_remove = new ArrayList<>();
-//
-//		for (FastDfsDoc fastDfsDoc : fastDfsDocs) {
-//
-//			fastDfsDoc.setDocPath(HTTP + fastDfsDoc.getDocPath());
-//
-//		}
-//
-//		for(FastDfsImg fastDfsImg : fastDfsImgs){
-//
-//			/*特殊字符需要转义*/
-//			String[] suffix = fastDfsImg.getImgPath().split("\\.");
-//
-//			if(suffix[1].equals("jpg")){
-//
-//				fastDfsImg.setImgPath(HTTP + fastDfsImg.getImgPath());
-//
-//			}else{
-//
-//				fastDfsImgs_remove.add(fastDfsImg);
-//			}
-//		}
-//		fastDfsImgs.removeAll(fastDfsImgs_remove);
-//
-//		return Msg.success().add("fastDfsImg",fastDfsImgs).add("fastDfsDoc",fastDfsDocs);
-//	}
 
 	/**
 	 * 获取诊疗方案在fastDFS的路径
@@ -610,15 +556,11 @@ public class BackStageController {
 	@GetMapping("/diagnosis")
 	@ResponseBody
 	public Msg diagnosisAll(){
-
 		List<FastDfsDoc> fastDfsDocs = getDocPathService.getDocPathAll();
-
 		for (FastDfsDoc fastDfsDoc : fastDfsDocs) {
-
 			fastDfsDoc.setDocPath(HTTP + fastDfsDoc.getDocPath());
-
 		}
-
+		System.out.println(fastDfsDocs);
 		return Msg.success().add("fastDfsDoc",fastDfsDocs);
 
 	}
@@ -629,13 +571,9 @@ public class BackStageController {
 	@RequestMapping("/patients")
 	@ResponseBody
 	public Msg getPatients(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-
 		PageHelper.startPage(pn, 7);
-
 		List<Info> patients = infoService.getAll();
-
 		PageInfo page = new PageInfo(patients, 5);
-
 		return Msg.success().add("PageInfo", page);
 	}
 

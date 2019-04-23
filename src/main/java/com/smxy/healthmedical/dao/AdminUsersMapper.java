@@ -1,9 +1,7 @@
 package com.smxy.healthmedical.dao;
 
-import com.smxy.healthmedical.bean.AdminUserRole;
 import com.smxy.healthmedical.bean.AdminUsers;
 import com.smxy.healthmedical.bean.AdminUsersExample;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

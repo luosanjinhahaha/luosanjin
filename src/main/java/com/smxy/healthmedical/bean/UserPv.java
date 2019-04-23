@@ -38,4 +38,5 @@ public class UserPv {
     private Integer pvJiaoxingSum;
     private Integer pvShenjingSum;
     private Integer pvZhongliuSum;
+    private Integer num;
 }

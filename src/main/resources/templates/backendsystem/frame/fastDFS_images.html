@@ -39,6 +39,17 @@
                         <li class="nav-item docSource"><a class="nav-link" href="javascript:;"
                                                           data-toggle="tab">诊疗方案管理中心</a></li>
                         <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">病历管理中心</a></li>
+                        <li class="nav-item articleSource"><a class="nav-link" href="javascript:;" data-toggle="tab">文章推送中心</a>
+                        </li>
+                        <li class="nav-item "><a class="nav-link" href="javascript:;">&emsp;&emsp;&emsp;</a></li>
+                        <li class="nav-item "><a class="nav-link" href="javascript:;">&emsp;&emsp;&emsp;</a></li>
+                        <li class="nav-item "><a class="nav-link" href="javascript:;">&emsp;&emsp;&emsp;</a></li>
+                        <li class="nav-item "><a class="nav-link" href="javascript:;">&emsp;&emsp;&emsp;</a></li>
+                        <li class="nav-item "><a class="nav-link" href="javascript:;">&emsp;&emsp;&emsp;</a></li>
+                        <li class="nav-item "><a class="nav-link" href="javascript:;">&emsp;&emsp;&emsp;</a></li>
+                        <li class="nav-item "><a class="nav-link" href="javascript:;">&emsp;&emsp;&emsp;</a></li>
+                        <li class="nav-item "><a class="nav-link" href="javascript:;">&emsp;</a></li>
+                        <li class="nav-item docSource"><a class="nav-link multi-push" href="javascript:;">多选推送</a></li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -49,7 +60,7 @@
                                 <img th:src="${Imgitem.imgPath}"
                                      style="width: 180px;border: 1px solid rgb(221, 221, 221);">
                                 <p>参考路径：
-                                <div style="height:100px;" class="fastDFS_path" th:text="${Imgitem.imgPath}"></div>
+                                <div style="height:100px;" class="fastDFS_path_img" th:text="${Imgitem.imgPath}"></div>
                                 <button th:id="${Imgitem.imgId}" class="btn btn-danger btn-sm deleteImg_btn"
                                         style="position: relative; top: 20px; left: 120px; width: 60px;"><span>删除</span>
                                 </button>
@@ -57,17 +68,17 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="docSource">
-                            <div th:each="docItem:${fastDfsDoc}" class="docItem"
+                            <div th:each="docItem:${fastDfsDoc}" th:docId="${docItem.docId}" class="docItem"
                                  style="margin-right: 8px; margin-bottom: 8px; width: 230px; border: 1px solid rgb(221, 221, 221); border-radius: 5px; padding: 10px; position: absolute; left: 0px; top: 0px;">
                                 <a th:href="${docItem.docPath}"
                                    style="width: 100%; height: 30px; color: rgb(0, 123, 255); cursor: pointer;"
                                    th:text="${docItem.docName}"></a>
                                 <p>参考路径：
-                                <div style="height:100px;" class="fastDFSDoc_path" th:text="${docItem.docPath}"></div>
+                                <div style="height:100px;" class="fastDFS_path_doc" th:text="${docItem.docPath}"></div>
                                 <button th:id="${docItem.docId}" class="btn btn-danger btn-sm deleteDoc_btn"
                                         style="margin-left: 10px; float: right; width: 60px;"><span>删除</span>
                                 </button>
-                                <button id="send" th:docId="${docItem.docId}" class="btn btn-sm subscriptionDoc_btn"
+                                <button id="sendDoc" th:docId="${docItem.docId}" class="btn btn-sm subscriptionDoc_btn"
                                         style="color: white; background: #577b93; float: right;  width: 60px;">
                                     <span>推送</span>
                                 </button>
@@ -75,6 +86,25 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="settings"></div>
+
+                        <div class="tab-pane" id="articleSource">
+                            <div th:each="pushContentLists:${pushContentList}" class="articleItem"
+                                 style="margin-right: 8px; margin-bottom: 8px; width: 350px; border: 1px solid rgb(221, 221, 221); border-radius: 5px; padding: 10px; position: absolute; left: 0px; top: 0px;">
+                                <div th:text="${pushContentLists.pushTitle}"
+                                     style="width: 100%; height: 30px; color: rgb(0, 123, 255); cursor: pointer;"></div>
+                                <p>参考内容：
+                                <div th:text="${pushContentLists.pushContent}"></div>
+                                <button th:id="${pushContentLists.pushId}" class="btn btn-danger btn-sm deleteDoc_btn"
+                                        style="margin-left: 10px; float: right; width: 60px;"><span>删除</span>
+                                </button>
+                                <button id="sendArticle" th:article-id="${pushContentLists.pushId}"
+                                        class="btn btn-sm subscriptionArticle_btn"
+                                        style="color: white; background: #577b93; float: right;  width: 60px;">
+                                    <span>推送</span>
+                                </button>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,8 +126,8 @@
         });
 
         $(".imgSource").click(function () {
-            $(".imgSource,.docSource").removeClass("active");
-            $("#imgSource,#docSource").removeClass("active");
+            $(".imgSource,.docSource,.articleSource").removeClass("active");
+            $("#imgSource,#docSource,#articleSource").removeClass("active");
             $(this).addClass("active");
             $('#imgSource').addClass("active").masonry({
                 itemSelector: ".imgItem"
@@ -105,21 +135,29 @@
         });
 
         $(".docSource").click(function () {
-            $(".imgSource,.docSource").removeClass("active");
-            $("#imgSource,#docSource").removeClass("active");
+            $(".imgSource,.docSource,.articleSource").removeClass("active");
+            $("#imgSource,#docSource,#articleSource").removeClass("active");
             $(this).addClass("active");
             $('#docSource').addClass("active").masonry({
                 itemSelector: ".docItem"
+            });
+        });
+        $(".articleSource").click(function () {
+            $(".imgSource,.docSource,.articleSource").removeClass("active");
+            $("#imgSource,#docSource,#articleSource").removeClass("active");
+            $(this).addClass("active");
+            $('#articleSource').addClass("active").masonry({
+                itemSelector: ".articleItem"
             });
         })
     });
 
     $(document).on('click', '.deleteImg_btn', function () {
-        var oldPath = $(this).siblings('.fastDFS_path').text();
-        var path = oldPath.substring(27, oldPath.length);
-        console.log(path);
+        var oldImgPath = $(this).siblings('.fastDFS_path_img').text();
+        var imgPath = oldImgPath.substring(27, oldImgPath.length);
+        console.log(imgPath);
         swal({
-            title: "确定从fastDFS上删除路径为" + path + "的文件吗？",
+            title: "确定从fastDFS上删除路径为" + imgPath + "的文件吗？",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
@@ -130,13 +168,64 @@
         }, function (isConfirm) {
             if (isConfirm) {
                 $.ajax({
-                    // url:http + "/consumer/admin/fastDFS_delete",
                     url: "/medical/admin/fastDFS_delete",
                     type: "POST",
                     xhrFields: {
                         withCredentials: true
                     },
-                    data: {oldPath: path},
+                    data: {oldPath: imgPath},
+                    success: function (res) {
+                        if (res.code = 200) {
+                            swal({
+                                title: "删除成功！",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            swal({
+                                title: "删除失败！",
+                                type: "error"
+                            });
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            title: "系统发生未知错误！删除失败！",
+                            type: "error"
+                        });
+                    }
+                });
+            } else {
+                swal({
+                    title: "您已取消删除！",
+                    type: "success"
+                });
+            }
+        });
+    });
+    $(document).on('click', '.deleteDoc_btn', function () {
+        var oldDocPath = $(this).siblings('.fastDFS_path_doc').text();
+        var docPath = oldDocPath.substring(27, oldDocPath.length);
+        console.log(docPath);
+        swal({
+            title: "确定从fastDFS上删除路径为" + docPath + "的文件吗？",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: "/medical/admin/fastDFS_delete",
+                    type: "POST",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    data: {oldPath: docPath},
                     success: function (res) {
                         if (res.code = 200) {
                             swal({
@@ -168,25 +257,59 @@
         });
     });
 
+    /*多选治疗方案，选中取消*/
+    var sendIds = [];
+    $(document).on('click', '.docItem', function (e) {
+        if ($(e.target).closest('#sendDoc').length == 0 && $(e.target).closest('.deleteDoc_btn').length == 0 && $(e.target).closest($(this).children('a')).length == 0) {
+            var docId = sendIds.indexOf($(this).attr('docId'));
+            if (docId == -1) {
+                $(this).css('background', '#007bff').css('color', 'white');
+                $(this).children('a').css('color', 'white');
+                sendIds.push($(this).attr('docId'));
+            } else {
+                $(this).css('background', '').css('color', '');
+                $(this).children('a').css('color', 'rgb(0, 123, 255)');
+                sendIds.splice(docId, 1);
+            }
+        }
+    });
+
+    var pushDocIds = "";
+    /*点击多选推送传入id数组到服务端*/
+    $('.multi-push').click(function () {
+
+        $.each(sendIds, function (index, item) {
+            pushDocIds += item + "-";
+        });
+        pushDocIds = pushDocIds.substring(0, pushDocIds.length - 1);
+        console.log(pushDocIds);
+        stompClient.send("/app/push/plans", {}, pushDocIds);
+        pushDocIds = "";
+    });
+
+    /*websocket相关配配置*/
     $(function () {
-        // $("form").on('submit', function (e) {
-        //     e.preventDefault();
-        // });
-
         connect();
-
         $("#disconnect").click(function () {
             disconnect();
         });
 
-        /*推送消息*/
-        $( "#send" ).click(function() { sendName(); });
-    });
+        /*客户端推送治疗方案id给服务端*/
+        $(document).on('click', '#sendDoc', function () {
+            console.log("客户端推送治疗方案id给服务端");
+            stompClient.send("/app/push/plan", {}, JSON.stringify({'docId': $(this).attr("docid")}));
+        });
 
-    /*推送消息*/
-    function sendName() {
-        stompClient.send("/app/topic/subscription", {}, JSON.stringify({'content': $("#send").parent("div").find("div:eq(0)").text()}));
-    }
+        /*客户端推送文章id给服务端*/
+        $(document).on('click', "#sendArticle", function () {
+            stompClient.send("/app/push/subscription", {}, JSON.stringify({'content': $(this).attr("article-id")}));
+        });
+
+        // $(document).on('click', '.multi-push', function () {
+        //     stompClient.send("/app/push/plans", {}, JSON.stringify({'pushDocIds': pushDocIds}));
+        // });
+
+    });
 
     /*WebSocket 配置*/
     var stompClient = null;
@@ -215,8 +338,8 @@
             setConnected(true);
             console.log('Connected: ' + frame);
 
-            /*订阅/topic/server_info信道的消息*/
-            stompClient.subscribe('/topic/diagnosis', function (result) {
+            /*订阅/topic/diagnosis信道的消息*/
+            stompClient.subscribe('/push/article', function (result) {
                 showContent(JSON.parse(result.body));
             });
         });

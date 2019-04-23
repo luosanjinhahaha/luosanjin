@@ -135,10 +135,10 @@
             },
             success:function (res) {
                 console.log(res);
-                if(res.extend.userPv == null){
+                if(res.extend.userPv == 0){
                     chatCount = 1;
                 }else{
-                    if(res.extend.userPv.pvChatSum == null){
+                    if(res.extend.userPv.pvChatSum == 0){
                         chatCount = 1;
                     }else{
                         chatCount = res.extend.userPv.pvChatSum;

@@ -5,6 +5,38 @@
     <meta charset="UTF-8">
     <title>个性定制-您的专属理疗方案</title>
 </head>
+<style>
+    html::-webkit-scrollbar
+    {
+        width: 5px;
+        height: 10px;
+        background-color: #F5F5F5;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+    ::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 5px;
+        background-color: #F5F5F5;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+    ::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #555;
+    }
+
+    .inner img {
+        height: 118px;
+        margin-left: 10px;
+        object-fit: cover;
+        float: right;
+        position: relative;
+    }
+</style>
 <link rel="icon" th:href="@{/images/homepage_images/core-img/favicon.ico}">
 <link rel="stylesheet" th:href="@{/css/homepage_css/style.css}">
 <!--<link rel="stylesheet" th:href="@{/css/homepage_css/bootstrap.min.css}">-->
@@ -39,7 +71,7 @@
             <th th:colspan="8" style="font-size: 20px;">基本信息
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="font-size: 15px;color: #006cff;">为能得到准确的方案请务必如实填写以下信息</span>
-                <button type="button" class="btn btn-sm btn-primary blank-page" style="float:right;">空白页</button>
+                <button type="button" id="blank-page" class="btn btn-sm btn-primary blank-page" style="float:right;">空白页</button>
             </th>
         </tr>
     </thead>
@@ -112,7 +144,7 @@
         <td>出生地:</td>
         <td th:colspan="3" class="info" data-toggle="distpicker">
             <span style="display: inline-block;margin-right: 20px;">
-                <select id="customProvince" name="customProvince" style="border: 1px solid #e7eaed;height: 30px;"></select>  
+                <select id="customProvince"  name="customProvince" style="border: 1px solid #e7eaed;height: 30px;"></select>  
             </span>
             <span style="display: inline-block;margin-right: 10px;">
                 <select id="customCity" name="customCity"style="border: 1px solid #e7eaed;height: 30px;"></select>  
@@ -125,7 +157,7 @@
     <tr style="line-height: 30px;">
         <td>医保卡号:</td>
         <td th:colspan="3">
-            <input type="text" name="customHealthCard" style="width: 300px;border: 1px solid #e7eaed;">
+            <input type="text" placeholder="&nbsp;没有可不填写" name="customHealthCard" style="width: 300px;border: 1px solid #e7eaed;">
         </td>
         <td>身份证件号:</td>
         <td th:colspan="3">
@@ -139,7 +171,7 @@
                 <span>现住地址:&nbsp;</span><input type="text" name="customLivePlace" style="width: 400px;border: 1px solid #e7eaed;">&emsp;&emsp;
             </span>
             <span style="display: inline-block;">
-                <span>邮政编码:&nbsp;</span><input type="text" name="customLivePostcode" style="width: 200px;border: 1px solid #e7eaed;">&emsp;&emsp;
+                <span>邮政编码:&nbsp;</span><input placeholder="&nbsp;可不填写" type="text" name="customLivePostcode" style="width: 200px;border: 1px solid #e7eaed;">&emsp;&emsp;
             </span>
         </td>
     </tr>
@@ -173,47 +205,19 @@
                 <span class="patientType">类型:</span>
                 <span style="display: inline-block;margin-right: 30px;">
                     <select name="customIllType" id="">
-                        <option value="呼吸系统疾病">呼吸系统疾病</option>
+                        <option value="呼吸系统疾病">颈椎类疾病</option>
                         <option value="急性脑血管病">心脑血管病</option>
                     </select>
                 </span>
                 <span class="patientType">类型:</span>
                 <span style="display: inline-block;margin-right: 30px;">
-                    <select name="customDetails" id="">
-                        <option value="呼吸系统疾病">高血压病</option>
-                        <option value="循环系统疾病">冠心病</option>
-                        <option value="急性脑血管病">中风</option>
-                        <option value="消化系统疾病">高脂血症</option>
+                    <select name="customDetails" id="customDetails" selected>
+                        <option value="颈椎病">颈椎病</option>
+                        <option value="高血压病">高血压病</option>
+                        <option value="痛风">痛风</option>
+                        <option value="肩周炎">肩周炎</option>
                     </select>
                 </span>
-                <!--<span class="patientType">类型:</span>-->
-                <!--<span style="display: inline-block;margin-right: 30px;">-->
-                    <!--<select name="customSymptom" id="">-->
-                        <!--<option value="呼吸系统疾病">呼吸系统疾病</option>-->
-                        <!--&lt;!&ndash;<option value="循环系统疾病">循环系统疾病</option>&ndash;&gt;-->
-                        <!--<option value="急性脑血管病">心脑血管病</option>-->
-                        <!--&lt;!&ndash;<option value="消化系统疾病">消化系统疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="泌尿系统疾病">泌尿系统疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="神经精神疾病">神经精神疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="传染性疾病">传染性疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="血液和造血系统">血液和造血系统</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="代谢疾病和营养疾病">代谢疾病和营养疾病</option>&ndash;&gt;-->
-                    <!--</select>-->
-                <!--</span>-->
-                <!--<span class="patientType">类型:</span>-->
-                <!--<span style="display: inline-block;margin-right: 28px;">-->
-                    <!--<select name="customTime" id="">-->
-                        <!--<option value="呼吸系统疾病">呼吸系统疾病</option>-->
-                        <!--&lt;!&ndash;<option value="循环系统疾病">循环系统疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="急性脑血管病">急性脑血管病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="消化系统疾病">消化系统疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="泌尿系统疾病">泌尿系统疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="神经精神疾病">神经精神疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="传染性疾病">传染性疾病</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="血液和造血系统">血液和造血系统</option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<option value="代谢疾病和营养疾病">代谢疾病和营养疾病</option>&ndash;&gt;-->
-                    <!--</select>-->
-                <!--</span>-->
             </td>
         </tr>
     <tr style="line-height: 30px;">
@@ -237,7 +241,6 @@
                 </select>
             </td>
             <td th:colspan="4" class="btns">
-                <a class="scheme" style="display: none;margin-right: 140px;font-size: 18px;" href="http://127.0.0.1:8082/upload/file/高血压的理疗方案.doc">高血压的理疗方案.doc</a>
                 <button type="button" class="btn btn-sm btn-primary" id="create">保存并生成方案</button>
                 <button class="btn btn-sm btn-danger" style="margin-left: 30px;">重置信息</button>
             </td>
@@ -246,6 +249,26 @@
 </table>
 </form>
 <div th:replace="~{common/footer::footer}"></div>
+<!--模态窗口-->
+<div id="modal" class="modal" style="background: rgba(0,0,0,.4);">
+    <div class="modal-dialog animated">
+        <div class="modal-content" style="width: 1095px; left: -175px;">
+            <form class="form-horizontal" method="get">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row row1">
+                            <table class="tablePuwai table col-sm-3"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" onclick="modal.close();">取消</button>
+                    <button class="btn btn-primary" type="submit" onclick="modal.close();">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script th:src="@{/js/homepage_js/jquery-2.2.4.min.js}"></script>
 <script th:src="@{/js/area_js/area.js}"></script>
 <script>_init_area();</script>
@@ -253,13 +276,15 @@
 <script th:src="@{/js/homepage_js/bootstrap.min.js}"></script>
 <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
 <script th:src="@{/js/homepage_js/plugins.js}"></script>
-<!--<script th:src="@{/js/homepage_js/active.js}"></script>-->
 <script th:src="@{/js/main_js/foundation-datepicker.js}"></script>
 <script th:src="@{/js/main_js/foundation-datepicker.zh-CN.js}"></script>
 <script th:src="@{/js/main_js/datatables.min.js}"></script>
 <script th:src="@{/js/sweetalert_js/sweet-alert.min.js}"></script>
 <script th:src="@{/js/homepage_js/number-pb.js}"></script>
 <script th:src="@{/js/homepage_js/jquery.velocity.min.js}"></script>
+<script th:src="@{/js/main_js/rmodal.js}"></script>
+<script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+<script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
 </body>
 <script>
     // 日期选择
@@ -267,6 +292,43 @@
         format: 'yyyy-mm-dd',
     });
     $("input[name=customSex]").val([$(".jiade").val()]);
+
+    $(function () {
+        connect();
+
+    });
+
+    /*WebSocket 配置*/
+    var stompClient = null;
+    function setConnected(connected) {
+        $("#connect").prop("disabled", connected);
+
+        //  /push/customDetails
+        stompClient.subscribe('/push/customDetails', function (result) {
+            showCustomDetails(JSON.parse(result.body));
+            // console.log("result: " + result);
+        });
+    }
+
+    function showCustomDetails(result) {
+        $.each(result, function (index, item) {
+            var ahref = $('<a></a>').attr('href',item.docPath).append(item.docName);
+            var tr = $('<tr></tr>').append($('<td></td>').append(ahref));
+            tr.appendTo('.tablePuwai');
+        });
+    }
+
+    /*连接*/
+    function connect() {
+        /*连接上端点(基站)*/
+        var socket = new SockJS('/medical/endpoint-websocket');
+        /*用stom进行包装，规范协议*/
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+        });
+    }
+
     //生成理疗方案
     $("#create").click(function () {
         swal({
@@ -289,11 +351,16 @@
                         if(res.code = 200){
                             swal({
                                 title:"生成方案成功！",
-                                text:"请返回查看或下载",
+                                text:"请返回下载或预约",
                                 type:"success"
                             },function () {
                                 $('.scheme').css('display','inline-block');
+                                modal.open();
+                                window.modal = modal;
+                                stompClient.send("/app/push/treatment", {}, JSON.stringify({'customDetails': $("#customDetails").find("option:selected").text()}));
+                                buildpuWaiDor(res);
                             });
+                            console.log(res.extend);
                         }
                     }
                 });
@@ -304,15 +371,37 @@
                 });
             }
         });
+
+        function buildpuWaiDor(res) {
+            // $('.row1').empty();
+            $.each(res.extend.puWaiDor, function (index, item) {
+                var div = $('<div></div>').addClass('inner').append($('<span></span>').append($('<img/>').attr('src', item.doctorPhotoSrc)))
+                    .append($('<div></div>').append(item.doctorName).css('position','relative').css('top','10px').css('left','90px'))
+                    .append($('<a></a>').attr('href','deptWithDoct/' + item.doctorId).append('预约').css('position','relative').css('width','100px').css('top','20px').css('left','66px').addClass('puWaiDor btn btn-primary btn-sm profile-btn'));
+                div.appendTo('.row1');
+            });
+        }
+
+        $(document).on('clock', '.puWaiDor', function () {
+
+        });
+
+
+        var modal = new RModal(document.getElementById('modal'));
+        document.addEventListener('keydown', function (ev) {
+            modal.keydown(ev);
+        }, true);
+
+        document.getElementById('create').addEventListener("click", function (ev) {
+            ev.preventDefault();
+            modal.open();
+        }, false);
     });
 
     $(".blank-page").click(function () {
         $('#customForm input').each(function () {
            $(this).val('');
         });
-        // $('#customForm select').each(function () {
-        //    $(this).val('');
-        // });
     })
 </script>
 </html>

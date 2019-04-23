@@ -1,6 +1,8 @@
 package com.smxy.healthmedical.dao;
 
 import com.smxy.healthmedical.bean.User;
+import com.smxy.healthmedical.bean.UserPreference;
+import com.smxy.healthmedical.bean.UserPv;
 import org.apache.ibatis.annotations.Mapper;
 /**
  * 功能描述:
@@ -11,7 +13,12 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 public interface RegMapper {
+
 	void reg(User user);
+
 	User queryuser(User user);
+
 	User queryByUserName(String username);
+
+	UserPv queryPreference(String realname);
 }

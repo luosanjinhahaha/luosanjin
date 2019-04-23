@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/main_css/sweet.css}">
 </head>
 <style>
    /*.post{*/
@@ -64,7 +65,38 @@
                             </div>
                             <!--protection锚点区-->
                             <div class="tab-pane " id="protection">
+                                <div th:each="doctorInfoLists:${doctorInfoList}">
+                                    <div class="post"  th:each="doctorTip:${doctorInfoLists.doctorTips}">
+                                        <div class="user-block">
+                                            <img class="img-circle img-bordered-sm"
+                                                 th:src="${doctorInfoLists.doctorPhotoSrc}" style="object-fit: cover;"
+                                                 alt="user image">
+                                            <span class="username">
+                                              <a href="#" th:text="${doctorInfoLists.doctorName}"></a>
+                                              <a href="#" class="float-right btn-tool"><i class="fa fa-times"></i></a>
+                                            </span>
+                                            <span class="description"
+                                                  th:text="'分享于&emsp;' + ${doctorTip.doctorTipsTime}"></span>
+                                        </div>
+                                        <p style="font-weight: bold" th:text="${doctorTip.doctorTipsName}"></p>
+                                        <p th:text="${doctorTip.doctorTipsDescription}"></p>
 
+                                        <p>
+                                            <a href="#" class="link-black text-sm mr-2"><i class="fa fa-share mr-1"></i>
+                                                分享</a>
+                                            <a href="#" class="link-black text-sm"><i
+                                                    class="fa fa-thumbs-o-up mr-1"></i>[['点赞(' +
+                                                ${doctorTip.doctorTipsLike} + ')']]</a>
+                                            <span class="float-right">
+                                              <a href="#" class="link-black text-sm" data-toggle="tooltip" title="查看评论">
+                                                <i class="fa fa-comments-o mr-1"></i> Comments (5)
+                                              </a>
+                                            </span>
+                                        </p>
+                                        <input class="form-control form-control-sm" type="text"
+                                               placeholder="发表评论">
+                                    </div>
+                                </div>
                             </div>
                             <!--guard锚点区-->
                             <div class="tab-pane" id="guard">
@@ -72,6 +104,39 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-3 right-area">
+                <div class="col-md-11">
+                    <table class="ranking-table">
+                        <tr>
+                            <td colspan="2"><span>热点文章</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="background: #f54545;color: white;">1</div>
+                            </td>
+                            <td><a href="#">痛风患者饮食注意方面</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="background: #ff8547;color: white;">2</div>
+                            </td>
+                            <td><a href="#">小动作缓解颈椎病</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="background: #ffac38;color: white;">3</div>
+                            </td>
+                            <td><a href="#">颈椎病的日常保健</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="background: #8eb9f5;color: white">4</div>
+                            </td>
+                            <td><a href="#">湿寒性颈椎病的诊治</a></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -123,25 +188,26 @@
                 "pvUserName" : $("#user_name").text(),
             },
             success:function (res) {
-                if(res.extend.userPv == null){
+                console.log(res);
+                if(res.extend.userPv == 0){
                     baojianCount = 0;
                     yangShengCount = 0;
                     yuFangCount = 0;
                 }else{
-                    if(res.extend.userPv.pvBaojianSum == null){
+                    if(res.extend.userPv.pvBaojianSum == 0){
                         baojianCount = 0;
-                    }else if(res.extend.userPv.pvBaojianSum != null){
+                    }else if(res.extend.userPv.pvBaojianSum != 0){
                         baojianCount = res.extend.userPv.pvBaojianSum;
                     }
 
-                    if(res.extend.userPv.pvYangShengSum == null){
+                    if(res.extend.userPv.pvYangShengSum == 0){
                         yangShengCount = 0;
-                    }else if(res.extend.userPv.pvYangShengSum != null){
+                    }else if(res.extend.userPv.pvYangShengSum != 0){
                         yangShengCount = res.extend.userPv.pvYangShengSum;
                     }
-                    if(res.extend.userPv.pvYufangSum == null) {
+                    if(res.extend.userPv.pvYufangSum == 0) {
                         yuFangCount = 0;
-                    }else if(res.extend.userPv.pvYufangSum != null) {
+                    }else if(res.extend.userPv.pvYufangSum != 0) {
                         yuFangCount = res.extend.userPv.pvYufangSum;
                     }
                 }
@@ -158,7 +224,8 @@
             $('#hygiene').addClass("active");
 
             var pvBaojianSum = ++baojianCount;
-            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation + "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime  + "&" + "pvBaojianSum=" + pvBaojianSum;
+            var pvData = "pvIp=" + pvIp + "&" + "pvHomeLocation=" + pvHomeLocation + "&" + "pvUserName=" + pvUserName +
+                "&" + "pvTime=" + pvTime  + "&" + "pvBaojianSum=" + pvBaojianSum;
             $.ajax({
                 url:"/medical/admin/pageViews",
                 type:"POST",
@@ -178,7 +245,7 @@
             $('#protection').addClass("active");
 
             var pvYangShengSum = ++yangShengCount;
-            var pvData = "pvUrl=" + pvUrl + "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime  + "&" + "pvYangShengSum=" + pvYangShengSum;
+            var pvData = "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime  + "&" + "pvYangShengSum=" + pvYangShengSum;
 
             $.ajax({
                 url:"/medical/admin/pageViews",
@@ -198,7 +265,7 @@
             $('#guard').addClass("active");
 
             var pvYufangSum = ++yuFangCount;
-            var pvData = "pvUrl=" + pvUrl + "&" + "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime  + "&" + "pvYufangSum=" + pvYufangSum;
+            var pvData = "pvUserName=" + pvUserName + "&" + "pvTime=" + pvTime  + "&" + "pvYufangSum=" + pvYufangSum;
 
             $.ajax({
                 url:"/medical/admin/pageViews",
@@ -208,7 +275,96 @@
                 }
             });
         });
-
     });
+
+
+    $(function () {
+        connect();
+        $("#disconnect").click(function () {
+            disconnect();
+        });
+    });
+
+    /*WebSocket 配置*/
+    var stompClient = null;
+    function setConnected(connected) {
+        $("#connect").prop("disabled", connected);
+        $("#disconnect").prop("disabled", !connected);
+        if (connected) {
+            $("#conversation").show();
+        }
+        else {
+            $("#conversation").hide();
+        }
+        $("#notice").html("");
+    }
+
+    /*连接*/
+    function connect() {
+
+        /*连接上端点(基站)*/
+        var socket = new SockJS('/medical/endpoint-websocket');
+
+        /*用stom进行包装，规范协议*/
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            console.log('Connected: ' + frame);
+
+            /*订阅/push/article信道的消息*/
+            stompClient.subscribe('/push/article', function (result) {
+                showContent(JSON.parse(result.body));
+                console.log("result: " + result);
+            });
+
+            /*订阅诊疗方案推送信道*/
+            stompClient.subscribe('/push/doc', function (result) {
+                console.log(JSON.parse(result.body));
+                /*渲染页面*/
+                showDocArea(result);
+            });
+
+            /*订阅多选诊疗档案信道*/
+            stompClient.subscribe('/push/docs', function (result) {
+                console.log(JSON.parse(result.body));
+                //渲染页面
+                showDocArea(result);
+            });
+        });
+    }
+
+    /*断开*/
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log("Disconnected");
+    }
+
+    /*定义消息展示方法*/
+    function showContent(body) {
+        $("#notice").prepend("<tr><td>" + body.content + "</td> <td>" + new Date(body.time).toLocaleString() + "</td></tr>");
+    }
+
+    function showDocArea(result) {
+        var item = JSON.parse(result.body);
+        var i = 0;
+        var tr = $('<tr></tr>').append($('<td></td>').append($('<div></div>').css('background','#8eb9f5').css('color','white').append((++i))))
+            .append($('<td></td>').append($('<a></a>').attr('href',item.docPath).append((item.docName))));
+        tr.appendTo('.ranking-table');
+    }
+
+    // function showDocAreas(result) {
+    //     var data = JSON.parse(result.body);
+    //     // var table = $('<table></table>').addClass('ranking-table');
+    //     $.each(result,function (index1, item1) {
+    //         $.each(data, function (index, item) {
+    //             var tr = $('<tr></tr>').append($('<td></td>').append($('<div></div>').css('background','#f54545').css('color','white').append(index.item)))
+    //                 .append($('<td></td>').append($('<a></a>').attr('href',data.docPath).append(data.docName)));
+    //             table.append(tr).appendTo('.col-md-11');
+    //         });
+    //     });
+    // }
 </script>
 </html>

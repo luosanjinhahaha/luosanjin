@@ -15,7 +15,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.16.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <properties>
@@ -27,12 +27,26 @@
     </properties>
 
     <dependencies>
+        <!-- alibaba druid依赖 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.10</version>
+        </dependency>
+
         <!--alibaba json依赖 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.51</version>
         </dependency>
+
+        <!--RabbitMQ amqp依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
         <!--java操作fastDFS-->
         <dependency>
             <groupId>org.csource</groupId>
@@ -103,8 +117,10 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <!--<version>5.1.46</version>-->
             <scope>runtime</scope>
         </dependency>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>

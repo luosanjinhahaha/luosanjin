@@ -1,9 +1,14 @@
 package com.smxy.healthmedical.service;
 
 import com.smxy.healthmedical.bean.User;
+import com.smxy.healthmedical.bean.UserPv;
 
 public interface RegService {
-	public void reg(User user);
-	public User queryuser(User user);
-	public User queryuserbyid(String username);
+	void reg(User user);
+
+	User queryuser(User user);
+
+	User queryuserbyid(String username);
+
+	UserPv queryPreference(String realname);
 }
